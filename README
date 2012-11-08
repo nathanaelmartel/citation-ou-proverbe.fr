@@ -1,0 +1,5 @@
+
+
+cron:
+
+*/5 * * * * /home/nat/sites/v2.citation-et-proverbe.fr/symfony downloadPages

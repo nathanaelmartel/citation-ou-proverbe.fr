@@ -71,7 +71,7 @@ EOF;
       	}
       }
       
-    	sfTask::log($Page->url.'  ++ '.$new_urls);
+    	sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
     }
     
     sfTask::log('==== end on '.date('r').' ====');
