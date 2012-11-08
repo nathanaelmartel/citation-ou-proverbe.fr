@@ -1,0 +1,19 @@
+
+
+Page:
+  tableName: page
+  actAs:
+    Timestampable:
+
+  columns:
+    url: varchar(255)
+    website: varchar(255)
+    title: varchar(255)
+    http_code: varchar(4)
+    loading_time: varchar(10)
+    downloaded_date: datetime
+    parsed_date: datetime
+
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8

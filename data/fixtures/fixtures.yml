@@ -1,0 +1,33 @@
+
+Page:
+  evene:
+    url: http://www.evene.fr/citations
+    website: evene
+  linternaute:
+    url: http://www.linternaute.com/citation/
+    website: linternaute
+  1001:
+    url: http://www.1001-citations.com/
+    website: 1001-citations
+  citations:
+    url: http://www.citations.com/
+    website: citations
+  dicocitations:
+    url: http://www.dicocitations.com/
+    website: dicocitations
+  lexode:
+    url: http://www.lexode.com/citations/
+    website: lexode
+  lescitations:
+    url: http://www.les-citations.com/index.php
+    website: les-citations
+#  wikiquote:
+#    url: http://fr.wikiquote.org/
+#    website: wikiquote
+  kaakook:
+    url: http://www.kaakook.fr
+    website: kaakook
+  leproverbe:
+    url: http://www.leproverbe.fr/
+    website: leproverbe
+    
