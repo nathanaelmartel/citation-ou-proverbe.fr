@@ -6,15 +6,15 @@ default:
     content-type: text/html
 
   metas:
-    #title:        symfony project
+    title:        BO Citations
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [admin.css]
 
-  javascripts:    []
+  javascripts:    [/js/jquery-1.8.3.min.js]
 
   has_layout:     true
   layout:         layout

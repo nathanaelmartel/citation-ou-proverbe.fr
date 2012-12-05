@@ -1,5 +1,45 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
-# default values
-#all:
+all:
+  sf_admin_dash:
+    web_dir:                      /sfAdminDashPlugin
+    image_dir:                    /sfAdminDashPlugin/images/icons/
+    default_image:                config.png
+    resize_mode:                  thumbnail
+    site:                         My Site
+    include_path:                 true
+    include_jquery_no_conflict:   false
+    logout:                       true
+    login_route:                  @sf_guard_signin
+    logout_route:                 @sf_guard_signout
+    
+    categories:
+      Citation:
+        items:
+          Dashboard:
+            url:          dash_citation
+            image:        generic.png
+            credentials:  [admin]
+          Citation:
+            url:          citation
+            image:        language.png
+            credentials:  [[admin]]
+          Auteur:
+            url:          author
+            image:        users.png
+            credentials:  [admin]
+          Tag:
+            url:          tag
+            image:        menu.png
+            credentials:  [admin]
+      Page:
+        items:
+          Dashboard:
+            url:          dash_page
+            image:        generic.png
+            credentials:  [admin]
+          Page:
+            url:          page
+            image:        searchtext.png
+            credentials:  [admin]

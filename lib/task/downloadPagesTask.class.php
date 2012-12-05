@@ -42,8 +42,9 @@ EOF;
     ->select('*')
     ->from('Page l')
     ->where('downloaded_date is NULL')
+    ->andWhere('website = ?', '1001-citations')
     ->limit(10)
-    ->orderBy('downloaded_date');
+    ->orderBy('downloaded_date DESC');
 
     foreach ($q->execute() as $Page) {
     	$Scraper = new scraper;
@@ -65,6 +66,7 @@ EOF;
       		$NewPage = new Page;
       		$NewPage->url = $url;
       		$NewPage->website = $Page->website;
+    			$NewPage->nb_citations = 0;
       		$NewPage->save();
       		
     			$new_urls++;

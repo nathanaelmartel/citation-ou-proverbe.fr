@@ -8,7 +8,9 @@
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
   </head>
-  <body>
-    <?php echo $sf_content ?>
-  </body>
+	<body>
+	  <?php include_component('sfAdminDash','header'); ?>
+	  <?php echo $sf_content ?>
+	  <?php include_partial('sfAdminDash/footer'); ?>
+	</body>
 </html>

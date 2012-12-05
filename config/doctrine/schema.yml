@@ -9,6 +9,7 @@ Page:
     url: varchar(255)
     website: varchar(255)
     title: varchar(255)
+    nb_citations: int
     http_code: varchar(4)
     loading_time: varchar(10)
     downloaded_date: datetime
@@ -17,3 +18,90 @@ Page:
   options:
     collate: utf8_unicode_ci
     charset: utf8
+    
+
+Author:
+  connection: doctrine
+  tableName: author
+  actAs:
+    Sluggable:
+      unique: true
+      fields: [name]
+      canUpdate: false
+    Timestampable:
+    
+  columns:
+    name: {type: string(255)}
+    wikipedia_bio: {type: string()}
+    wikipedia_photo: {type: string()}
+    wikipedia_url: {type: string(255), default: null}
+    twitter_account: {type: string(255)}
+    twitter_keys: {type: string(255)}
+    is_active: {type: int}
+    
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+
+Citation:
+  connection: doctrine
+  tableName: citation
+  actAs:
+    Timestampable:
+  columns:
+    quote: {type: string()}
+    author_id: {type: integer, notnull: true}
+    source: {type: string(255)}
+    is_active: {type: int}
+    last_published_at: {type: datetime}
+    hash: {type: string(255)}
+    note: {type: int, default: 0}
+    view: {type: int, default: 0}
+    slug: {type: string(255), unique: true}
+    
+  relations:
+    Author:
+      class: Author
+      foreignAlias: Citations
+      local: author_id
+      foreign: id
+      onDelete: cascade
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
+Tag:    
+  tableName: tag
+  actAs:
+    Sluggable:
+      unique: true
+      fields: [name]
+    Timestampable:
+
+  columns:
+    name: { type: string(255), notnull: true }
+    is_active: {type: int}
+    
+  relations:
+    Citations:
+      class: Citation
+      refClass: TagCitation
+      foreignAlias: Tags
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
+TagCitation:    
+  tableName: tag_citation
+
+  columns:
+    tag_id: {type: integer, primary: true}
+    citation_id: {type: integer, primary: true}
+
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    

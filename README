@@ -1,5 +1,10 @@
 
 
-cron:
+== cron:
 
 */5 * * * * /home/nat/sites/v2.citation-et-proverbe.fr/symfony downloadPages
+
+
+== dashboard
+SELECT `http_code`, count(id) FROM `page` GROUP BY `http_code`;
+SELECT `website` , count( id ) FROM `page` GROUP BY `website`;
