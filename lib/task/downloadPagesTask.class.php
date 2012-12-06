@@ -44,7 +44,7 @@ EOF;
     ->where('downloaded_date is NULL')
     ->andWhere('website = ?', '1001-citations')
     ->limit(10)
-    ->orderBy('downloaded_date DESC');
+    ->orderBy('created_at DESC');
 
     foreach ($q->execute() as $Page) {
     	$Scraper = new scraper;
