@@ -15,7 +15,9 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
+      list:
+          display: [=name, nb_citations, slug, is_active, updated_at]
+          max_per_page: 50
       filter:  ~
       form:    ~
       edit:    ~

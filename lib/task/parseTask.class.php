@@ -94,19 +94,19 @@ EOF;
 	    $query_results = $dom2->query('h2');
 	    $quote = '';
     	foreach($query_results as $result) {
-    	  $quote = $result->nodeValue;
+    	  $quote = scraper::encodingCorrection($result->nodeValue, 'alpha');
     	}
     	
 	    $query_results = $dom2->query('.author a');
 	    $author = '';
     	foreach($query_results as $result) {
-    	  $author = $result->nodeValue;
+    	  $author = scraper::encodingCorrection($result->nodeValue, 'alpha');
     	}
     	
 	    $query_results = $dom2->query('.tags a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    	  $tags[] = $result->nodeValue;
+    	  $tags[] = scraper::encodingCorrection($result->nodeValue, 'alpha');
     	}
     	
     	//sfTask::log($quote.' - '.$author.' - '.json_encode($tags));

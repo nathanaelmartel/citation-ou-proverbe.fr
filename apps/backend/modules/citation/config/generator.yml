@@ -15,7 +15,9 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
+      list:
+          display: [=quote, Author, is_active, note, view, updated_at]
+          max_per_page: 50
       filter:  ~
       form:    ~
       edit:    ~

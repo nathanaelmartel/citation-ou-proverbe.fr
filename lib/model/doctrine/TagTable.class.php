@@ -26,6 +26,7 @@ class TagTable extends Doctrine_Table
         {
           $Tag = new Tag;
           $Tag->name = $tag;
+          $Tag->is_active = true;
           $Tag->save();
           return true;
         }

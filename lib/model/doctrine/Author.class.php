@@ -12,4 +12,7 @@
  */
 class Author extends BaseAuthor
 {
+	public function getNbCitations() {
+		return count($this->Citations);
+	}
 }

@@ -12,5 +12,12 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 {
   public function setup()
   {
+  	unset(  
+			$this['created_at'],  
+			$this['updated_at'],
+			$this['citations_list'],
+			$this['tags_list'],
+			$this['author_id']
+		); 
   }
 }

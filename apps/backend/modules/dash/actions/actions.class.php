@@ -17,9 +17,11 @@ class dashActions extends sfActions
   */
   public function executePage(sfWebRequest $request)
   {
+  	$this->q = Doctrine_Manager::getInstance()->getCurrentConnection();
   }
   
   public function executeCitation(sfWebRequest $request)
   {
+  	$this->q = Doctrine_Manager::getInstance()->getCurrentConnection();
   }
 }

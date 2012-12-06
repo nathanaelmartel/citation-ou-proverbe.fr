@@ -37,7 +37,7 @@ Author:
     wikipedia_url: {type: string(255), default: null}
     twitter_account: {type: string(255)}
     twitter_keys: {type: string(255)}
-    is_active: {type: int}
+    is_active: {type: boolean}
     
       
   options:
@@ -53,7 +53,7 @@ Citation:
     quote: {type: string()}
     author_id: {type: integer, notnull: true}
     source: {type: string(255)}
-    is_active: {type: int}
+    is_active: {type: boolean}
     last_published_at: {type: datetime}
     hash: {type: string(255)}
     note: {type: int, default: 0}
@@ -82,7 +82,7 @@ Tag:
 
   columns:
     name: { type: string(255), notnull: true }
-    is_active: {type: int}
+    is_active: {type: boolean}
     
   relations:
     Citations:

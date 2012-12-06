@@ -65,16 +65,16 @@ class CitationTable extends Doctrine_Table
           	$Citation->source = $quote['source'];
           
           $Citation->last_published_at  = '0000-00-00 00:00:00';
-          $Citation->is_active = 1;
+          $Citation->is_active = true;
           $Citation->hash = $hash;
           $Citation->save();
           
           
-          $slug = '';
+          $slug = $Citation->id;
           foreach ($quote['tags'] as $tag) {
           	$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
           	
-          	$slug .= $Tag->slug.'-';
+          	$slug .= '-'.$Tag->slug;
           	
           	$TagCitation = new TagCitation;
           	$TagCitation->tag_id = $Tag->id;

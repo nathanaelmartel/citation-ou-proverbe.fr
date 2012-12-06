@@ -12,4 +12,7 @@
  */
 class Tag extends BaseTag
 {
+	public function getNbCitations() {
+		return count($this->Citations);
+	}
 }
