@@ -43,7 +43,7 @@ EOF;
     ->where('http_code = ?', '200')
     ->andWhere('website = ?', '1001-citations')
     //->andWhere('nb_citations = ?', 0)
-    ->limit(10)
+    ->limit(5)
     ->orderBy('parsed_date ASC');
     
     foreach ($q->execute() as $Page) {
