@@ -18,7 +18,7 @@ class AuthorTable extends Doctrine_Table
     }
     
   	public static function addAuthor($author_name) {
-    
+  		
       if ($author_name != '')
       {
         $authors = Doctrine::getTable('Author')->findByName($author_name);

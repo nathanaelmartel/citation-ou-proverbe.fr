@@ -35,14 +35,20 @@ EOF;
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     
+    $website = array(
+    		'citations', 
+    		'1001-citations'
+    );
+    
     
     sfTask::log('==== begin on '.date('r').' ====');
     
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Page l')
-    ->where('downloaded_date is NULL')
-    ->andWhere('website = ?', '1001-citations')
+    ->whereIn('website', $website)
+    ->andWhere('downloaded_date is NULL')
+    //->andWhere('website = ?', 'citations')
     ->limit(20)
     ->orderBy('created_at ASC');
     
@@ -50,7 +56,6 @@ EOF;
 
     foreach ($q->execute() as $Page) {
     	$Scraper = new scraper;
-      $title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
       
       $header = $Scraper->getPageHeader($Page->url);
       if (is_array($header)) {
@@ -58,6 +63,7 @@ EOF;
 	      $Page->loading_time = $header['total_time'];
 	      $Page->downloaded_date = new Doctrine_Expression('NOW()');
       }
+      $title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
 	    $Page->title = $title[0];
 	    $Page->save();
     	

@@ -79,6 +79,8 @@ class scraper
       return $url_info['scheme'].'://'.$url_info['host'].$url;
     else if (substr($url, 0, 1) == '#')
       return $base_url;
+    else if (substr($url, 0, 10) == 'javascript')
+      return $base_url;
     else
       return substr($base_url, 0, strrpos($base_url, '/')).$url;
     
@@ -97,7 +99,7 @@ class scraper
     if (array_key_exists('path', $url_info))
       $filename = scraper::toAscii($url_info['path']).'-';
     
-    $file = $url_info['host'].'/'.$filename.base64_encode($url);
+    $file = $url_info['host'].'/'.substr($filename, 0, 32).substr(base64_encode($url), 0, 32);
     
     return $base_path.$file.'.html';
   }
@@ -143,6 +145,28 @@ class scraper
         
     
     return $text;
+  }
+
+  public static function cleanTag($tag) {
+  	
+  		$tag = strtolower($tag);
+  		
+  		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
+  		if( !empty($replace) ) {
+  			$tag = str_replace((array)$replace, ' ', $tag);
+  		}
+  		
+  		$tag = trim($tag, '.,;:');
+  		$tag = trim($tag);
+  		
+  		return $tag;
+  }
+
+  public static function cleanAuthor($author_name) {
+    
+  		$author_name =  ucwords(strtolower($author_name));
+  		
+  		return $author_name;
   }
 
   public static function cleanString($text) {
