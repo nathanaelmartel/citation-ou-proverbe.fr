@@ -43,7 +43,7 @@ EOF;
     ->from('Page l')
     ->where('downloaded_date is NULL')
     ->andWhere('website = ?', '1001-citations')
-    ->limit(10)
+    ->limit(20)
     ->orderBy('created_at ASC');
     
     //echo $q->getSqlQuery();echo "\n";die;
