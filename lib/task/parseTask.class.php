@@ -37,11 +37,17 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     
+    $website = array(
+    		'citations', 
+    		'1001-citations'
+    );
+    
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Page l')
-    ->where('http_code = ?', '200')
-    ->andWhere('website = ?', '1001-citations')
+    //->where('http_code = ?', '200')
+    //->andWhere('website = ?', '1001-citations')
+    ->whereIn('website', $website)
     //->andWhere('nb_citations = ?', 0)
     ->limit(5)
     ->orderBy('parsed_date ASC');
@@ -53,6 +59,9 @@ EOF;
     	switch ($Page->website) {
     		case '1001-citations':
     			$quotes = $this->parse_1001citations($Page->url);
+    			break;
+    		case 'citations':
+    			$quotes = $this->parse_citations($Page->url);
     			break;
     	}
     	
@@ -100,16 +109,52 @@ EOF;
 	    $query_results = $dom2->query('.author');
 	    $author = '';
     	foreach($query_results as $result) {
-    	  $author = scraper::encodingCorrection($result->nodeValue, 'alpha');
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
     	}
     	
 	    $query_results = $dom2->query('.tags a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    	  $tags[] = scraper::encodingCorrection($result->nodeValue, 'alpha');
+    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
     	}
     	
     	//sfTask::log($quote.' - '.$author.' - '.json_encode($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    }
+    
+    return $quotes;
+  }
+  
+  function parse_citations($url) {
+  	$quotes = array();
+    $Scraper = new scraper;
+    $html = $Scraper->getPage($url);
+    $dom = new Zend_Dom_Query($html);
+    $values = $dom->query('#contenu-zoom-citation');
+    
+    foreach($values as $value) {
+      $item = simplexml_import_dom($value)->asXML();
+	    $dom2 = new Zend_Dom_Query($item);
+	    
+	    $query_results = $dom2->query('h2');
+	    $quote = '';
+    	foreach($query_results as $result) {
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
+    	}
+    	
+	    $query_results = $dom2->query('h1');
+	    $author = '';
+    	foreach($query_results as $result) {
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('h2 a');
+	    $tags = array();
+    	foreach($query_results as $result) {
+    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
     	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
     }
     

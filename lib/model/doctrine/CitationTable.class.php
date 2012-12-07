@@ -54,7 +54,7 @@ class CitationTable extends Doctrine_Table
         if (count($citations) == 0)
         {
           $Citation = new Citation;
-          $Citation->quote = $quote['quote'];
+          $Citation->quote = trim($quote['quote']);
           
           if ((array_key_exists('author', $quote)) && ($quote['author'] != '')) {
         		$author = Doctrine::getTable('Author')->findOneByName($quote['author']);
