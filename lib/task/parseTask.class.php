@@ -97,7 +97,7 @@ EOF;
     	  $quote = scraper::encodingCorrection($result->nodeValue, 'alpha');
     	}
     	
-	    $query_results = $dom2->query('.author a');
+	    $query_results = $dom2->query('.author');
 	    $author = '';
     	foreach($query_results as $result) {
     	  $author = scraper::encodingCorrection($result->nodeValue, 'alpha');
