@@ -44,7 +44,7 @@ EOF;
     ->andWhere('website = ?', '1001-citations')
     //->andWhere('nb_citations = ?', 0)
     ->limit(10)
-    ->orderBy('parsed_date DESC');
+    ->orderBy('parsed_date ASC');
     
     foreach ($q->execute() as $Page) {
     	$total_quote = 0;
