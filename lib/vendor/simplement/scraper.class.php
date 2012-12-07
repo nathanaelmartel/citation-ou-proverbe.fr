@@ -163,7 +163,10 @@ class scraper
   }
 
   public static function cleanAuthor($author_name) {
-    
+  	
+  		$author_name = trim($author_name);
+  		$author_name = trim($author_name, '-');
+  		$author_name = trim($author_name);
   		$author_name =  ucwords(strtolower($author_name));
   		
   		return $author_name;
