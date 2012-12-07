@@ -45,6 +45,8 @@ EOF;
     ->andWhere('website = ?', '1001-citations')
     ->limit(10)
     ->orderBy('created_at ASC');
+    
+    echo $q->getSqlQuery();echo "\n";die;
 
     foreach ($q->execute() as $Page) {
     	$Scraper = new scraper;
