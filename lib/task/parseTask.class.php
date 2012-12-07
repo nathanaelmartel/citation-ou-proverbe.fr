@@ -49,7 +49,7 @@ EOF;
     //->andWhere('website = ?', '1001-citations')
     ->whereIn('website', $website)
     //->andWhere('nb_citations = ?', 0)
-    ->limit(5)
+    ->limit(20)
     ->orderBy('parsed_date ASC');
     
     foreach ($q->execute() as $Page) {
