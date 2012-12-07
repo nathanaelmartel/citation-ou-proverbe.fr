@@ -9,7 +9,7 @@ $site_local = array(
 );
 
 $backend = array(
-		'v2-admin.citation-et-proverbe.fr.dev'
+		'v2-admin.citation-et-proverbe.fr.dev',
 		'v2-admin.citation-et-proverbe.fr'
 );
 
