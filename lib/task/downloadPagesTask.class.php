@@ -46,7 +46,7 @@ EOF;
     ->limit(10)
     ->orderBy('created_at ASC');
     
-    echo $q->getSqlQuery();echo "\n";die;
+    //echo $q->getSqlQuery();echo "\n";die;
 
     foreach ($q->execute() as $Page) {
     	$Scraper = new scraper;
