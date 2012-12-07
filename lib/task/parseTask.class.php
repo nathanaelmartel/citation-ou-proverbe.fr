@@ -83,7 +83,7 @@ EOF;
     		$total_quote++;
     	}
     	
-    	sfTask::log($Page->url.' ++ '.$new_quote.' ['.$total_quote.']');
+    	sfTask::log($Page->id.' ('.$Page->website.') ++ '.$new_quote.' ['.$total_quote.']');
     }
     
     sfTask::log('==== end on '.date('r').' ====');
