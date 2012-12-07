@@ -103,7 +103,7 @@ EOF;
 	    $query_results = $dom2->query('h2');
 	    $quote = '';
     	foreach($query_results as $result) {
-    	  $quote = scraper::encodingCorrection($result->nodeValue, 'alpha');
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
     	}
     	
 	    $query_results = $dom2->query('.author');
