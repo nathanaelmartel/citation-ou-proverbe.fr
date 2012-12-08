@@ -49,7 +49,7 @@ EOF;
     ->whereIn('website', $website)
     ->andWhere('downloaded_date is NULL')
     //->andWhere('website = ?', 'citations')
-    ->offset(rand(0, 100))
+    //->offset(rand(0, 100))
     ->limit(5)
     ->orderBy('created_at ASC');
     
