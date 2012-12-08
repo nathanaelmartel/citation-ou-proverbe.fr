@@ -69,6 +69,19 @@ EOF;
     	}
     }
     
+    $q = Doctrine_Query::create()
+    ->select('*')
+    ->from('Author')
+    ->orderBy('name');
+    
+    foreach ($q->execute() as $Author) {
+	    $clean_name = scraper::cleanAuthor($Author->name);
+	    if ($clean_name != $Author->name) {
+		    $Author->name = $clean_name;
+		    $Author->save();
+	    }
+    }
+    
     sfTask::log('==== end on '.date('r').' ====');
   }
   
