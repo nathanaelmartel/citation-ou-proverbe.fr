@@ -50,7 +50,7 @@ EOF;
     ->whereIn('website', $website)
     //->andWhere('nb_citations = ?', 0)
     ->offset(rand(0, 100))
-    ->limit(20)
+    ->limit(5)
     ->orderBy('parsed_date ASC');
     
     foreach ($q->execute() as $Page) {
