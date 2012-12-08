@@ -56,9 +56,13 @@
 				<table>
 					<thead>
 						<tr>
-							<th><?php echo $website?></th>
-							<th colspan="3">downloaded</th>
-							<th colspan="3">parsed</th>
+							<th style="width:100px;"><?php echo $website?></th>
+							<th style="width:100px;">downloaded</th>
+							<th style="width:50px;"></th>
+							<th style="min-width:100px;"></th>
+							<th style="width:100px;">parsed</th>
+							<th style="width:50px;"></th>
+							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
 					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 10);');
@@ -74,11 +78,11 @@
 								<td><?php echo $result_dl['date'];?></td>
 								
 								<td><?php echo $result_dl['count'] ?></td>			
-								<td><?php echo ceil($result_dl['count']/$pages_downloaded*100) ?></td>
+								<td><?php echo ceil($result_dl['count']/$pages_downloaded*100) ?>%</td>
 								<td><div style="width:<?php echo ceil($result_dl['count']/$pages_downloaded*100) ?>%;background:#C64934;height:1em;"></div></td>
 								
 								<td><?php echo $results_parsed[$result_dl['date']] ?></td>			
-								<td><?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?></td>
+								<td><?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%</td>
 								<td><div style="width:<?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%;background:#C64934;height:1em;"></div></td>
 							</tr>
 						<?php endif;?>
