@@ -37,56 +37,60 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     
-    $website = array(
+    $websites = array(
     		'citations', 
     		'1001-citations'
     );
     
-    $q = Doctrine_Query::create()
-    ->select('*')
-    ->from('Page l')
-    ->where('http_code = ?', '200')
-    //->andWhere('website = ?', '1001-citations')
-    ->whereIn('website', $website)
-    ->andWhere('parsed_date is ?', null)
-    ->offset(rand(0, 50))
-    ->limit(5)
-    ->orderBy('downloaded_date ASC');
-    
-    foreach ($q->execute() as $Page) {
-    	$total_quote = 0;
-    	$new_quote = 0;
+    foreach ($websites as $website) {
+    	sfTask::log('**** '.$website.' '.date('r').' ****');    	
     	
-    	//sfTask::log($Page->id.' ('.$Page->website.')');
+    	$q = Doctrine_Query::create()
+    	->select('*')
+    	->from('Page l')
+    	->where('http_code = ?', '200')
+    	->andWhere('website = ?', $website)
+    	->andWhere('parsed_date is ?', null)
+    	//->offset(rand(0, 50))
+    	->limit(ceil(5/count($websites)))
+    	->orderBy('downloaded_date ASC');
     	
-    	switch ($Page->website) {
-    		case '1001-citations':
-    			$quotes = $this->parse_1001citations($Page->url);
-    			break;
-    		case 'citations':
-    			$quotes = $this->parse_citations($Page->url);
-    			break;
+    	foreach ($q->execute() as $Page) {
+    		$total_quote = 0;
+    		$new_quote = 0;
+    		 
+    		//sfTask::log($Page->id.' ('.$Page->website.')');
+    		 
+    		switch ($Page->website) {
+    			case '1001-citations':
+    				$quotes = $this->parse_1001citations($Page->url);
+    				break;
+    			case 'citations':
+    				$quotes = $this->parse_citations($Page->url);
+    				break;
+    		}
+    		 
+    		$Page->nb_citations = count($quotes);
+    		$Page->parsed_date = new Doctrine_Expression('NOW()');
+    		$Page->save();
+    	
+    		foreach ($quotes as $quote) {
+    			foreach ($quote['tags'] as $tag) {
+    				if (TagTable::addTag($tag))
+    					sfTask::log('++ tag : '.$tag);
+    			}
+    			if (AuthorTable::addAuthor($quote['author']))
+    				sfTask::log('++ author : '.$quote['author']);
+    			if (CitationTable::addCitation($quote)) {
+    				sfTask::log('++ citation : '.$quote['quote']);
+    				$new_quote++;
+    			}
+    			$total_quote++;
+    		}
+    		 
+    		sfTask::log($Page->id.' ('.$Page->website.') ++ '.$new_quote.' ['.$total_quote.']');
     	}
     	
-    	$Page->nb_citations = count($quotes);
-	    $Page->parsed_date = new Doctrine_Expression('NOW()');
-    	$Page->save();
-
-    	foreach ($quotes as $quote) {
-    		foreach ($quote['tags'] as $tag) {
-    			if (TagTable::addTag($tag))
-    				sfTask::log('++ tag : '.$tag);
-    		}
-    		if (AuthorTable::addAuthor($quote['author']))
-    			sfTask::log('++ author : '.$quote['author']);
-    		if (CitationTable::addCitation($quote)) {
-    			sfTask::log('++ citation : '.$quote['quote']);
-    			$new_quote++;
-    		}
-    		$total_quote++;
-    	}
-    	
-    	sfTask::log($Page->id.' ('.$Page->website.') ++ '.$new_quote.' ['.$total_quote.']');
     }
     
     sfTask::log('==== end on '.date('r').' ====');
