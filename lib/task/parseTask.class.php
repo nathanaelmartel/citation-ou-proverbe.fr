@@ -148,13 +148,13 @@ EOF;
 	    $query_results = $dom2->query('h1');
 	    $author = '';
     	foreach($query_results as $result) {
-    	  $author = scraper::encodingCorrection(scraper::cleanAuthor($result->nodeValue), 'alpha');
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
     	}
     	
 	    $query_results = $dom2->query('h2 a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    	  $tags[] = scraper::encodingCorrection(scraper::cleanTag($result->nodeValue), 'alpha');
+    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
