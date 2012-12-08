@@ -45,7 +45,7 @@ EOF;
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Page l')
-    //->where('http_code = ?', '200')
+    ->where('http_code = ?', '200')
     //->andWhere('website = ?', '1001-citations')
     ->whereIn('website', $website)
     //->andWhere('nb_citations = ?', 0)
