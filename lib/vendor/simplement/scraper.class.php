@@ -16,7 +16,7 @@ class scraper
   public function getPage($url) {
     $file = scraper::slugify($url);
     
-    if (file_exists($file)) {
+    if (file_exists($file) && filesize($file)) {
       
       $fp = fopen($file, 'r');
       $output = fread($fp, filesize($file));
