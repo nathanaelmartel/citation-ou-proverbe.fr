@@ -36,37 +36,38 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     
-    
-    $q = Doctrine_Query::create()
-    ->select('*')
-    ->from('Author')
-    ->where('slug LIKE ?', '%1')
-    ->limit(100)
-    ->orderBy('name');
-    
-    foreach ($q->execute() as $Author) {
-    	
-    	if (count($Author->Citations) == 0) {
-    		$Author->delete();
-    	} else {
-	    	$clean_name = scraper::cleanAuthor($Author->name);
-	    	sfTask::log($clean_name.' ('.$Author->id.') ['.count($Author->Citations).']');
+    for ($i=1; $i<6; $i++) {
+	    $q = Doctrine_Query::create()
+	    ->select('*')
+	    ->from('Author')
+	    ->where('slug LIKE ?', '%'.$i)
+	    ->limit(100)
+	    ->orderBy('name');
+	    
+	    foreach ($q->execute() as $Author) {
 	    	
-	    	$q = Doctrine_Query::create()
-	    	->select('*')
-	    	->from('Author')
-	    	->where('slug = ?', str_replace('-1', '', $Author->slug))
-	    	->orderBy('name');
-	    	
-	    	foreach ($q->execute() as $other_author) {
-	    		if ($other_author->id != $Author->id) {
-	    			$this->changeCitationsAuthor($Author, $other_author);
-	    		}
+	    	if (count($Author->Citations) == 0) {
+	    		$Author->delete();
+	    	} else {
+		    	$clean_name = scraper::cleanAuthor($Author->name);
+		    	sfTask::log($clean_name.' ('.$Author->id.') ['.count($Author->Citations).']');
+		    	
+		    	$q = Doctrine_Query::create()
+		    	->select('*')
+		    	->from('Author')
+		    	->where('slug = ?', str_replace('-'.$i, '', $Author->slug))
+		    	->orderBy('name');
+		    	
+		    	foreach ($q->execute() as $other_author) {
+		    		if ($other_author->id != $Author->id) {
+		    			$this->changeCitationsAuthor($Author, $other_author);
+		    		}
+		    	}
+		    	
+			    $Author->name = $clean_name;
+			    $Author->save();
 	    	}
-	    	
-		    $Author->name = $clean_name;
-		    $Author->save();
-    	}
+	    }
     }
     
     $q = Doctrine_Query::create()
@@ -80,6 +81,9 @@ EOF;
 		    $Author->name = $clean_name;
 		    $Author->save();
 	    }
+	    if (count($Author->Citations) == 0){
+    		$Author->delete();
+    	}
     }
     
     sfTask::log('==== end on '.date('r').' ====');
