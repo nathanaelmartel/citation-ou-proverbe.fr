@@ -49,6 +49,7 @@ EOF;
     //->andWhere('website = ?', '1001-citations')
     ->whereIn('website', $website)
     //->andWhere('nb_citations = ?', 0)
+    ->offset(rand(0, 100))
     ->limit(20)
     ->orderBy('parsed_date ASC');
     
@@ -56,7 +57,7 @@ EOF;
     	$total_quote = 0;
     	$new_quote = 0;
     	
-    	sfTask::log($Page->id.' ('.$Page->website.')');
+    	//sfTask::log($Page->id.' ('.$Page->website.')');
     	
     	switch ($Page->website) {
     		case '1001-citations':
