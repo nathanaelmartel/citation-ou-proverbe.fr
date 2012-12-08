@@ -41,7 +41,7 @@ EOF;
 	    ->select('*')
 	    ->from('Author')
 	    ->where('slug LIKE ?', '%'.$i)
-	    ->limit(100)
+	    //->limit(100)
 	    ->orderBy('name');
 	    
 	    foreach ($q->execute() as $Author) {
