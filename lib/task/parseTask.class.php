@@ -56,6 +56,8 @@ EOF;
     	$total_quote = 0;
     	$new_quote = 0;
     	
+    	sfTask::log($Page->id.' ('.$Page->website.')');
+    	
     	switch ($Page->website) {
     		case '1001-citations':
     			$quotes = $this->parse_1001citations($Page->url);
