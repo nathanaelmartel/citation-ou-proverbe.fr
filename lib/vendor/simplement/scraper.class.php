@@ -148,9 +148,8 @@ class scraper
   }
 
   public static function cleanTag($tag) {
-  		return $tag;
   	
-  		$tag = mb_strtolower($tag);
+  		//$tag = mb_strtolower($tag);
   		
   		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
   		if( !empty($replace) ) {
@@ -164,12 +163,11 @@ class scraper
   }
 
   public static function cleanAuthor($author_name) {
-  		return $author_name;
   	
   		$author_name = trim($author_name);
   		$author_name = trim($author_name, '-.,;:');
   		$author_name = trim($author_name);
-  		$author_name =  mb_convert_case(mb_strtolower($author_name), MB_CASE_TITLE);
+  		//$author_name =  mb_convert_case(mb_strtolower($author_name), MB_CASE_TITLE);
   		
   		return $author_name;
   }
