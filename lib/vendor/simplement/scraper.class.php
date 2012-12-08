@@ -149,7 +149,7 @@ class scraper
 
   public static function cleanTag($tag) {
   	
-  		$tag = strtolower($tag);
+  		$tag = mb_strtolower($tag);
   		
   		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
   		if( !empty($replace) ) {
@@ -167,7 +167,7 @@ class scraper
   		$author_name = trim($author_name);
   		$author_name = trim($author_name, '-.,;:');
   		$author_name = trim($author_name);
-  		$author_name =  ucwords(strtolower($author_name));
+  		$author_name =  mb_convert_case(mb_strtolower($author_name), MB_CASE_TITLE);
   		
   		return $author_name;
   }
