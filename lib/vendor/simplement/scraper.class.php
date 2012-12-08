@@ -148,6 +148,7 @@ class scraper
   }
 
   public static function cleanTag($tag) {
+  		return $tag;
   	
   		$tag = mb_strtolower($tag);
   		
@@ -163,6 +164,7 @@ class scraper
   }
 
   public static function cleanAuthor($author_name) {
+  		return $author_name;
   	
   		$author_name = trim($author_name);
   		$author_name = trim($author_name, '-.,;:');
