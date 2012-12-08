@@ -2,7 +2,7 @@
 
 == cron:
 
-*/5 * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony downloadPages >> /home/nat/www/v2.citation-et-proverbe.fr/log/download.log
+* * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony downloadPages >> /home/nat/www/v2.citation-et-proverbe.fr/log/download.log
 * * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony parse >> /home/nat/www/v2.citation-et-proverbe.fr/log/parse.log
 
 
