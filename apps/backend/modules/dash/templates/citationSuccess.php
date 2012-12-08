@@ -22,9 +22,11 @@
 				<?php endforeach;?>
 			</table>
 		</div>
+	
+		<div class="clear"></div>
 		
 		<?php foreach ($object as $obj): ?>
-			<div class="sf_admin_list" style="width:300px;margin-right:50px;float: left;">
+			<div class="sf_admin_list" style="width:400px;margin-right:50px;float: left;">
 				<table>
 					<thead>
 						<tr>
@@ -34,7 +36,7 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 10) as date, count( id ) as nb FROM `'.$obj.'` GROUP BY SUBSTRING(created_at, 1, 10);'); ?>
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 13) as date, count( id ) as nb FROM `'.$obj.'` GROUP BY SUBSTRING(created_at, 1, 13);'); ?>
 					<?php foreach ($results as $key => $result): ?>
 						<tr>
 							<td><?php echo $result['date'];?></td>					

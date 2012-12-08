@@ -65,13 +65,13 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 10);');
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 13) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 13);');
 						foreach ($results as $key => $result_parsed) {
 							$results_parsed[$result_parsed['date']] = $result_parsed['count'];
 						}
 					?>
 					
-					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 10);'); ?>
+					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 13) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 13);'); ?>
 					<?php foreach ($results_dl as $key => $result_dl): ?>
 						<?php if ($result_dl['date'] != ''): ?>
 							<tr>
@@ -81,9 +81,13 @@
 								<td><?php echo ceil($result_dl['count']/$pages_downloaded*100) ?>%</td>
 								<td><div style="width:<?php echo ceil($result_dl['count']/$pages_downloaded*100) ?>%;background:#C64934;height:1em;"></div></td>
 								
-								<td><?php echo $results_parsed[$result_dl['date']] ?></td>			
-								<td><?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%</td>
-								<td><div style="width:<?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%;background:#C64934;height:1em;"></div></td>
+								<?php if (array_key_exists($result_dl['date'], $results_parsed)): ?>
+									<td><?php echo $results_parsed[$result_dl['date']] ?></td>			
+									<td><?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%</td>
+									<td><div style="width:<?php echo ceil($results_parsed[$result_dl['date']]/$total_pages_parsed[$website]*100) ?>%;background:#C64934;height:1em;"></div></td>
+								<?php else:?>
+									<td colspan="3"></td>
+								<?php endif;?>
 							</tr>
 						<?php endif;?>
 					<?php endforeach;?>
