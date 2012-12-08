@@ -34,56 +34,59 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
+    sfTask::log('==== begin on '.date('r').' ====');
     
-    $website = array(
+    $websites = array(
     		'citations', 
     		'1001-citations'
     );
     
     
-    sfTask::log('==== begin on '.date('r').' ====');
-    
-    $q = Doctrine_Query::create()
-    ->select('*')
-    ->from('Page l')
-    ->whereIn('website', $website)
-    ->andWhere('downloaded_date is NULL')
-    //->andWhere('website = ?', 'citations')
-    ->offset(rand(0, 1000))
-    ->limit(5)
-    ->orderBy('created_at ASC');
-    
-    //echo $q->getSqlQuery();echo "\n";die;
-
-    foreach ($q->execute() as $Page) {
-    	$Scraper = new scraper;
-      
-      $header = $Scraper->getPageHeader($Page->url);
-      if (is_array($header)) {
-	      $Page->http_code = $header['http_code'];
-	      $Page->loading_time = $header['total_time'];
-	      $Page->downloaded_date = new Doctrine_Expression('NOW()');
-      }
-      $title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
-	    $Page->title = $title[0];
-	    $Page->save();
+    foreach ($websites as $website) {
+    	sfTask::log('**** '.$website.' '.date('r').' ****');
     	
-      $urls = $Scraper->queryPage($Page->url, 'a', 'href-absolute');
-      $new_urls = 0;
-      foreach ($urls as $url) {
-      	if ($this->checkUrl($url)) {
-      		$NewPage = new Page;
-      		$NewPage->url = $url;
-      		$NewPage->website = $Page->website;
-    			$NewPage->nb_citations = 0;
-      		$NewPage->save();
-      		
-    			$new_urls++;
-      	}
-      }
-      
-    	sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
+    	$q = Doctrine_Query::create()
+    	->select('*')
+    	->from('Page l')
+    	->where('downloaded_date is NULL')
+    	->andWhere('website = ?', $website)
+    	//->offset(rand(0, 1000))
+    	->limit(ceil(5/count($websites)))
+    	->orderBy('created_at ASC');
+    	
+    	//echo $q->getSqlQuery();echo "\n";die;
+    	
+    	foreach ($q->execute() as $Page) {
+    		$Scraper = new scraper;
+    	
+    		$header = $Scraper->getPageHeader($Page->url);
+    		if (is_array($header)) {
+    			$Page->http_code = $header['http_code'];
+    			$Page->loading_time = $header['total_time'];
+    			$Page->downloaded_date = new Doctrine_Expression('NOW()');
+    		}
+    		$title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
+    		$Page->title = $title[0];
+    		$Page->save();
+    		 
+    		$urls = $Scraper->queryPage($Page->url, 'a', 'href-absolute');
+    		$new_urls = 0;
+    		foreach ($urls as $url) {
+    			if ($this->checkUrl($url)) {
+    				$NewPage = new Page;
+    				$NewPage->url = $url;
+    				$NewPage->website = $Page->website;
+    				$NewPage->nb_citations = 0;
+    				$NewPage->save();
+    	
+    				$new_urls++;
+    			}
+    		}
+    	
+    		sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
+    	}
     }
+    
     
     sfTask::log('==== end on '.date('r').' ====');
   }
