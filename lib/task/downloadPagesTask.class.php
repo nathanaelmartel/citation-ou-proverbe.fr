@@ -50,7 +50,7 @@ EOF;
     	->from('Page l')
     	->where('downloaded_date is NULL')
     	->andWhere('website = ?', $website)
-    	//->offset(rand(0, 1000))
+    	->offset(rand(0, 50))
     	->limit(ceil(5/count($websites)))
     	->orderBy('created_at ASC');
     	
