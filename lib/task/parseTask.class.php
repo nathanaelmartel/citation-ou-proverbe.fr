@@ -39,7 +39,8 @@ EOF;
     
     $websites = array(
     		'citations', 
-    		'1001-citations'
+    		'1001-citations', 
+    		'linternaute'
     );
     
     foreach ($websites as $website) {
@@ -67,6 +68,9 @@ EOF;
     				break;
     			case 'citations':
     				$quotes = $this->parse_citations($Page->url);
+    				break;
+    			case 'linternaute':
+    				$quotes = $this->parse_linternaute($Page->url);
     				break;
     		}
     		 
@@ -159,6 +163,60 @@ EOF;
 	    $tags = array();
     	foreach($query_results as $result) {
     	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    }
+    
+    return $quotes;
+  }
+  
+  function parse_linternaute($url) {
+  	$allowed_hosts = array(
+  			'http://www.linternaute.com/citation/auteur/',
+  			'http://www.linternaute.com/citation/theme/',
+  			'http://www.linternaute.com/citation/avis/',
+  			'http://www.linternaute.com/citation/meilleures_citations/',
+  			'http://www.linternaute.com/citation/plus_commentees/',
+  			'http://www.linternaute.com/citation/contenu/',
+  			'http://www.linternaute.com/citation/recherche_top/'
+  	);
+  	foreach ($allowed_hosts as $allowed_host) {
+  		if (substr($url, 0, strlen($allowed_host)) == $allowed_host){
+	  		return array();
+  		}
+  	}
+  	
+  	$quotes = array();
+    $Scraper = new scraper;
+    $html = $Scraper->getPage($url);
+    $dom = new Zend_Dom_Query($html);
+    $values = $dom->query('.col_milieu');
+    
+    foreach($values as $value) {
+	    $quote = '';
+	    $author = '';
+	    $tags = array();
+	    
+      $item = simplexml_import_dom($value)->asXML();
+	    $dom2 = new Zend_Dom_Query($item);
+	    
+	    $query_results = $dom2->query('h1');
+    	foreach($query_results as $result) {
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
+    	}
+    	
+	    $query_results = $dom2->query('.petit_texte a.nom_personnage');
+    	foreach($query_results as $result) {
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('.petit_texte a');
+    	foreach($query_results as $key => $result) {
+    		if ($key == 2) {
+    	  	$tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    		}
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
