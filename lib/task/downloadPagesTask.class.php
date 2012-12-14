@@ -51,7 +51,7 @@ EOF;
     	->where('downloaded_date is NULL')
     	->andWhere('website = ?', $website)
     	->offset(rand(0, 50))
-    	->limit(ceil(5/count($websites)))
+    	->limit(min(1, floor(5/count($websites))))
     	->orderBy('created_at ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;

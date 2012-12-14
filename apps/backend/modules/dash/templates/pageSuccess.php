@@ -65,13 +65,13 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 13) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 13);');
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 10);');
 						foreach ($results as $key => $result_parsed) {
 							$results_parsed[$result_parsed['date']] = $result_parsed['count'];
 						}
 					?>
 					
-					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 13) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 13);'); ?>
+					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 10);'); ?>
 					<?php foreach ($results_dl as $key => $result_dl): ?>
 						<?php if ($result_dl['date'] != ''): ?>
 							<tr>

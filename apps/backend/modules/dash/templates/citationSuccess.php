@@ -36,7 +36,7 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 13) as date, count( id ) as nb FROM `'.$obj.'` GROUP BY SUBSTRING(created_at, 1, 13);'); ?>
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 10) as date, count( id ) as nb FROM `'.$obj.'` GROUP BY SUBSTRING(created_at, 1, 10);'); ?>
 					<?php foreach ($results as $key => $result): ?>
 						<tr>
 							<td><?php echo $result['date'];?></td>					

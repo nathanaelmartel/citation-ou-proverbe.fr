@@ -130,21 +130,25 @@ class scraper
         return $text;
       case 'alpha':
         return scraper::encodingCorrectionAlpha($text);
+      case 'beta':
+        return scraper::encodingCorrectionBeta($text);
     }
     
     return $text;
   }
 
   static function encodingCorrectionAlpha($text) {
-    
-
     //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
     //return iconv(mb_detect_encoding($text), 'UTF8', $text);
- 
-    $text = utf8_decode($text);
         
-    
-    return $text;
+    return utf8_decode($text);
+  }
+
+  static function encodingCorrectionBeta($text) {
+    //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
+    //return iconv(mb_detect_encoding($text), 'UTF8', $text);
+        
+    return utf8_encode($text);
   }
 
   public static function cleanTag($tag) {
@@ -189,8 +193,8 @@ class scraper
     $text = html_entity_decode($text);
     
     $text = str_replace(
-      array('&#13;', '&#amp;', '&#039;', '’'), 
-      array(" ", '&', "'", "'"),
+      array('&#13;', '&#amp;', '&#039;', '’', '&#160;'), 
+      array(" ", '&', "'", "'", ' '),
       $text);
     
     return $text;
