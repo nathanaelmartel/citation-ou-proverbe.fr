@@ -37,8 +37,8 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    		'citations', 
-    		'1001-citations', 
+    //		'citations', 
+    //		'1001-citations', 
     		'linternaute'
     );
     
