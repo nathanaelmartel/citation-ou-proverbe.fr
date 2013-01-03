@@ -64,6 +64,7 @@ EOF;
     		if (is_array($header)) {
     			$Page->http_code = $header['http_code'];
     			$Page->loading_time = $header['total_time'];
+    			$Page->save();
     		}
     		$title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
     		$Page->downloaded_date = new Doctrine_Expression('NOW()');
