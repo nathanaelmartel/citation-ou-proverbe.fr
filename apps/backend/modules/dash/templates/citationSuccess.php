@@ -23,6 +23,22 @@
 			</table>
 		</div>
 	
+		<div class="sf_admin_list" style="width:200px;float: left;margin-right:50px;">
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">Count (last week)</th>
+					</tr>
+				</thead>
+				<?php foreach ($object as $obj): ?>
+					<tr>
+						<td><?php echo $obj ?></td>
+						<td><?php $total[$obj] = $q->fetchOne('SELECT COUNT(id) as count FROM '.$obj.' WHERE `created_at` > "'.date("Y-m-t", strtotime("-1 week") ).'"'); echo $total[$obj] ?></td>
+					</tr>
+				<?php endforeach;?>
+			</table>
+		</div>
+	
 		<div class="clear"></div>
 		
 		<?php foreach ($object as $obj): ?>
@@ -36,7 +52,7 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 10) as date, count( id ) as nb FROM `'.$obj.'` GROUP BY SUBSTRING(created_at, 1, 10);'); ?>
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(created_at, 1, 10) as date, count( id ) as nb FROM `'.$obj.'` WHERE `created_at` > "'.date("Y-m-t", strtotime("-1 week") ).'"  GROUP BY SUBSTRING(created_at, 1, 10);'); ?>
 					<?php foreach ($results as $key => $result): ?>
 						<tr>
 							<td><?php echo $result['date'];?></td>					
