@@ -53,7 +53,7 @@ EOF;
     ->orderBy('dbpedia_at ASC');
      
     foreach ($q->execute() as $Author) {
-    	sfTask::log('***** '.$Author->name);
+    	$log = '';
 	    
     	foreach ($data as $key => $key_fr) {
     		$response = json_decode($this->request($Author->name, $key_fr), true);
@@ -61,6 +61,7 @@ EOF;
 		    	$value = $response['results']['bindings'][0][$key]['value'];
 		    	//sfTask::log($key."\t".$value);
 		    	$Author->$key = $value;
+		    	$log .= ' '.$key_fr;
 		    } else {
 		    	$response = json_decode($this->request($Author->name, $key, 'dbpedia.org/sparql'), true);
 		    	if (count($response['results']['bindings'])) {
@@ -68,12 +69,14 @@ EOF;
 		    		//sfTask::log($key." (en) \t".$value);
 		    		//sfTask::log($key);
 		    		$Author->$key = $value;
+		    		$log .= ' '.$key;
 		    	}
 		    }
     	}
     	
     	$Author->dbpedia_at = new Doctrine_Expression('NOW()');
     	$Author->save();
+    	sfTask::log($Author->name.$log);
     }
     
     sfTask::log('==== end on '.date('r').' ====');
