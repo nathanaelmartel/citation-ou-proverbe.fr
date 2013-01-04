@@ -48,8 +48,8 @@ EOF;
     ->select('*')
     ->from('Author l')
     ->where('dbpedia_url is ?', null)
-    ->offset(rand(0, 5))
-    ->limit(10)
+    ->offset(rand(0, 50))
+    ->limit(50)
     ->orderBy('dbpedia_at ASC');
      
     foreach ($q->execute() as $Author) {
