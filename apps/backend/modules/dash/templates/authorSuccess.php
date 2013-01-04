@@ -3,7 +3,7 @@
 	
 	<div id="sf_admin_content">
 	
-		<?php $results = $q->fetchAll('SELECT count( id ) AS total, count( `abstract` ) AS abstract, count( `comment` ) AS comment, count( `thumbnail` ) AS thumbnail, count( `birth_date` ) AS birth_date, count( `death_date` ) AS death_date, count( `wikipedia_url` ) AS wikipedia_url, count( `dbpedia_at` ) AS dbpedia_at FROM `author`'); ?>
+		<?php $results = $q->fetchAll('SELECT count( id ) AS total, count( `abstract` ) AS abstract, count( `comment` ) AS comment, count( `thumbnail` ) AS thumbnail, count( `birth_date` ) AS birth_date, count( `death_date` ) AS death_date, count( `wikipedia_url` ) AS wikipedia_url, count( `dbpedia_url` ) AS dbpedia_url, count( `dbpedia_at` ) AS dbpedia_at FROM `author`'); ?>
 		<div class="sf_admin_list" style="width:500px;">
 			<table>
 				<thead>
@@ -56,6 +56,12 @@
 						<td><?php echo $result['wikipedia_url'] ?></td>
 						<td><?php echo ceil($result['wikipedia_url']/$result['total']*100) ?>%</td>
 						<td><div style="width:<?php echo ceil($result['wikipedia_url']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Dbpedia url</td>
+						<td><?php echo $result['dbpedia_url'] ?></td>
+						<td><?php echo ceil($result['dbpedia_url']/$result['total']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['dbpedia_url']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
 					</tr>
 					<tr>
 						<td>Query</td>
