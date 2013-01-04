@@ -32,13 +32,15 @@ Author:
     
   columns:
     name: {type: string(255)}
-    wikipedia_bio: {type: string()}
-    wikipedia_photo: {type: string()}
+    abstract: {type: string()}
+    comment: {type: string()}
+    thumbnail: {type: string(255)}
+    birth_date: {type: string(255)}
+    death_date: {type: string(255)}
     wikipedia_url: {type: string(255), default: null}
-    twitter_account: {type: string(255)}
-    twitter_keys: {type: string(255)}
+    dbpedia_url: {type: string(255), default: null}
+    dbpedia_at: datetime
     is_active: {type: boolean}
-    
       
   options:
     collate: utf8_unicode_ci
