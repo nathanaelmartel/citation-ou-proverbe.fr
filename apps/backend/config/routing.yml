@@ -42,6 +42,10 @@ homepage:
 dash_citation:
   url:   /dashboard/citation
   param: { module: dash, action: citation } 
+
+dash_author:
+  url:   /dashboard/author
+  param: { module: dash, action: author } 
   
 dash_page:
   url:   /dashboard/page

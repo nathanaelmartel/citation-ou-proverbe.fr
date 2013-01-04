@@ -17,8 +17,12 @@ all:
     categories:
       Citation:
         items:
-          Dashboard:
+          Citation Dashboard:
             url:          dash_citation
+            image:        generic.png
+            credentials:  [admin]
+          Author Dashboard:
+            url:          dash_author
             image:        generic.png
             credentials:  [admin]
           Citation:

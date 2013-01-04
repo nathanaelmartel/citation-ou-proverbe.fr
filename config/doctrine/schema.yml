@@ -32,14 +32,14 @@ Author:
     
   columns:
     name: {type: string(255)}
-    abstract: {type: string()}
-    comment: {type: string()}
-    thumbnail: {type: string(255)}
-    birth_date: {type: string(255)}
-    death_date: {type: string(255)}
+    abstract: {type: string(), default: null}
+    comment: {type: string(), default: null}
+    thumbnail: {type: string(255), default: null}
+    birth_date: {type: string(255), default: null}
+    death_date: {type: string(255), default: null}
     wikipedia_url: {type: string(255), default: null}
     dbpedia_url: {type: string(255), default: null}
-    dbpedia_at: datetime
+    dbpedia_at: {type: datetime, default: null}
     is_active: {type: boolean}
       
   options:

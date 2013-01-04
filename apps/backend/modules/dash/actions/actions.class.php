@@ -24,4 +24,9 @@ class dashActions extends sfActions
   {
   	$this->q = Doctrine_Manager::getInstance()->getCurrentConnection();
   }
+  
+  public function executeAuthor(sfWebRequest $request)
+  {
+  	$this->q = Doctrine_Manager::getInstance()->getCurrentConnection();
+  }
 }
