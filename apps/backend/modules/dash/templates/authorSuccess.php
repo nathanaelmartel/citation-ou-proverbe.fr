@@ -22,52 +22,52 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Abstract</td>
-						<td><?php echo $result['abstract'] ?></td>
-						<td><?php echo ceil($result['abstract']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['abstract']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Comment</td>
-						<td><?php echo $result['comment'] ?></td>
-						<td><?php echo ceil($result['comment']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['comment']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Thumbnail</td>
-						<td><?php echo $result['thumbnail'] ?></td>
-						<td><?php echo ceil($result['thumbnail']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['thumbnail']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Birth_date</td>
-						<td><?php echo $result['birth_date'] ?></td>
-						<td><?php echo ceil($result['birth_date']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['birth_date']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Death_date</td>
-						<td><?php echo $result['death_date'] ?></td>
-						<td><?php echo ceil($result['death_date']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['death_date']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Wikipedia url</td>
-						<td><?php echo $result['wikipedia_url'] ?></td>
-						<td><?php echo ceil($result['wikipedia_url']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['wikipedia_url']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
-						<td>Dbpedia url</td>
-						<td><?php echo $result['dbpedia_url'] ?></td>
-						<td><?php echo ceil($result['dbpedia_url']/$result['total']*100) ?>%</td>
-						<td><div style="width:<?php echo ceil($result['dbpedia_url']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
-					</tr>
-					<tr>
 						<td>Query</td>
 						<td><?php echo $result['dbpedia_at'] ?></td>
 						<td><?php echo ceil($result['dbpedia_at']/$result['total']*100) ?>%</td>
 						<td><div style="width:<?php echo ceil($result['dbpedia_at']/$result['total']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Abstract</td>
+						<td><?php echo $result['abstract'] ?></td>
+						<td><?php echo ceil($result['abstract']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['abstract']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Comment</td>
+						<td><?php echo $result['comment'] ?></td>
+						<td><?php echo ceil($result['comment']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['comment']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Thumbnail</td>
+						<td><?php echo $result['thumbnail'] ?></td>
+						<td><?php echo ceil($result['thumbnail']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['thumbnail']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Birth_date</td>
+						<td><?php echo $result['birth_date'] ?></td>
+						<td><?php echo ceil($result['birth_date']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['birth_date']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Death_date</td>
+						<td><?php echo $result['death_date'] ?></td>
+						<td><?php echo ceil($result['death_date']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['death_date']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Wikipedia url</td>
+						<td><?php echo $result['wikipedia_url'] ?></td>
+						<td><?php echo ceil($result['wikipedia_url']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['wikipedia_url']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+					<tr>
+						<td>Dbpedia url</td>
+						<td><?php echo $result['dbpedia_url'] ?></td>
+						<td><?php echo ceil($result['dbpedia_url']/$result['dbpedia_at']*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['dbpedia_url']/$result['dbpedia_at']*100) ?>%;background:#C64934;height:1em;"></div></td>
 					</tr>
 				<?php endforeach;?>
 			</table>
