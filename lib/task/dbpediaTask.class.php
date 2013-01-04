@@ -47,7 +47,7 @@ EOF;
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
-    ->where('dbpedia_url = ?', '')
+    ->where('dbpedia_url is ?', null)
     ->offset(rand(0, 5))
     ->limit(10)
     ->orderBy('dbpedia_at ASC');
