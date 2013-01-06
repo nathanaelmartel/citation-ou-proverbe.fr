@@ -110,7 +110,7 @@ EOF;
         }
       }
       
-    	sfTask::log('author: '.$author->name.' '.$log);
+    	sfTask::log($author->name.' '.$log);
     }
     
     sfTask::log('==== end on '.date('r').' ====');
@@ -183,6 +183,7 @@ EOF;
   }
   
   public function mergeAuthor($newAuthor, $oldAuthor) {
+  	return true;
 
   	if ($newAuthor->id == $oldAuthor->id) {
   		return false;
