@@ -49,7 +49,7 @@ EOF;
     ->select('*')
     ->from('Author l')
     ->where('dbpedia_url is ?', null)
-    ->offset(rand(0, 50))
+    ->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
      
@@ -66,10 +66,12 @@ EOF;
     ->from('Author l')
     ->where('dbpedia_url is null')
     ->andWhere('wikipedia_url <> ""')
-    ->offset(rand(0, 50))
+    ->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
-     
+    
+    //echo $q->getSqlQuery();echo "\n";die;
+    
     foreach ($q->execute() as $Author) {
     	$log = $this->pass($Author, $data);
     	
