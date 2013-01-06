@@ -81,7 +81,8 @@ EOF;
 	          			$html);
 	          
 	          	$name = $this->retrieveName($html);
-		      		if (($name != '') && ($author->name != $name)) {
+	          	
+		      		if ($name != '') {
 			          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
 			          $author->name = $name;
 			          $author->save();
