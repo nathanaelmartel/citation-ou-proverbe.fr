@@ -81,6 +81,13 @@ EOF;
 	          			$html);
 	          
 	          	$name = $this->retrieveName($html);
+		      		if ($name != '') {
+		      			if ($author->name != $name) {
+				          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
+				          $author->name = $name;
+				          $author->save();
+		      			}
+		      		}
 	          	
 		          $authors = Doctrine::getTable('Author')->findByName($name);
 		          if (count($authors) == 1)
@@ -95,7 +102,7 @@ EOF;
       		}
       		
       		// ni l'url ni le nom ne sont trouvé -> on met à jour le nom
-      		if (!$is_merged) {
+      		if ((!$is_merged) && ($name != '')) {
       			if ($author->name != $name) {
 		          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
 		          $author->name = $name;
