@@ -40,14 +40,15 @@ EOF;
     ->select('*')
     ->from('Author a')
     ->where('wikipedia_url IS NULL')
-    ->offset(0)
-    ->limit(5);
+    ->offset(rand(0, 50))
+    ->limit(10);
     
     $authors = $q->execute();
     
     foreach ($authors as $author) {
       $file = "data/scraper_cache/wikipedia/$author->slug.html";
       $log = '';
+      $is_merged = false;
       
       if ($author->wikipedia_url == null) {
         if ($url = $this->searchWikipedia($author->name)) {
@@ -56,40 +57,59 @@ EOF;
           $author->save();
           $log = 'url, ';
           
-          $html = $this->retrievePage($url, $file);
+          
+          // l'url est déja renseigné pour un autre auteur -> merge
+          $authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
+          if (count($authors) == 1)
+          {
+          	$is_merged = $this->mergeAuthor($authors[0], $author);
+          } else if (count($authors) > 1) {
+    				sfTask::log('author: duplicate url '.$author->name.' '.count($authors));
+          }
+          
+          // l'url n'est pas trouvé dans la base, on chercre le nom (de wikipedia), si on le trouve -> merge
+      		if (!$is_merged) {
+	          $html = $this->retrievePage($url, $file);
+	          if (file_exists($file)) {
+	          	$fp = fopen($file, "r");
+	          	$html = fread($fp, filesize($file));
+	          	fclose($fp);
+	          
+	          	$html = str_replace(
+	          			array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
+	          			array(" ", '&', "'", "'", ' '),
+	          			$html);
+	          
+	          	$name = $this->retrieveName($html);
+	          	
+		          $authors = Doctrine::getTable('Author')->findByName($name);
+		          if (count($authors) == 1)
+		          {
+		          	$is_merged = $this->mergeAuthor($authors[0], $author);
+		          	$authors[0]->name = $name;
+		          	$authors[0]->save();
+		          } else if (count($authors) > 1) {
+		    				sfTask::log('author: duplicate name '.$author->name.' '.count($authors));
+		          }
+	          }
+      		}
+      		
+      		// ni l'url ni le nom ne sont trouvé -> on met à jour le nom
+      		if (!$is_merged) {
+      			if ($author->name != $name) {
+		          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
+		          $author->name = $name;
+		          $author->save();
+      			}
+      		}
+          
+          
         } else {
           $author->wikipedia_url = '';
           $author->save();
         }
       }
       
-      if (file_exists($file)) {
-        $fp = fopen($file, "r");
-        $html = fread($fp, filesize($file));
-        fclose($fp);
-        
-        $html = str_replace(
-        		array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
-        		array(" ", '&', "'", "'", ' '),
-        		$html);
-        
-        $bio = $this->retrieveBio($html);
-        $photo = $this->retrievePhoto($html);
-        /*$bio = utf8_encode(htmlentities($bio, ENT_COMPAT, 'UTF-8'));/*
-    $bio = str_replace(
-      array('&#13;', '&#amp;', '&#039;', '’', '&#160;'), 
-      array(" ", '&', "'", "'", ' '),
-      utf8_decode($bio));*/
-       
-        $author->wikipedia_bio = utf8_decode($bio);
-        $log .= 'bio, ';
-        if ($photo != '') {
-        	$author->wikipedia_photo = 'http:'.$photo;
-        $log .= 'photo.';
-        }
-        $author->save();
-      }
-        
     	sfTask::log('author: '.$author->name.' '.$log);
     }
     
@@ -144,6 +164,15 @@ EOF;
     }
   }
   
+  public function retrieveName($html) {
+    $dom = new Zend_Dom_Query($html);
+    $results = $dom->query('.firstHeading');
+    
+    foreach ($results as $result) {
+        return utf8_decode(strip_tags($result->nodeValue));
+    }
+  }
+  
   public function retrievePhoto($html) {
     $dom = new Zend_Dom_Query($html);
     $results = $dom->query('.infobox_v3 .thumbinner a.image img');
@@ -151,5 +180,25 @@ EOF;
     foreach ($results as $result) {
         return $result->getAttribute('src');
     }
+  }
+  
+  public function mergeAuthor($newAuthor, $oldAuthor) {
+
+  	if ($newAuthor->id == $oldAuthor->id) {
+  		return false;
+  	}
+  	
+  	echo "\n";
+    foreach ($oldAuthor->Citations as $Citation) {
+    	$Citation->Author = $newAuthor;
+    	$Citation->save();
+    	echo '.';
+    }
+  	echo "\n";
+		sfTask::log('merge author: '.$oldAuthor->id.' -> '.$newAuthor->id.' ['.$oldAuthor->name.' -> '.$newAuthor->name.']');
+		$oldAuthor->delete();
+		$oldAuthor->save();
+    
+  	return true;
   }
 }
