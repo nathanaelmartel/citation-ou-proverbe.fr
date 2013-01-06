@@ -88,8 +88,8 @@ EOF;
 	    		}
 	    	
 	    		sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
-    		} catch () {
-	    		sfTask::log('unexpected error: '.$Page->id.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
+    		} catch (Exception $e) {
+	    		sfTask::log('unexpected error: '.$e->getMessage().' ['.$Page->id.']');
     		}
     	}
     }
