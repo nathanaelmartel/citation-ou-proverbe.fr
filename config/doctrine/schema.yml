@@ -27,7 +27,7 @@ Author:
     Sluggable:
       unique: true
       fields: [name]
-      canUpdate: false
+      canUpdate: true
     Timestampable:
     
   columns:
