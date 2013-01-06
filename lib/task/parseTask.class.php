@@ -43,6 +43,8 @@ EOF;
     		'linternaute'
     );
     
+    shuffle($websites);
+    
     foreach ($websites as $website) {
     	sfTask::log('**** '.$website.' '.date('r').' ****');    	
     	
@@ -52,7 +54,7 @@ EOF;
     	->where('http_code = ?', '200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
-    	->offset(rand(0, 5))
+    	->offset(rand(0, 50))
     	->limit(ceil(40/count($websites)))
     	->orderBy('downloaded_date ASC');
     	

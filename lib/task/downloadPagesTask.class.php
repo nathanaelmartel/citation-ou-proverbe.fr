@@ -42,6 +42,7 @@ EOF;
     		'linternaute'
     );
     
+    shuffle($websites);
     
     foreach ($websites as $website) {
     	sfTask::log('**** '.$website.' '.date('r').' ****');
@@ -58,34 +59,38 @@ EOF;
     	//echo $q->getSqlQuery();echo "\n";die;
     	
     	foreach ($q->execute() as $Page) {
-    		$Scraper = new scraper;
-    	
-    		$header = $Scraper->getPageHeader($Page->url);
-    		if (is_array($header)) {
-    			$Page->http_code = $header['http_code'];
-    			$Page->loading_time = $header['total_time'];
-    			$Page->save();
+    		try {
+	    		$Scraper = new scraper;
+	    	
+	    		$header = $Scraper->getPageHeader($Page->url);
+	    		if (is_array($header)) {
+	    			$Page->http_code = $header['http_code'];
+	    			$Page->loading_time = $header['total_time'];
+	    			$Page->save();
+	    		}
+	    		$title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
+	    		$Page->downloaded_date = new Doctrine_Expression('NOW()');
+	    		$Page->title = $title[0];
+	    		$Page->save();
+	    		 
+	    		$urls = $Scraper->queryPage($Page->url, 'a', 'href-absolute');
+	    		$new_urls = 0;
+	    		foreach ($urls as $url) {
+	    			if ($this->checkUrl($url)) {
+	    				$NewPage = new Page;
+	    				$NewPage->url = $url;
+	    				$NewPage->website = $Page->website;
+	    				$NewPage->nb_citations = 0;
+	    				$NewPage->save();
+	    	
+	    				$new_urls++;
+	    			}
+	    		}
+	    	
+	    		sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
+    		} catch () {
+	    		sfTask::log('unexpected error: '.$Page->id.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
     		}
-    		$title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
-    		$Page->downloaded_date = new Doctrine_Expression('NOW()');
-    		$Page->title = $title[0];
-    		$Page->save();
-    		 
-    		$urls = $Scraper->queryPage($Page->url, 'a', 'href-absolute');
-    		$new_urls = 0;
-    		foreach ($urls as $url) {
-    			if ($this->checkUrl($url)) {
-    				$NewPage = new Page;
-    				$NewPage->url = $url;
-    				$NewPage->website = $Page->website;
-    				$NewPage->nb_citations = 0;
-    				$NewPage->save();
-    	
-    				$new_urls++;
-    			}
-    		}
-    	
-    		sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
     	}
     }
     
