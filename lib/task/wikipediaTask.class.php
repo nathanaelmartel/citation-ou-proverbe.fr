@@ -179,9 +179,9 @@ EOF;
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
-    var_dump($result);die;
-        return strip_tags($result->nodeValue);
-    }
+    var_dump($result);
+        //return strip_tags($result->nodeValue);
+    }die;
   }
   
   public function retrievePhoto($html) {
