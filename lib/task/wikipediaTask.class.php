@@ -53,11 +53,8 @@ EOF;
       if ($author->wikipedia_url == null) {
         if ($url = $this->searchWikipedia($author->name)) {
           
-          $author->wikipedia_url = $url;
-          $author->save();
-          $log = 'url, ';
-          
-          
+        	$log = 'url, ';
+        	
           // l'url est déja renseigné pour un autre auteur -> merge
           $authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
           if (count($authors) == 1)
@@ -82,7 +79,7 @@ EOF;
 	          
 	          	$name = $this->retrieveName($html);
 	          	
-		      		if ($name != '') {
+		      		if (($name != '') && ($name != $author->name)) {
 			          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
 			          $author->name = $name;
 			          $author->save();
@@ -95,7 +92,7 @@ EOF;
 		          	$authors[0]->name = $name;
 		          	$authors[0]->save();
 		          } else if (count($authors) > 1) {
-		    				sfTask::log('author: duplicate name '.$author->name.' '.count($authors));
+		    				sfTask::log('author duplicate name in database '.$author->name.' '.count($authors));
 		          }
 	          }
       		}
@@ -106,6 +103,9 @@ EOF;
 		        $author->name = $name;
 		        $author->save();
       	  }
+          
+          $author->wikipedia_url = $url;
+          $author->save();
           
           
         } else {
@@ -136,9 +136,16 @@ EOF;
 
     //echo $output;
     $response = json_decode($output);
-    if (count($response[1]) > 0)
+    if (count($response[1]) == 1)
       return 'http://fr.wikipedia.org/wiki/'.str_replace(' ', '_', $response[1][0]);
     else {
+    	if (count($response[1]) > 1) {
+    		$names = '';
+    		foreach ($response[1] as $item) {
+    			$names .= $item.', ';
+    		}
+    		sfTask::log('homonymes in wikipedia ('.$name.'):'.$names);
+    	}
       return false;
     }
   }
