@@ -180,7 +180,7 @@ EOF;
     
     foreach ($results as $result) {
     
-    sfTask::log($result);die;
+    sfTask::log($result->nodeValue);die;
         return utf8_decode(strip_tags($result->nodeValue));
     }
   }
