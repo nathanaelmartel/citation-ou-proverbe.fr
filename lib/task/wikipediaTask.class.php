@@ -83,6 +83,8 @@ EOF;
 			          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
 			          $author->name = $name;
 			          $author->save();
+		      		} else {
+		      			$log .= ' not updated ('.$author->name.' -> '.$name.') ';
 		      		}
 	          	
 		          $authors = Doctrine::getTable('Author')->findByName($name);
@@ -98,11 +100,11 @@ EOF;
       		}
       		
       		// ni l'url ni le nom ne sont trouvé -> on met à jour le nom
-      		if ((!$is_merged) && ($name != '') && ($author->name != $name)) {
+      		/*if ((!$is_merged) && ($name != '') && ($author->name != $name)) {
 		        $log .= ' name updated ('.$author->name.' -> '.$name.') ';
 		        $author->name = $name;
 		        $author->save();
-      	  }
+      	  }*/
           
           $author->wikipedia_url = $url;
           $author->save();
