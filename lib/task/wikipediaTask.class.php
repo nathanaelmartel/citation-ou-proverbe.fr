@@ -46,7 +46,7 @@ EOF;
     $authors = $q->execute();
     
     foreach ($authors as $author) {
-      $file = "data/scraper_cache/wikipedia/$author->slug.html";
+      $file = 'data/scraper_cache/wikipedia/'.$author->slug.'.html';
       $log = '';
       $is_merged = false;
       
