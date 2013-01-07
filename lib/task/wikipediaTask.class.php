@@ -56,13 +56,13 @@ EOF;
         	$log = 'url, ';
         	
           // l'url est déja renseigné pour un autre auteur -> merge
-          $authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
+          /*$authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
           if (count($authors) == 1)
           {
           	$is_merged = $this->mergeAuthor($authors[0], $author);
           } else if (count($authors) > 1) {
     				sfTask::log('author: duplicate url '.$author->name.' '.count($authors));
-          }
+          }*/
           
           // l'url n'est pas trouvé dans la base, on chercre le nom (de wikipedia), si on le trouve -> merge
       		if (!$is_merged) {
