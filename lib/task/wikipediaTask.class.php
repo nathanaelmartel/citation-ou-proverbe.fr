@@ -179,8 +179,7 @@ EOF;
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
-    
-    sfTask::log(utf8_decode(strip_tags($result->nodeValue)));die;
+    var_dump($result);die;
         return utf8_decode(strip_tags($result->nodeValue));
     }
   }
