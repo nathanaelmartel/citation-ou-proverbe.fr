@@ -176,7 +176,7 @@ EOF;
   
   public function retrieveName($html) {
     $dom = new Zend_Dom_Query($html);
-    $results = $dom->query('.firstHeading');
+    $results = $dom->query('.firstHeading>span');
     
     foreach ($results as $result) {
     var_dump($result);die;
