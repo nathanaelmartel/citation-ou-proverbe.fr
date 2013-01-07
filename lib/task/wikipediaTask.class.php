@@ -156,6 +156,8 @@ EOF;
     curl_setopt($ch, CURLOPT_USERAGENT, 'citation-et-proverbe.fr , nathanael@fam-martel.eu'); 
     curl_setopt($ch, CURLOPT_URL, $url );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5); 
     $output = curl_exec($ch);
     curl_close($ch);
 
