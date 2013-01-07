@@ -179,7 +179,7 @@ EOF;
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
-    var_dump($result);
+    var_dump($result->nodeValue);
         //return strip_tags($result->nodeValue);
     }die;
   }
