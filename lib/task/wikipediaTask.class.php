@@ -175,7 +175,7 @@ EOF;
   }
   
   public function retrieveName($html) {
-    $dom = new Zend_Dom_Query(utf8_decode($html);
+    $dom = new Zend_Dom_Query(utf8_decode($html));
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
