@@ -162,8 +162,6 @@ EOF;
     fwrite($fp, $output);
     fclose($fp);
     
-    sfTask::log($output);die;
-    
     return $output;
   }
   
@@ -181,6 +179,8 @@ EOF;
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
+    
+    sfTask::log($result);die;
         return utf8_decode(strip_tags($result->nodeValue));
     }
   }
