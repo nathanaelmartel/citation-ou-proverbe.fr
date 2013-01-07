@@ -175,7 +175,6 @@ EOF;
   }
   
   public function retrieveName($html) {
-    var_dump($html);die;
     $dom = new Zend_Dom_Query($html);
     $results = $dom->query('.firstHeading');
     
