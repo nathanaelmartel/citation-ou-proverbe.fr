@@ -175,12 +175,12 @@ EOF;
   }
   
   public function retrieveName($html) {
-    $dom = new Zend_Dom_Query($html);
-    $results = $dom->query('.firstHeading>span');
+    $dom = new Zend_Dom_Query(utf8_decode($html));
+    $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
     var_dump($result);die;
-        return utf8_decode(strip_tags($result->nodeValue));
+        return strip_tags($result->nodeValue);
     }
   }
   
