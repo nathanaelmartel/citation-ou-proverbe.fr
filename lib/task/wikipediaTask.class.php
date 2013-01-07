@@ -179,7 +179,7 @@ EOF;
     $results = $dom->query('.firstHeading');
     
     foreach ($results as $result) {
-        return strip_tags($result->nodeValue);
+        return utf8_decode(strip_tags($result->nodeValue));
     }
   }
   
