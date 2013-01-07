@@ -54,6 +54,7 @@ EOF;
         if ($url = $this->searchWikipedia($author->name)) {
           
         	$log = 'url, ';
+        	$name = '';
         	
           // l'url est déja renseigné pour un autre auteur -> merge
           /*$authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
@@ -79,15 +80,7 @@ EOF;
 	          
 	          	$name = $this->retrieveName($html);
 	          	
-		      		if (($name != '') && ($name != $author->name)) {
-			          $log .= ' name updated ('.$author->name.' -> '.$name.') ';
-			          $author->name = $name;
-			          $author->save();
-		      		} else {
-		      			$log .= ' not updated ('.$author->name.' -> '.$name.') ';
-		      		}
-	          	
-		          $authors = Doctrine::getTable('Author')->findByName($name);
+		          /*$authors = Doctrine::getTable('Author')->findByName($name);
 		          if (count($authors) == 1)
 		          {
 		          	$is_merged = $this->mergeAuthor($authors[0], $author);
@@ -95,16 +88,18 @@ EOF;
 		          	$authors[0]->save();
 		          } else if (count($authors) > 1) {
 		    				sfTask::log('author duplicate name in database '.$author->name.' '.count($authors));
-		          }
+		          }*/
 	          }
       		}
       		
-      		// ni l'url ni le nom ne sont trouvé -> on met à jour le nom
-      		/*if ((!$is_merged) && ($name != '') && ($author->name != $name)) {
-		        $log .= ' name updated ('.$author->name.' -> '.$name.') ';
-		        $author->name = $name;
-		        $author->save();
-      	  }*/
+      		
+      		if (($name != '') && ($name != $author->name)) {
+      			$log .= ' name updated ('.$author->name.' -> '.$name.') ';
+      			$author->name = $name;
+      			$author->save();
+      		} else {
+      			$log .= ' not updated ('.$author->name.' -> '.$name.') ';
+      		}
           
           $author->wikipedia_url = $url;
           $author->save();
