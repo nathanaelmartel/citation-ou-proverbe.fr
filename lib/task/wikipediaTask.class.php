@@ -46,7 +46,7 @@ EOF;
     $authors = $q->execute();
     
     foreach ($authors as $author) {
-      $file = 'data/scraper_cache/wikipedia/'.$author->slug.'.html';
+      $file = 'data/scraper_cache/wikipedia/'.$author->id.'.html';
       $log = '';
       $is_merged = false;
       
@@ -175,6 +175,7 @@ EOF;
   }
   
   public function retrieveName($html) {
+    var_dump($html);die;
     $dom = new Zend_Dom_Query($html);
     $results = $dom->query('.firstHeading');
     
