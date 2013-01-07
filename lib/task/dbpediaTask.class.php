@@ -73,6 +73,26 @@ EOF;
     //echo $q->getSqlQuery();echo "\n";die;
     
     foreach ($q->execute() as $Author) {
+    	$log = '';
+    	
+  		/*$response = json_decode($this->request($Author->wikipedia_url, 'label'), true);
+  		if (count($response['results']['bindings'])) {
+  			$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
+  			//sfTask::log($key."\t".$value);
+  			if ($value != '') {
+    			$log .= $this->pass($value, $data);
+  			}
+  		} else {
+  			$response = json_decode($this->request($Author->wikipedia_url, 'label', 'dbpedia.org/sparql'), true);
+  			if (count($response['results']['bindings'])) {
+  				$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
+  				//sfTask::log($key." (en) \t".$value);
+  				//sfTask::log($key);
+	  			if ($value != '') {
+	    			$log .= $this->pass($value, $data);
+	  			}
+  			}
+  		}*/
     	$log = $this->pass($Author, $data);
     	
     	sfTask::log($Author->name.$log);
@@ -118,7 +138,7 @@ EOF;
 		$prefix = "PREFIX dbp: <http://dbpedia.org/resource/>
 		  PREFIX dbp2: <http://dbpedia.org/ontology/>
 		  PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-		  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>";
+		  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  ";
 		$filter = '';
 		
 		if ($base == 'dbpedia.org/sparql') {
@@ -136,9 +156,11 @@ EOF;
 			'death_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathDate ?death_date. }',
 			'dateDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeNaissance ?birth_date. }',
 			'dateDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeDécès ?death_date. }',
+				
+			'label' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:isPrimaryTopicOf "'.$author_name.'"@fr. }',
 		);
 		
-		//if ($query_type == 'dateDeNaissance') sfTask::log($query);
+		//if ($query_type == 'label') sfTask::log($prefix.$query[$query_type]);
 		
 	  $url = 'http://'.$base.'?query='.urlencode($prefix.$query[$query_type]).'&format=json';
 	   
