@@ -162,6 +162,8 @@ EOF;
     fwrite($fp, $output);
     fclose($fp);
     
+    sfTask::log($output);die;
+    
     return $output;
   }
   
