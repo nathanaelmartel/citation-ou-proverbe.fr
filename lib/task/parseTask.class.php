@@ -212,7 +212,9 @@ EOF;
 	    $query_results = $dom2->query('blockquote a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    		$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    		if ($tag != '#')
+    	  	$tags[] = $tag;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
