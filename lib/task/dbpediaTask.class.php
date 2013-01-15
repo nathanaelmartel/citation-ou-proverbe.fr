@@ -45,7 +45,7 @@ EOF;
     		'birth_date' => 'dateDeNaissance',
     		'death_date' => 'dateDeDécès');
     
-    /*$q = Doctrine_Query::create()
+    $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
     ->where('dbpedia_url is ?', null)
@@ -57,7 +57,7 @@ EOF;
     	$log = $this->pass($Author, $data);
     	
     	sfTask::log($Author->name.$log);
-    }*/
+    }
     
     sfTask::log('==== second pass on '.date('r').' ====');
 

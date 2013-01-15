@@ -37,9 +37,10 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    		'citations', 
-    		'1001-citations', 
-    		'linternaute'
+    //		'citations', 
+    //		'1001-citations', 
+    //		'linternaute', 
+    		'citation-et-proverbe'
     );
     
     shuffle($websites);
@@ -53,7 +54,7 @@ EOF;
     	->where('downloaded_date is NULL')
     	->andWhere('website = ?', $website)
     	->andWhere('http_code is NULL')
-    	->offset(rand(0, 500))
+    	//->offset(rand(0, 50))
     	->limit(ceil(40/count($websites)))
     	->orderBy('created_at ASC');
     	
@@ -110,7 +111,8 @@ EOF;
   			'http://www.lexode.com/citations/',
   			'http://www.les-citations.com/',
   			'http://www.kaakook.fr',
-  			'http://www.leproverbe.fr/'
+  			'http://www.leproverbe.fr/',
+  			'http://www.citation-et-proverbe.fr/'
   	);
   	
   	foreach ($allowed_hosts as $allowed_host) {
