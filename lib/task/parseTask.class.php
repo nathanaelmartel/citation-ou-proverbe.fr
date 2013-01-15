@@ -38,10 +38,10 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    		'citations', 
-    		'1001-citations', 
-    		'linternaute', 
-    //		'citation-et-proverbe'
+    //		'citations', 
+    //		'1001-citations', 
+    //		'linternaute', 
+    		'citation-et-proverbe'
     );
     
     shuffle($websites);
@@ -52,18 +52,20 @@ EOF;
     	$q = Doctrine_Query::create()
     	->select('*')
     	->from('Page l')
-    	->where('http_code = ?', '200')
+    	->where('http_code = 200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
-    	->offset(rand(0, 50))
+    	//->offset(rand(0, 50))
     	->limit(ceil(40/count($websites)))
     	->orderBy('downloaded_date ASC');
+    	
+    	//echo $q->getSqlQuery();echo "\n";die;
     	
     	foreach ($q->execute() as $Page) {
     		$total_quote = 0;
     		$new_quote = 0;
     		 
-    		//sfTask::log($Page->id.' ('.$Page->website.')');
+    		sfTask::log($Page->id.' ('.$Page->website.')');
     		 
     		switch ($Page->website) {
     			case '1001-citations':
@@ -192,7 +194,7 @@ EOF;
 	    $query_results = $dom2->query('blockquote');
 	    $quote = '';
     	foreach($query_results as $result) {
-    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), " \t#");
+    	  $quote = trim(str_replace('#', '', scraper::encodingCorrection($result->nodeValue, 'alpha')));
     	}
     	
 	    $query_results = $dom2->query('.author');
