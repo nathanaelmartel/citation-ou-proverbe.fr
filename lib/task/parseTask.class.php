@@ -40,7 +40,8 @@ EOF;
     $websites = array(
     		'citations', 
     		'1001-citations', 
-    		'linternaute'
+    		'linternaute', 
+    //		'citation-et-proverbe'
     );
     
     shuffle($websites);
@@ -73,6 +74,9 @@ EOF;
     				break;
     			case 'linternaute':
     				$quotes = $this->parse_linternaute($Page->url);
+    				break;
+    			case 'citation-et-proverbe':
+    				$quotes = $this->parse_citation_et_proverbe($Page->url);
     				break;
     		}
     		 
@@ -169,6 +173,48 @@ EOF;
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
     	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    }
+    
+    return $quotes;
+  }
+  
+  function parse_citation_et_proverbe($url) {
+  	$quotes = array();
+    $Scraper = new scraper;
+    $html = $Scraper->getPage($url);
+    $dom = new Zend_Dom_Query($html);
+    $values = $dom->query('article');
+    
+    foreach($values as $value) {
+      $item = simplexml_import_dom($value)->asXML();
+	    $dom2 = new Zend_Dom_Query($item);
+	    
+	    $query_results = $dom2->query('blockquote');
+	    $quote = '';
+    	foreach($query_results as $result) {
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), " \t#");
+    	}
+    	
+	    $query_results = $dom2->query('.author');
+	    $author = '';
+    	foreach($query_results as $result) {
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('.source');
+	    $source = '';
+    	foreach($query_results as $result) {
+    	  $source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('blockquote a');
+	    $tags = array();
+    	foreach($query_results as $result) {
+    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => $tags);
     }
     
     return $quotes;
