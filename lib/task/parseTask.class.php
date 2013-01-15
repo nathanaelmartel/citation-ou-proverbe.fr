@@ -51,7 +51,7 @@ EOF;
     	$q = Doctrine_Query::create()
     	->select('*')
     	->from('Page l')
-    	->where('http_code IN ("200", "")')
+    	->where('http_code = ?', '200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
     	->offset(rand(0, 50))
