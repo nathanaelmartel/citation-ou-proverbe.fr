@@ -56,7 +56,7 @@ EOF;
     	->andWhere('website = ?', $website)
     	->andWhere('http_code is NULL')
     	->offset(rand(0, 50))
-    	->limit(ceil(30/count($websites)))
+    	->limit(ceil(5/count($websites)))
     	->orderBy('created_at ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;
