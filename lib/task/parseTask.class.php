@@ -41,7 +41,8 @@ EOF;
     //		'citations', 
     //		'1001-citations', 
     //		'linternaute', 
-    		'citation-et-proverbe'
+    //		'citation-et-proverbe',
+    		'les-citations'
     );
     
     shuffle($websites);
@@ -79,6 +80,9 @@ EOF;
     				break;
     			case 'citation-et-proverbe':
     				$quotes = $this->parse_citation_et_proverbe($Page->url);
+    				break;
+    			case 'les-citations':
+    				$quotes = $this->parse_les_citations($Page->url);
     				break;
     		}
     		 
@@ -168,6 +172,48 @@ EOF;
     	}
     	
 	    $query_results = $dom2->query('h2 a');
+	    $tags = array();
+    	foreach($query_results as $result) {
+    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    }
+    
+    return $quotes;
+  }
+  
+  function parse_les_citations($url) {
+  	$quotes = array();
+    $Scraper = new scraper;
+    $html = $Scraper->getPage($url);
+    $dom = new Zend_Dom_Query($html);
+    $values = $dom->query('.node-type-citation');
+    
+    foreach($values as $value) {
+      $item = simplexml_import_dom($value)->asXML();
+	    $dom2 = new Zend_Dom_Query($item);
+	    
+	    $query_results = $dom2->query('.field-title h1');
+	    $quote = '';
+    	foreach($query_results as $result) {
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
+    	}
+    	
+	    $query_results = $dom2->query('.auteur-name h1');
+	    $author = '';
+    	foreach($query_results as $result) {
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('.field-item');
+	    $source = '';
+    	foreach($query_results as $result) {
+    	  $source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('.field-terms a');
 	    $tags = array();
     	foreach($query_results as $result) {
     	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
