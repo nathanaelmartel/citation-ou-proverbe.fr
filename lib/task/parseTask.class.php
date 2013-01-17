@@ -56,8 +56,8 @@ EOF;
     	->where('http_code = 200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
-    	//->offset(rand(0, 50))
-    	->limit(ceil(40/count($websites)))
+    	->offset(rand(0, 50))
+    	->limit(ceil(30/count($websites)))
     	->orderBy('downloaded_date ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;
