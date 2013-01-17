@@ -30,35 +30,6 @@
 				<?php endforeach;?>
 			</table>
 		</div>
-		
-		<div class="sf_admin_list" style="width:300px;float: left;margin-right:50px;">
-			<table>
-				<thead>
-					<tr>
-						<th>Sites (last week)</th>
-						<th>Page</th>
-						<th>dl</th>
-						<th>parsed</th>
-						<th>quote</th>
-					</tr>
-				</thead>
-				<?php 
-					$total_pages_downloaded = array(); 
-					$total_pages_parsed = array(); 
-					$results = $q->fetchAll('SELECT `website`, count( id ) as count, sum( nb_citations ) as nb_citations, count( downloaded_date ) as downloaded, count( parsed_date ) as parsed FROM `page` WHERE `downloaded_date` > "'.date("Y-m-t", strtotime("-1 week") ).'" GROUP BY `website`;'); ?>
-				<?php foreach ($results as $key => $result): 
-					$total_pages_downloaded[$result['website']] = $result['downloaded']; 
-					$total_pages_parsed[$result['website']] = $result['parsed']; ?>
-				<tr>
-					<td><?php echo $result['website'];?></td>					
-					<td><?php echo $result['count'] ?></td>
-					<td><?php echo $result['downloaded'] ?></td>
-					<td><?php echo $result['parsed'] ?></td>
-					<td><?php echo $result['nb_citations'] ?></td>
-				</tr>
-				<?php endforeach;?>
-			</table>
-		</div>
 	
 		<div class="sf_admin_list" style="width:200px;float: left;">
 			<table>
@@ -94,13 +65,13 @@
 							<th style="min-width:100px;"></th>
 						</tr>
 					</thead>
-					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 10) as date, count( id ) as count FROM `page` WHERE `parsed_date` > "'.date("Y-m-t", strtotime("-1 week") ).'" AND website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 10);');
+					<?php $results = $q->fetchAll('SELECT SUBSTRING(parsed_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(parsed_date, 1, 10);');
 						foreach ($results as $key => $result_parsed) {
 							$results_parsed[$result_parsed['date']] = $result_parsed['count'];
 						}
 					?>
 					
-					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 10) as date, count( id ) as count FROM `page` WHERE `downloaded_date` > "'.date("Y-m-t", strtotime("-1 week") ).'" AND website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 10);'); ?>
+					<?php $results_dl = $q->fetchAll('SELECT SUBSTRING(downloaded_date, 1, 10) as date, count( id ) as count FROM `page` WHERE website="'.$website.'" GROUP BY SUBSTRING(downloaded_date, 1, 10);'); ?>
 					<?php foreach ($results_dl as $key => $result_dl): ?>
 						<?php if ($result_dl['date'] != ''): ?>
 							<tr>
