@@ -48,7 +48,7 @@ EOF;
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
-    ->where('dbpedia_url is ?', null)
+    //->where('dbpedia_url is ?', null)
     ->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
@@ -146,16 +146,16 @@ EOF;
 		}
 	  
 		$query = array (
-			'dbpedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr.}',
-			'name' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url foaf:name ?name. '.$filter.'}',
-			'abstract' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url dbp2:abstract ?abstract. '.$filter.'}',
-			'comment' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url rdfs:comment ?comment. '.$filter.'}',
-			'wikipedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url foaf:isPrimaryTopicOf ?wikipedia_url. }',
-			'thumbnail' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url dbp2:thumbnail ?thumbnail. }',
-			'birth_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url dbp2:birthDate ?birth_date. }',
-			'death_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathDate ?death_date. }',
-			'dateDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeNaissance ?birth_date. }',
-			'dateDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url rdfs:label "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeDécès ?death_date. }',
+			'dbpedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr.}',
+			'name' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url foaf:name ?name. '.$filter.'}',
+			'abstract' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:abstract ?abstract. '.$filter.'}',
+			'comment' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url rdfs:comment ?comment. '.$filter.'}',
+			'wikipedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url foaf:isPrimaryTopicOf ?wikipedia_url. }',
+			'thumbnail' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:thumbnail ?thumbnail. }',
+			'birth_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:birthDate ?birth_date. }',
+			'death_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathDate ?death_date. }',
+			'dateDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeNaissance ?birth_date. }',
+			'dateDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeDécès ?death_date. }',
 				
 			'label' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:isPrimaryTopicOf "'.$author_name.'"@fr. }',
 		);
