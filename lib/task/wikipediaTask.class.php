@@ -143,7 +143,7 @@ EOF;
     $output = curl_exec($ch);
     curl_close($ch);
 
-    //echo $output;
+    echo $output;
     $response = json_decode($output);
     if (count($response[1]) == 1)
       return 'http://fr.wikipedia.org/wiki/'.str_replace(' ', '_', $response[1][0]);
