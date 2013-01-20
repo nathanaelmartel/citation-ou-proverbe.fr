@@ -41,7 +41,7 @@ EOF;
     //		'citations', 
     //		'1001-citations', 
     //		'linternaute', 
-    //		'citation-et-proverbe',
+    		'citation-et-proverbe',
     		'les-citations'
     );
     
