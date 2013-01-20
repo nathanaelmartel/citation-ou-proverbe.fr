@@ -42,7 +42,8 @@ EOF;
     ->where('dbpedia_url IS NULL')
     ->andWhere('wikipedia_url IS NULL')
     ->offset(rand(0, 50))
-    ->limit(50);
+    ->limit(50)
+   	->orderBy('upadated_at ASC');;
     
     $authors = $q->execute();
     
