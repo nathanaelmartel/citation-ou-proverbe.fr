@@ -41,7 +41,7 @@ EOF;
     ->from('Author a')
     ->where('dbpedia_url IS NULL')
     ->andWhere('wikipedia_url IS NULL')
-    ->offset(rand(0, 5))
+    ->offset(rand(0, 50))
     ->limit(50);
     
     $authors = $q->execute();
@@ -143,8 +143,8 @@ EOF;
     $output = curl_exec($ch);
     curl_close($ch);
 
-    echo $url."\n".$output."\n";
-    $response = json_decode($output);
+    //echo $url."\n".$output."\n";
+    //$response = json_decode($output);
     if (count($response[1]) == 1)
       return 'http://fr.wikipedia.org/wiki/'.str_replace(' ', '_', $response[1][0]);
     else {
