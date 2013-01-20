@@ -183,7 +183,7 @@ EOF;
     $results = $dom->query('#mw-content-text>p');
     
     foreach ($results as $result) {
-        return strip_tags($result->nodeValue);
+        return utf8_decode(strip_tags($result->nodeValue));
     }
   }
   
