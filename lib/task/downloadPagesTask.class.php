@@ -37,16 +37,20 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    //		'citations' => 40, 
-    //		'1001-citations' => 40, 
-    //		'linternaute' => 40, 
-    		'citation-et-proverbe' => 40,
-    		'les-citations' => 5
+    //		'citations', 
+    //		'1001-citations', 
+    //		'linternaute', 
+    		'citation-et-proverbe',
+    		'les-citations'
     );
     
     shuffle($websites);
     
-    foreach ($websites as $website => $limit) {
+    foreach ($websites as $website) {
+    	$limit = 40;
+    	if ($website == 'les-citations') 
+    		$limit = 5;
+    	
     	sfTask::log('**** '.$website.' '.date('r').' ****');
     	
     	$q = Doctrine_Query::create()
