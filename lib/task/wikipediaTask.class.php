@@ -77,8 +77,10 @@ EOF;
 	          			array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
 	          			array(" ", '&', "'", "'", ' '),
 	          			$html);
-	          
+	          	
 	          	$name = $this->retrieveName($html);
+	          	$abstract = $this->retrieveBio($html);
+	          	$thumbnail = $this->retrievePhoto($html);
 	          	
 		          /*$authors = Doctrine::getTable('Author')->findByName($name);
 		          if (count($authors) == 1)
@@ -96,9 +98,18 @@ EOF;
       		if (($name != '') && ($name != $author->name)) {
       			$log .= ' name updated ('.$author->name.' -> '.$name.') ';
       			$author->name = $name;
-      			$author->save();
       		} else {
       			$log .= ' not updated ('.$author->name.' -> '.$name.') ';
+      		}
+      		
+      		if (($abstract != '') && ($abstract != $author->abstract)) {
+      			$log .= ' abstract updated ';
+      			$author->abstract = $abstract;
+      		}
+      		
+      		if (($thumbnail != '') && ($thumbnail != $author->thumbnail)) {
+      			$log .= ' thumbnail updated ';
+      			$author->thumbnail = $thumbnail;
       		}
           
           $author->wikipedia_url = $url;

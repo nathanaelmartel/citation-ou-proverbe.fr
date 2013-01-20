@@ -48,7 +48,7 @@ EOF;
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
-    //->where('dbpedia_url is ?', null)
+    ->where('dbpedia_url is ?', null)
     ->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
@@ -59,14 +59,14 @@ EOF;
     	sfTask::log($Author->name.$log);
     }
     
-    sfTask::log('==== second pass on '.date('r').' ====');
+    /*sfTask::log('==== second pass on '.date('r').' ====');
 
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
     ->where('dbpedia_url is null')
     ->andWhere('wikipedia_url <> ""')
-    ->offset(rand(0, 5))
+    //->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
     
@@ -75,10 +75,10 @@ EOF;
     foreach ($q->execute() as $Author) {
     	$log = '';
     	
-  		/*$response = json_decode($this->request($Author->wikipedia_url, 'label'), true);
+  		$response = json_decode($this->request($Author->wikipedia_url, 'label'), true);
   		if (count($response['results']['bindings'])) {
   			$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
-  			//sfTask::log($key."\t".$value);
+  			sfTask::log($key."\t".$value);
   			if ($value != '') {
     			$log .= $this->pass($value, $data);
   			}
@@ -86,17 +86,17 @@ EOF;
   			$response = json_decode($this->request($Author->wikipedia_url, 'label', 'dbpedia.org/sparql'), true);
   			if (count($response['results']['bindings'])) {
   				$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
-  				//sfTask::log($key." (en) \t".$value);
+  				sfTask::log($key." (en) \t".$value);
   				//sfTask::log($key);
 	  			if ($value != '') {
 	    			$log .= $this->pass($value, $data);
 	  			}
   			}
-  		}*/
-    	$log = $this->pass($Author, $data);
+  		}
+    	//$log = $this->pass($Author, $data);
     	
-    	sfTask::log($Author->name.$log);
-    }
+    	sfTask::log($Author->name."\t".$Author->wikipedia_url.$log);
+    }*/
      
     
     sfTask::log('==== end on '.date('r').' ====');
