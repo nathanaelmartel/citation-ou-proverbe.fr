@@ -37,16 +37,16 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    //		'citations', 
-    //		'1001-citations', 
-    //		'linternaute', 
-    //		'citation-et-proverbe',
-    		'les-citations'
+    //		'citations' => 40, 
+    //		'1001-citations' => 40, 
+    //		'linternaute' => 40, 
+    		'citation-et-proverbe' => 40,
+    		'les-citations' => 5
     );
     
     shuffle($websites);
     
-    foreach ($websites as $website) {
+    foreach ($websites as $website => $limit) {
     	sfTask::log('**** '.$website.' '.date('r').' ****');
     	
     	$q = Doctrine_Query::create()
@@ -56,7 +56,7 @@ EOF;
     	->andWhere('website = ?', $website)
     	->andWhere('http_code is NULL')
     	->offset(rand(0, 50))
-    	->limit(ceil(5/count($websites)))
+    	->limit($limit)
     	->orderBy('created_at ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;
