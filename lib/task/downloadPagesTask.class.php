@@ -59,7 +59,7 @@ EOF;
     	->where('downloaded_date is NULL')
     	->andWhere('website = ?', $website)
     	->andWhere('http_code is NULL')
-    	//->offset(rand(0, 50))
+    	->offset(rand(0, 50))
     	->limit($limit)
     	->orderBy('created_at ASC');
     	
