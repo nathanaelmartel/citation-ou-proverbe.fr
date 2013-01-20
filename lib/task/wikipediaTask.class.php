@@ -39,7 +39,8 @@ EOF;
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author a')
-    ->where('wikipedia_url IS NULL')
+    ->where('dbpedia_url IS NULL')
+    ->andWhere('wikipedia_url IS NULL')
     ->offset(rand(0, 5))
     ->limit(50);
     
