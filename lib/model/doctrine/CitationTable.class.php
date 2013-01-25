@@ -87,7 +87,6 @@ class CitationTable extends Doctrine_Table
           return true;
         } else {
         	$Citation = $citations[0];
-        	echo '************************ updating an already existing quote. ************************ '.$Citation->id;
           $Citation->note = $Citation->note + 1;
         	
           if (array_key_exists('source', $quote) && ($quote['source'] == ''))
@@ -95,24 +94,29 @@ class CitationTable extends Doctrine_Table
           
           $Citation->save();
           
-          if (count($quote['tags']) > 0) {
-	          $already_tag = array();
-	          foreach ($Citation->Tags as $tag) {
-	          	$already_tag[] = $tag->name;
-	          }var_dump($already_tag);
-	          
-	          foreach ($quote['tags'] as $tag) {
-	          	if (!in_array($tag, $already_tag)) {
-	          		echo $tag;
+	          if (count($quote['tags']) > 0) {
+	          	foreach ($quote['tags'] as $tag) {
 		          	$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
-		          	 
-		          	$TagCitation = new TagCitation;
-		          	$TagCitation->tag_id = $Tag->id;
-		          	$TagCitation->citation_id = $Citation->id;
-		          	$TagCitation->save();
+		          	
+		          	$already = false;
+		          	foreach ($Citation->Tags as $Linked_Tag) {
+		          		if ($Linked_Tag->id = $Tag->id) {
+		          			$already = true;
+		          			break;
+		          		}
+		          	}
+          try {
+		          	if (!$already) {
+			          	$TagCitation = new TagCitation;
+			          	$TagCitation->tag_id = $Tag->id;
+			          	$TagCitation->citation_id = $Citation->id;
+			          	$TagCitation->save();
+		          	}
+          } catch (Exception $e) {
+          	echo '*******************erreur**************************';
+          }
 	          	}
 	          }
-          }
         }
       }
 		return false;
