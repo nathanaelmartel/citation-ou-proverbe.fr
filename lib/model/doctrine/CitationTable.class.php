@@ -61,7 +61,7 @@ class CitationTable extends Doctrine_Table
           	$Citation->author_id = $author->id;
           }
           
-          if (array_key_exists('source', $quote))
+          if (array_key_exists('source', $quote) && ($quote['source'] == ''))
           	$Citation->source = $quote['source'];
           
           $Citation->last_published_at  = '0000-00-00 00:00:00';
@@ -85,6 +85,34 @@ class CitationTable extends Doctrine_Table
           $Citation->save();
           
           return true;
+        } else {
+        	echo '************************ updating an already existing quote. ************************ ';
+        	$Citation = $citations[0];
+          $Citation->note = $Citation->note + 1;
+        	
+          if (array_key_exists('source', $quote) && ($quote['source'] == ''))
+          	$Citation->source = $quote['source'];
+          
+          $Citation->save();
+          
+          if (count($quote['tags']) > 0) {
+	          $already_tag = array();
+	          foreach ($Citation->Tags as $tag) {
+	          	$already_tag[] = $tag->name;
+	          }var_dump($already_tag);
+	          
+	          foreach ($quote['tags'] as $tag) {
+	          	if (!in_array($tag, $already_tag)) {
+	          		echo $tag;
+		          	$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
+		          	 
+		          	$TagCitation = new TagCitation;
+		          	$TagCitation->tag_id = $Tag->id;
+		          	$TagCitation->citation_id = $Citation->id;
+		          	$TagCitation->save();
+	          	}
+	          }
+          }
         }
       }
 		return false;

@@ -35,18 +35,22 @@ EOF;
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
+    $begin_time = time();
     
     $websites = array(
     //		'citations', 
     //		'1001-citations', 
     //		'linternaute', 
-    		'citation-et-proverbe',
-    		'les-citations'
+    //		'citation-et-proverbe',
+    //		'les-citations',
+    //		'evene',
+    'lexode'
     );
     
     shuffle($websites);
     
     foreach ($websites as $website) {
+      if (time() - $begin_time > 50) break;
     	$limit = 40;
     	if ($website == 'les-citations') 
     		$limit = 5;
@@ -58,29 +62,29 @@ EOF;
     	->from('Page l')
     	->where('downloaded_date is NULL')
     	->andWhere('website = ?', $website)
-    	->andWhere('http_code is NULL')
-    	//->offset(rand(0, 50))
+    	//->offset(rand(0, 5))
     	->limit($limit)
     	->orderBy('created_at ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;
     	
     	foreach ($q->execute() as $Page) {
+    		if (time() - $begin_time > 50) break;
     		try {
-	    		$Scraper = new scraper;
+	    		$Scraper = new scraper($Page->url, $Page->id);
 	    	
-	    		$header = $Scraper->getPageHeader($Page->url);
-	    		if (is_array($header)) {
+	    		$header = $Scraper->getPageHeader();
+	    		if (is_array($header) && ($header['http_code'] != '')) {
 	    			$Page->http_code = $header['http_code'];
 	    			$Page->loading_time = $header['total_time'];
 	    			$Page->save();
 	    		}
-	    		$title = $Scraper->queryPage($Page->url, 'title', 'nodeValue');
+	    		$title = $Scraper->queryPage('title', 'nodeValue');
 	    		$Page->downloaded_date = new Doctrine_Expression('NOW()');
 	    		$Page->title = $title[0];
 	    		$Page->save();
 	    		 
-	    		$urls = $Scraper->queryPage($Page->url, 'a', 'href-absolute');
+	    		$urls = $Scraper->queryPage('a', 'href-absolute');
 	    		$new_urls = 0;
 	    		foreach ($urls as $url) {
 	    			if ($this->checkUrl($url)) {
@@ -94,11 +98,12 @@ EOF;
 	    			}
 	    		}
 	    	
-	    		sfTask::log($Page->url.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
+	    		sfTask::log($Page->id.' ['.$Page->http_code.' - '.$Page->loading_time.']  ++ '.$new_urls);
     		} catch (Exception $e) {
 	    		sfTask::log('unexpected error: '.$e->getMessage().' ['.$Page->id.']');
     		}
     	}
+      if (time() - $begin_time > 50) break;
     }
     
     

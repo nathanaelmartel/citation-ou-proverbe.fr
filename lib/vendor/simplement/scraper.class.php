@@ -12,14 +12,47 @@ class scraper
 {
 	private $curl_info = '';
 	private $output = '';
-  
-  public function getPage($url) {
-    $file = scraper::slugify($url);
+	private $filename = '';
+	private $url = '';
+	
+	public function __construct($url, $id = '') {
+		$this->url = $url;
+		$this->setFilename($id);
+	}
+	
+	public function setFilename($id = '') {
+    $base_path = dirname(__FILE__).'/../../../data/scraper_cache/';
     
-    if (file_exists($file) && filesize($file)) {
+    $url_info = parse_url($this->url);
+    
+    if (!file_exists($base_path.$url_info['host']))
+      mkdir($base_path.$url_info['host']);
+    
+		if ($id == '')
+			$filename = scraper::slugify($url_info['path']);
+		else
+			$filename = $id;
+		
+		$this->filename = $base_path.$url_info['host'].'/'.$filename.'.html';
+	}
+	
+	public function getFilename() {
+		return $this->filename;
+	}
+  
+  static function slugify($path) {
+    
+    $filename = scraper::toAscii($path).'-';
+    
+    return substr($filename, 0, 32);
+  }
+  
+  public function getPage() {
+    
+    if (file_exists($this->filename) && filesize($this->filename)) {
       
-      $fp = fopen($file, 'r');
-      $output = fread($fp, filesize($file));
+      $fp = fopen($this->filename, 'r');
+      $output = fread($fp, filesize($this->filename));
       fclose($fp);
       
     } else {
@@ -27,13 +60,13 @@ class scraper
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_HEADER, 0);
       curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1'); 
-      curl_setopt($ch, CURLOPT_URL, $url );
+      curl_setopt($ch, CURLOPT_URL, $this->url );
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       $output = curl_exec($ch);
       $this->curl_info = curl_getinfo($ch);
       curl_close($ch);
   
-      $fp = fopen($file, 'w');
+      $fp = fopen($this->filename, 'w');
       fwrite($fp, $output);
       fclose($fp);
       
@@ -42,15 +75,15 @@ class scraper
     return $output;
   }
   
-  public function getPageHeader($url) {
+  public function getPageHeader() {
   	if ($this->curl_info == '')
-  		$this->getPage($url);
+  		$this->getPage();
   	
   	return $this->curl_info;
   }
   
-  public function queryPage($url, $css_selector, $fetch = 'nodeValue') {
-    $html = $this->getPage($url);
+  public function queryPage($css_selector, $fetch = 'nodeValue') {
+    $html = $this->getPage();
 
     $dom = new Zend_Dom_Query($html);
     $query_results = $dom->query($css_selector);
@@ -60,9 +93,9 @@ class scraper
       if ($fetch == 'nodeValue')
         $results[] = $result->nodeValue;
       else if (($fetch == 'href-absolute') && (($result->tagName == 'a') || ($result->tagName == 'link')))
-        $results[] = scraper::absoluteUrl($result->getAttribute('href'), $url);
+        $results[] = scraper::absoluteUrl($result->getAttribute('href'), $this->url);
       else if (($fetch == 'src-absolute') && ($result->tagName == 'img'))
-        $results[] = scraper::absoluteUrl($result->getAttribute('src'), $url);
+        $results[] = scraper::absoluteUrl($result->getAttribute('src'), $this->url);
       else 
         $results[] = $result->getAttribute($fetch);
     }
@@ -85,23 +118,6 @@ class scraper
       return substr($base_url, 0, strrpos($base_url, '/')).$url;
     
     return $url;
-  }
-  
-  static function slugify($url) {
-    $base_path = dirname(__FILE__).'/../../../data/scraper_cache/';
-    
-    $url_info = parse_url($url);
-    
-    if (!file_exists($base_path.$url_info['host']))
-      mkdir($base_path.$url_info['host']);
-    
-    $filename = '';
-    if (array_key_exists('path', $url_info))
-      $filename = scraper::toAscii($url_info['path']).'-';
-    
-    $file = $url_info['host'].'/'.substr($filename, 0, 32).substr(base64_encode($url), 0, 32);
-    
-    return $base_path.$file.'.html';
   }
   
   public static function toAscii($str) {
@@ -153,7 +169,7 @@ class scraper
 
   public static function cleanTag($tag) {
   	
-  		//$tag = mb_strtolower($tag);
+  		$tag = mb_strtolower($tag);
   		
   		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
   		if( !empty($replace) ) {
@@ -171,7 +187,7 @@ class scraper
   		$author_name = trim($author_name);
   		$author_name = trim($author_name, '-.,;:');
   		$author_name = trim($author_name);
-  		//$author_name =  mb_convert_case(mb_strtolower($author_name), MB_CASE_TITLE);
+  		$author_name =  mb_convert_case(mb_strtolower($author_name), MB_CASE_TITLE);
   		
   		return $author_name;
   }

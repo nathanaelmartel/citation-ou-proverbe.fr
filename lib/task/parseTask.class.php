@@ -41,8 +41,10 @@ EOF;
     //		'citations', 
     //		'1001-citations', 
     //		'linternaute', 
-    		'citation-et-proverbe',
-    		'les-citations'
+    //		'citation-et-proverbe',
+    //		'les-citations',
+    //			'evene',
+    'lexode'
     );
     
     shuffle($websites);
@@ -56,7 +58,7 @@ EOF;
     	->where('http_code = 200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
-    	->offset(rand(0, 50))
+    	//->offset(rand(0, 50))
     	->limit(ceil(50/count($websites)))
     	->orderBy('downloaded_date ASC');
     	
@@ -66,23 +68,29 @@ EOF;
     		$total_quote = 0;
     		$new_quote = 0;
     		 
-    		sfTask::log($Page->id.' ('.$Page->website.')');
+    		//sfTask::log($Page->id.' ('.$Page->website.')');
     		 
     		switch ($Page->website) {
     			case '1001-citations':
-    				$quotes = $this->parse_1001citations($Page->url);
+    				$quotes = $this->parse_1001citations($Page);
     				break;
     			case 'citations':
-    				$quotes = $this->parse_citations($Page->url);
+    				$quotes = $this->parse_citations($Page);
     				break;
     			case 'linternaute':
-    				$quotes = $this->parse_linternaute($Page->url);
+    				$quotes = $this->parse_linternaute($Page);
     				break;
     			case 'citation-et-proverbe':
-    				$quotes = $this->parse_citation_et_proverbe($Page->url);
+    				$quotes = $this->parse_citation_et_proverbe($Page);
     				break;
     			case 'les-citations':
-    				$quotes = $this->parse_les_citations($Page->url);
+    				$quotes = $this->parse_les_citations($Page);
+    				break;
+    			case 'evene':
+    				$quotes = $this->parse_evene($Page);
+    				break;
+    			case 'lexode':
+    				$quotes = $this->parse_lexode($Page);
     				break;
     		}
     		 
@@ -112,10 +120,10 @@ EOF;
     sfTask::log('==== end on '.date('r').' ====');
   }
   
-  function parse_1001citations($url) {
+  function parse_1001citations($Page) {
   	$quotes = array();
-    $Scraper = new scraper;
-    $html = $Scraper->getPage($url);
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
     $dom = new Zend_Dom_Query($html);
     $values = $dom->query('.entry');
     
@@ -148,10 +156,10 @@ EOF;
     return $quotes;
   }
   
-  function parse_citations($url) {
+  function parse_citations($Page) {
   	$quotes = array();
-    $Scraper = new scraper;
-    $html = $Scraper->getPage($url);
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
     $dom = new Zend_Dom_Query($html);
     $values = $dom->query('#contenu-zoom-citation');
     
@@ -184,10 +192,10 @@ EOF;
     return $quotes;
   }
   
-  function parse_les_citations($url) {
+  function parse_les_citations($Page) {
   	$quotes = array();
-    $Scraper = new scraper;
-    $html = $Scraper->getPage($url);
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
     $dom = new Zend_Dom_Query($html);
     $values = $dom->query('.node-type-citation');
     
@@ -226,10 +234,10 @@ EOF;
     return $quotes;
   }
   
-  function parse_citation_et_proverbe($url) {
+  function parse_citation_et_proverbe($Page) {
   	$quotes = array();
-    $Scraper = new scraper;
-    $html = $Scraper->getPage($url);
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
     $dom = new Zend_Dom_Query($html);
     $values = $dom->query('article');
     
@@ -270,7 +278,105 @@ EOF;
     return $quotes;
   }
   
-  function parse_linternaute($url) {
+  function parse_evene($Page) {
+  	$allowed_hosts = array(
+  			'http://www.evene.fr/citations/mot.php?mot=',
+  			'http://www.evene.fr/citations/theme/'
+  	);
+  	foreach ($allowed_hosts as $allowed_host) {
+  		if (substr($Page->url, 0, strlen($allowed_host)) == $allowed_host){
+  			return array();
+  		}
+  	}
+  	 
+  	$quotes = array();
+  	$Scraper = new scraper($Page->url, $Page->id);
+  	$html = $Scraper->getPage();
+  	$dom = new Zend_Dom_Query($html);
+  	$values = $dom->query('.block-citations-main');
+  	 
+  	foreach($values as $value) {
+  		$item = simplexml_import_dom($value)->asXML();
+  		$dom2 = new Zend_Dom_Query($item);
+  	  
+  		$query_results = $dom2->query('h1');
+  		$quote = '';
+  		foreach($query_results as $result) {
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$quote = htmlentities($quote);
+  			$quote = str_replace('&nbsp;', '', $quote);
+  			$quote = str_replace('&laquo;', '', $quote);
+  			$quote = str_replace('&raquo;', '', $quote);
+  			$quote = html_entity_decode($quote);
+  		}
+  		 
+  		$query_results = $dom2->query('h2 span');
+  		$author = '';
+  		foreach($query_results as $result) {
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  		}
+  		 
+  		$query_results = $dom2->query('.author a');
+  		$source = '';
+  		foreach($query_results as $result) {
+  			$source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  		}
+  		 
+  		$query_results = $dom2->query('h1 a');
+  		$tags = array();
+  		foreach($query_results as $result) {
+  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			if ($tag != '#')
+  				$tags[] = $tag;
+  		}
+  		 
+  		//sfTask::log('==== '.$quote.' - '.$author.' - '.$source.' - '.json_encode($tags));
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => $tags);
+  	}
+  
+  	return $quotes;
+  }
+  
+  function parse_lexode($Page) {
+  	$quotes = array();
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
+    $dom = new Zend_Dom_Query($html);
+    $values = $dom->query('fieldset.citation');
+  	
+    foreach($values as $value) {
+      $item = simplexml_import_dom($value)->asXML();
+	    $dom2 = new Zend_Dom_Query($item);
+	    
+	    $query_results = $dom2->query('.nolink');
+	    $quote = '';
+    	foreach($query_results as $result) {
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	}
+    	
+	    $query_results = $dom2->query('legend');
+	    $author = '';
+    	foreach($query_results as $result) {
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$author = trim(str_replace('Auteur inconnu', '', $author));
+    	}
+    	
+	    $query_results = $dom2->query('.legende a');
+	    $tags = array();
+    	foreach($query_results as $result) {
+    		$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    		if ($tag != '#')
+    	  	$tags[] = $tag;
+    	}
+    	
+    	sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    }
+    
+    return $quotes;
+  }
+  
+  function parse_linternaute($Page) {
   	$allowed_hosts = array(
   			'http://www.linternaute.com/citation/auteur/',
   			'http://www.linternaute.com/citation/theme/',
@@ -281,14 +387,14 @@ EOF;
   			'http://www.linternaute.com/citation/recherche_top/'
   	);
   	foreach ($allowed_hosts as $allowed_host) {
-  		if (substr($url, 0, strlen($allowed_host)) == $allowed_host){
+  		if (substr($Page->url, 0, strlen($allowed_host)) == $allowed_host){
 	  		return array();
   		}
   	}
   	
   	$quotes = array();
-    $Scraper = new scraper;
-    $html = $Scraper->getPage($url);
+    $Scraper = new scraper($Page->url, $Page->id);
+    $html = $Scraper->getPage();
     $dom = new Zend_Dom_Query($html);
     $values = $dom->query('.col_milieu');
     
