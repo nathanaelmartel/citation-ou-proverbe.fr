@@ -169,7 +169,9 @@ class scraper
 
   public static function cleanTag($tag) {
   	
+  		$tag = htmlentities($tag);
   		$tag = strtolower($tag);
+  		$tag = html_entity_decode($tag);
   		
   		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
   		if( !empty($replace) ) {
@@ -184,13 +186,15 @@ class scraper
 
   public static function cleanAuthor($author_name) {
   	
-  		$author_name = strtolower($author_name);
-  		$author_name = trim($author_name);
-  		$author_name = trim($author_name, '-.,;:');
-  		$author_name = trim($author_name);
-  		$author_name =  ucwords($author_name);
-  		
-  		return $author_name;
+  	$author_name = trim($author_name, '-.,;:');
+  	$author_name = trim($author_name);
+  	$author_name = trim($author_name);
+  	$author_name = htmlentities($author_name);
+  	$author_name = strtolower($author_name);
+  	$author_name = ucwords($author_name);
+  	$author_name = html_entity_decode($author_name);
+  	
+  	return $author_name;
   }
 
   public static function cleanString($text) {
