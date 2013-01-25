@@ -86,8 +86,8 @@ class CitationTable extends Doctrine_Table
           
           return true;
         } else {
-        	echo '************************ updating an already existing quote. ************************ ';
         	$Citation = $citations[0];
+        	echo '************************ updating an already existing quote. ************************ '.$Citation->id;
           $Citation->note = $Citation->note + 1;
         	
           if (array_key_exists('source', $quote) && ($quote['source'] == ''))
