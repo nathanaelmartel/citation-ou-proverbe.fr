@@ -14,7 +14,9 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   {
   	unset(  
 			$this['created_at'],  
-			$this['updated_at']
+			$this['updated_at'],  
+			$this['author_id'],  
+			$this['tags_list']
 		); 
   }
 }
