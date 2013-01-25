@@ -36,6 +36,7 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     $begin_time = time();
+    $max_time = 50;
     
     $websites = array(
     //		'citations', 
@@ -50,7 +51,7 @@ EOF;
     shuffle($websites);
     
     foreach ($websites as $website) {
-      if (time() - $begin_time > 50) break;
+      if (time() - $begin_time > $max_time) break;
     	$limit = 40;
     	if ($website == 'les-citations') 
     		$limit = 5;
@@ -69,7 +70,7 @@ EOF;
     	//echo $q->getSqlQuery();echo "\n";die;
     	
     	foreach ($q->execute() as $Page) {
-    		if (time() - $begin_time > 50) break;
+    		if (time() - $begin_time > $max_time) break;
     		try {
 	    		$Scraper = new scraper($Page->url, $Page->id);
 	    	
@@ -103,7 +104,7 @@ EOF;
 	    		sfTask::log('unexpected error: '.$e->getMessage().' ['.$Page->id.']');
     		}
     	}
-      if (time() - $begin_time > 50) break;
+      if (time() - $begin_time > $max_time) break;
     }
     
     

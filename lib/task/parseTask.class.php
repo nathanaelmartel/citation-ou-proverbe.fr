@@ -358,7 +358,7 @@ EOF;
 	    $author = '';
     	foreach($query_results as $result) {
     	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-  			$author = trim(str_replace('Auteur inconnu', '', $author));
+  			$author = trim(str_replace('Auteur inconnu', 'Anonyme', $author));
     	}
     	
 	    $query_results = $dom2->query('.legende a');
@@ -369,7 +369,7 @@ EOF;
     	  	$tags[] = $tag;
     	}
     	
-    	sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
     	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
     }
     
