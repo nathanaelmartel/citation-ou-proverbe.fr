@@ -6,7 +6,9 @@ Page:
     Timestampable:
 
   columns:
-    url: varchar(255)
+    url: 
+      type: varchar(255)
+      unique: true
     website: varchar(255)
     title: varchar(255)
     nb_citations: int
@@ -31,7 +33,7 @@ Author:
     Timestampable:
     
   columns:
-    name: {type: string(255)}
+    name: {type: string(255), unique: true}
     abstract: {type: string(), default: null}
     comment: {type: string(), default: null}
     thumbnail: {type: string(255), default: null}
@@ -57,7 +59,7 @@ Citation:
     source: {type: string(255)}
     is_active: {type: boolean}
     last_published_at: {type: datetime}
-    hash: {type: string(255)}
+    hash: {type: string(255), unique: true}
     note: {type: int, default: 0}
     view: {type: int, default: 0}
     slug: {type: string(255), unique: true}
@@ -83,7 +85,7 @@ Tag:
     Timestampable:
 
   columns:
-    name: { type: string(255), notnull: true }
+    name: { type: string(255), notnull: true, unique: true }
     is_active: {type: boolean}
     
   relations:

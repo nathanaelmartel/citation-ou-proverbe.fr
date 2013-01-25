@@ -12,9 +12,9 @@ Page:
   citations:
     url: http://www.citations.com/
     website: citations
-  dicocitations:
-    url: http://www.dicocitations.com/
-    website: dicocitations
+#  dicocitations:
+#    url: http://www.dicocitations.com/
+#    website: dicocitations
   lexode:
     url: http://www.lexode.com/citations/
     website: lexode
