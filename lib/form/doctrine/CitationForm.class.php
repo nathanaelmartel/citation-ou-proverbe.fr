@@ -12,5 +12,11 @@ class CitationForm extends BaseCitationForm
 {
   public function configure()
   {
+  	$this->setWidget('author_id', new sfWidgetFormPlain(array('value'=>$this->getObject()->Author->name)));
+  	$tags = '';
+  	foreach ($this->getObject()->Tags as $tag) {
+  		$tags .= $tag.', ';
+  	}
+  	$this->setWidget('tags_list', new sfWidgetFormPlain(array('value'=>$tags)));
   }
 }

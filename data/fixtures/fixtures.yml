@@ -3,6 +3,9 @@ Page:
   evene:
     url: http://www.evene.fr/citations
     website: evene
+  citation-et-proverbe:
+    url: http://www.citation-et-proverbe.fr/
+    website: citation-et-proverbe
   linternaute:
     url: http://www.linternaute.com/citation/
     website: linternaute
@@ -24,9 +27,9 @@ Page:
 #  wikiquote:
 #    url: http://fr.wikiquote.org/
 #    website: wikiquote
-  kaakook:
-    url: http://www.kaakook.fr
-    website: kaakook
+#  kaakook:
+#    url: http://www.kaakook.fr
+#    website: kaakook
   leproverbe:
     url: http://www.leproverbe.fr/
     website: leproverbe

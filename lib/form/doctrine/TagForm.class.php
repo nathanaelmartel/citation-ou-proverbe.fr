@@ -12,5 +12,11 @@ class TagForm extends BaseTagForm
 {
   public function configure()
   {
+  	$citations = '<ul>';
+  	foreach ($this->getObject()->Citations as $citation) {
+  		$citations .= '<li>'.$citation->id.' «&nbsp;'.$citation->quote.'&nbsp;»</li>'."\n";
+  	}
+  	$citations .= '</ul>';
+  	$this->setWidget('citations_list', new sfWidgetFormPlain(array('value'=>$citations)));
   }
 }
