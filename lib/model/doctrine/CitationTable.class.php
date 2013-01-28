@@ -105,16 +105,16 @@ class CitationTable extends Doctrine_Table
 		          			break;
 		          		}
 		          	}
-          try {
-		          	if (!$already) {
-			          	$TagCitation = new TagCitation;
-			          	$TagCitation->tag_id = $Tag->id;
-			          	$TagCitation->citation_id = $Citation->id;
-			          	$TagCitation->save();
-		          	}
-          } catch (Exception $e) {
-          	echo '*******************erreur**************************';
-          }
+			          try {
+					          	if (!$already) {
+						          	$TagCitation = new TagCitation;
+						          	$TagCitation->tag_id = $Tag->id;
+						          	$TagCitation->citation_id = $Citation->id;
+						          	$TagCitation->save();
+					          	}
+			          } catch (Exception $e) {
+			          	echo '*******************erreur**************************';
+			          }
 	          	}
 	          }
         }

@@ -38,16 +38,18 @@ EOF;
     sfTask::log('==== begin on '.date('r').' ====');
     
     $websites = array(
-    //		'citations', 
-    //		'1001-citations', 
-    //		'linternaute', 
-    //		'citation-et-proverbe',
-    //		'les-citations',
-    //			'evene',
-    'lexode'
+    /*		'citations', 
+    		'1001-citations', 
+    		'linternaute', 
+    		'citation-et-proverbe',
+    		'les-citations',*/
+    		'evene',
+    //		'lexode'
     );
     
     shuffle($websites);
+    $limit = ceil(50/count($websites));
+    //$limit = 50;
     
     foreach ($websites as $website) {
     	sfTask::log('**** '.$website.' '.date('r').' ****');    	
@@ -59,7 +61,7 @@ EOF;
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
     	//->offset(rand(0, 50))
-    	->limit(ceil(50/count($websites)))
+    	->limit($limit)
     	->orderBy('downloaded_date ASC');
     	
     	//echo $q->getSqlQuery();echo "\n";die;
@@ -150,7 +152,7 @@ EOF;
     	}
     	
     	//sfTask::log($quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array_unique($tags));
     }
     
     return $quotes;
@@ -186,7 +188,7 @@ EOF;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array_unique($tags));
     }
     
     return $quotes;
@@ -194,44 +196,44 @@ EOF;
   
   function parse_les_citations($Page) {
   	$quotes = array();
-    $Scraper = new scraper($Page->url, $Page->id);
-    $html = $Scraper->getPage();
-    $dom = new Zend_Dom_Query($html);
-    $values = $dom->query('.node-type-citation');
-    
-    foreach($values as $value) {
-      $item = simplexml_import_dom($value)->asXML();
-	    $dom2 = new Zend_Dom_Query($item);
-	    
-	    $query_results = $dom2->query('.field-title h1');
-	    $quote = '';
-    	foreach($query_results as $result) {
-    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
-    	}
-    	
-	    $query_results = $dom2->query('.auteur-name h1');
-	    $author = '';
-    	foreach($query_results as $result) {
-    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-    	}
-    	
-	    $query_results = $dom2->query('.field-item');
-	    $source = '';
-    	foreach($query_results as $result) {
-    	  $source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-    	}
-    	
-	    $query_results = $dom2->query('.field-terms a');
-	    $tags = array();
-    	foreach($query_results as $result) {
-    	  $tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-    	}
-    	
-    	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
-    }
-    
-    return $quotes;
+  	$Scraper = new scraper($Page->url, $Page->id);
+  	$html = $Scraper->getPage();
+  	$dom = new Zend_Dom_Query($html);
+  	$values = $dom->query('.node-type-citation');
+  
+  	foreach($values as $value) {
+  		$item = simplexml_import_dom($value)->asXML();
+  		$dom2 = new Zend_Dom_Query($item);
+  	  
+  		$query_results = $dom2->query('.field-title h1');
+  		$quote = '';
+  		foreach($query_results as $result) {
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'), '"');
+  		}
+  		 
+  		$query_results = $dom2->query('.auteur-name h1');
+  		$author = '';
+  		foreach($query_results as $result) {
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  		}
+  		 
+  		$query_results = $dom2->query('.field-item');
+  		$source = '';
+  		foreach($query_results as $result) {
+  			$source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  		}
+  		 
+  		$query_results = $dom2->query('.field-terms a');
+  		$tags = array();
+  		foreach($query_results as $result) {
+  			$tags[] = scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  		}
+  		 
+  		//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array_unique($tags));
+  	}
+  
+  	return $quotes;
   }
   
   function parse_citation_et_proverbe($Page) {
@@ -272,14 +274,18 @@ EOF;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => $tags);
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags));
     }
     
     return $quotes;
   }
   
   function parse_evene($Page) {
-  	$allowed_hosts = array(
+  	/* UPDATE `page` SET `downloaded_date`=NOW() WHERE `url` LIKE 'http://www.evene.fr/citations/mot.php?mot=%';
+  	   UPDATE `page` SET `downloaded_date`=NOW() WHERE `url` LIKE 'http://www.evene.fr/citations/theme/%';
+  	   UPDATE `page` SET `downloaded_date`=NOW() WHERE `url` LIKE 'http://www.evene.fr/citations/%?page=%';
+  	 */
+  	/*$allowed_hosts = array(
   			'http://www.evene.fr/citations/mot.php?mot=',
   			'http://www.evene.fr/citations/theme/'
   	);
@@ -287,13 +293,13 @@ EOF;
   		if (substr($Page->url, 0, strlen($allowed_host)) == $allowed_host){
   			return array();
   		}
-  	}
+  	}*/
   	 
   	$quotes = array();
   	$Scraper = new scraper($Page->url, $Page->id);
   	$html = $Scraper->getPage();
   	$dom = new Zend_Dom_Query($html);
-  	$values = $dom->query('.block-citations-main');
+  	$values = $dom->query('evene-content .block-citations-main');
   	 
   	foreach($values as $value) {
   		$item = simplexml_import_dom($value)->asXML();
@@ -331,7 +337,54 @@ EOF;
   		}
   		 
   		//sfTask::log('==== '.$quote.' - '.$author.' - '.$source.' - '.json_encode($tags));
-  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => $tags);
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags));
+  	}
+  	
+  	
+  	$values = $dom->query('.evene-content .block-cdc-citations');
+  	 
+  	foreach($values as $value) {
+  		$item = simplexml_import_dom($value)->asXML();
+  		$dom2 = new Zend_Dom_Query($item);
+  	  
+  		$query_results = $dom2->query('h3');
+  		$quote = '';
+  		foreach($query_results as $result) {
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$quote = htmlentities($quote);
+  			$quote = str_replace('&nbsp;', '', $quote);
+  			$quote = str_replace('&laquo;', '', $quote);
+  			$quote = str_replace('&raquo;', '', $quote);
+  			$quote = html_entity_decode($quote);
+  		}
+  		 
+  		$query_results = $dom2->query('h4');
+  		$author = '';
+  		foreach($query_results as $result) {
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$author = str_replace('De ', '', $author);
+  			$author = str_replace('[+]', '', $author);
+  			$author = trim($author);
+  		}
+  		 
+  		$query_results = $dom2->query('.author a');
+  		$source = '';
+  		foreach($query_results as $result) {
+  			$source_temp = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			if ($source_temp != '[+]')
+  				$source = $source_temp;
+  		}
+  		 
+  		$query_results = $dom2->query('h3 a');
+  		$tags = array();
+  		foreach($query_results as $result) {
+  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			if ($tag != '#')
+  				$tags[] = $tag;
+  		}
+  		 
+  		//sfTask::log('==== '.$quote.' - '.$author.' - '.$source.' - '.json_encode($tags));
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags));
   	}
   
   	return $quotes;
@@ -351,26 +404,26 @@ EOF;
 	    $query_results = $dom2->query('.nolink');
 	    $quote = '';
     	foreach($query_results as $result) {
-    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'gamma'));
     	}
     	
 	    $query_results = $dom2->query('legend');
 	    $author = '';
     	foreach($query_results as $result) {
-    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			$author = trim(str_replace('Auteur inconnu', 'Anonyme', $author));
     	}
     	
 	    $query_results = $dom2->query('.legende a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    		$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    		$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'gamma'));
     		if ($tag != '#')
     	  	$tags[] = $tag;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array_unique($tags));
     }
     
     return $quotes;
@@ -424,7 +477,7 @@ EOF;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => $tags);
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array_unique($tags));
     }
     
     return $quotes;

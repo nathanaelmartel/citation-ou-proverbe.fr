@@ -19,7 +19,6 @@ class TagTable extends Doctrine_Table
     
   	public static function addTag($tag) {
   		
-  		
       if ($tag != '')
       {
         $tags = Doctrine::getTable('Tag')->findByName($tag);

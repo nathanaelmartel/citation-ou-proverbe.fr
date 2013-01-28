@@ -36,16 +36,16 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     $begin_time = time();
-    $max_time = 50;
+    $max_time = 150;
     
     $websites = array(
-    //		'citations', 
-    //		'1001-citations', 
-    //		'linternaute', 
-    //		'citation-et-proverbe',
-    //		'les-citations',
-    //		'evene',
-    'lexode'
+    /*		'citations', 
+    		'1001-citations', 
+    		'linternaute', 
+    		'citation-et-proverbe',
+    		'les-citations',*/
+    		'evene',
+    //		'lexode'
     );
     
     shuffle($websites);

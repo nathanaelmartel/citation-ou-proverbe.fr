@@ -1,5 +1,11 @@
 <?php
 
+
+function get_contents_utf8($content) {
+	return mb_convert_encoding($content, 'UTF-8',
+			mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+}
+
 require_once(dirname(__FILE__).'/../Zend/Dom/Query.php');
 /**
  * scraper
@@ -61,10 +67,13 @@ class scraper
       curl_setopt($ch, CURLOPT_HEADER, 0);
       curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1'); 
       curl_setopt($ch, CURLOPT_URL, $this->url );
+    	curl_setopt( $ch, CURLOPT_ENCODING, "" );
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       $output = curl_exec($ch);
       $this->curl_info = curl_getinfo($ch);
       curl_close($ch);
+      
+      $output = get_contents_utf8($output);
   
       $fp = fopen($this->filename, 'w');
       fwrite($fp, $output);
@@ -148,6 +157,8 @@ class scraper
         return scraper::encodingCorrectionAlpha($text);
       case 'beta':
         return scraper::encodingCorrectionBeta($text);
+      case 'gamma':
+        return scraper::encodingCorrectionGamma($text);
     }
     
     return $text;
@@ -167,11 +178,16 @@ class scraper
     return utf8_encode($text);
   }
 
+  static function encodingCorrectionGamma($text) {
+    //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
+    //return iconv(mb_detect_encoding($text), 'UTF8', $text);
+        
+    return utf8_decode(utf8_decode($text));
+  }
+
   public static function cleanTag($tag) {
   	
-  		//$tag = htmlentities($tag);
-  		//$tag = strtolower($tag);
-  		//$tag = html_entity_decode($tag);
+  		$tag = strtolower($tag);
   		
   		$replace = array("l'", 'l’', 'l&#039;', "d'", 'd’', 'd&#039;', "s'", 's’', 's&#039;');
   		if( !empty($replace) ) {
@@ -189,10 +205,8 @@ class scraper
   	$author_name = trim($author_name, '-.,;:');
   	$author_name = trim($author_name);
   	$author_name = trim($author_name);
-  	//$author_name = htmlentities($author_name);
-  	//$author_name = strtolower($author_name);
-  	//$author_name = ucwords($author_name);
-  	//$author_name = html_entity_decode($author_name);
+  	$author_name = strtolower($author_name);
+  	$author_name = ucwords($author_name);
   	
   	return $author_name;
   }
