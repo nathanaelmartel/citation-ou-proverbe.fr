@@ -308,7 +308,7 @@ EOF;
   		$query_results = $dom2->query('h1');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			$quote = htmlentities($quote);
   			$quote = str_replace('&nbsp;', '', $quote);
   			$quote = str_replace('&laquo;', '', $quote);
@@ -319,19 +319,19 @@ EOF;
   		$query_results = $dom2->query('h2 span');
   		$author = '';
   		foreach($query_results as $result) {
-  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   		}
   		 
   		$query_results = $dom2->query('.author a');
   		$source = '';
   		foreach($query_results as $result) {
-  			$source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   		}
   		 
   		$query_results = $dom2->query('h1 a');
   		$tags = array();
   		foreach($query_results as $result) {
-  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			if ($tag != '#')
   				$tags[] = $tag;
   		}
@@ -350,7 +350,7 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			$quote = htmlentities($quote);
   			$quote = str_replace('&nbsp;', '', $quote);
   			$quote = str_replace('&laquo;', '', $quote);
@@ -361,7 +361,7 @@ EOF;
   		$query_results = $dom2->query('h4');
   		$author = '';
   		foreach($query_results as $result) {
-  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			$author = str_replace('De ', '', $author);
   			$author = str_replace('[+]', '', $author);
   			$author = trim($author);
@@ -370,7 +370,7 @@ EOF;
   		$query_results = $dom2->query('.author a');
   		$source = '';
   		foreach($query_results as $result) {
-  			$source_temp = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$source_temp = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			if ($source_temp != '[+]')
   				$source = $source_temp;
   		}
@@ -378,7 +378,7 @@ EOF;
   		$query_results = $dom2->query('h3 a');
   		$tags = array();
   		foreach($query_results as $result) {
-  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'beta'));
+  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'gamma'));
   			if ($tag != '#')
   				$tags[] = $tag;
   		}
