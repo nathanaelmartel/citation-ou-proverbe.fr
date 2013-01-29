@@ -51,3 +51,11 @@ all:
             url:          page
             image:        searchtext.png
             credentials:  [admin]
+      Option:
+        items:
+          Option:
+            url:          option
+            image:        generic.png
+            credentials:  [admin]
+            
+            

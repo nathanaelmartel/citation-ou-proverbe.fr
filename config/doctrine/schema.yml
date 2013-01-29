@@ -1,5 +1,18 @@
 
 
+Option:
+  tableName: option_table
+  actAs:
+    Timestampable:
+
+  columns:
+    option_key:  varchar(255)
+    option_value: {type: string()}
+
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+
 Page:
   tableName: page
   actAs:
