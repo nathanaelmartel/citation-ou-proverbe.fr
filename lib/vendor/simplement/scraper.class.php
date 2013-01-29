@@ -21,9 +21,14 @@ class scraper
 	private $filename = '';
 	private $url = '';
 	
-	public function __construct($url, $id = '') {
+	public function __construct($url, $id = '', $cache = true) {
 		$this->url = $url;
 		$this->setFilename($id);
+		if (!$cache) {
+			if (file_exists($this->filename)) {
+				unlink($this->filename);
+			}
+		}
 	}
 	
 	public function setFilename($id = '') {
@@ -73,7 +78,9 @@ class scraper
       $this->curl_info = curl_getinfo($ch);
       curl_close($ch);
       
-      $output = get_contents_utf8($output);
+      //$output = file_get_contents($this->url);
+      
+      //$output = get_contents_utf8($output);
   
       $fp = fopen($this->filename, 'w');
       fwrite($fp, $output);
@@ -159,30 +166,31 @@ class scraper
         return scraper::encodingCorrectionBeta($text);
       case 'gamma':
         return scraper::encodingCorrectionGamma($text);
+      case 'epsilon':
+        return scraper::encodingCorrectionEpsilon($text);
     }
     
     return $text;
   }
 
   static function encodingCorrectionAlpha($text) {
-    //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
-    //return iconv(mb_detect_encoding($text), 'UTF8', $text);
         
     return utf8_decode($text);
   }
 
   static function encodingCorrectionBeta($text) {
-    //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
-    //return iconv(mb_detect_encoding($text), 'UTF8', $text);
         
     return utf8_encode($text);
   }
 
   static function encodingCorrectionGamma($text) {
-    //return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
-    //return iconv(mb_detect_encoding($text), 'UTF8', $text);
-        
-    return utf8_decode(utf8_decode($text));
+  	
+    return mb_convert_encoding($text, 'UTF8', mb_detect_encoding($text));
+  }
+
+  static function encodingCorrectionEpsilon($text) {
+  	
+    return iconv(mb_detect_encoding($text), 'UTF8', $text);
   }
 
   public static function cleanTag($tag) {
