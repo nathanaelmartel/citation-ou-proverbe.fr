@@ -4,7 +4,7 @@
 	<div id="sf_admin_content">
 		<div class="sf_admin_list" >
 			<table>
-				<header>
+				<thead>
 					<tr>
 						<th>Site</th>
 						<th>mb_detect_encoding</th>
@@ -16,7 +16,7 @@
 						<th>gamma</th>
 						<th>epsilon</th>
 					</tr>
-				</header>
+				</thead>
 				<?php foreach ($strings as $website => $string): ?>
 					<tr>
 						<td><?php echo $website ?></td>

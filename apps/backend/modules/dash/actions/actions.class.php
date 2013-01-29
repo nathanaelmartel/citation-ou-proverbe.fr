@@ -60,47 +60,40 @@ class dashActions extends sfActions
   			 
   			$q = Doctrine_Query::create()
   			->select('*')
-		  	->from('Page l')
-		  	->andWhere('website = ?', $website)
+		  	->from('Page')
+		  	->where('website = ?', $website)
 	  		->limit(1)
 	  		->orderBy('created_at ASC');
   		 
   		foreach ($q->execute() as $Page) {
+  			echo $Page;
 	  		try {
-		  		$Scraper = new scraper($Page->url, 0, false);
+		  		$Scraper = new scraper($Page->url, $Page->id);
 		  		 
 		  		$string = $Scraper->queryPage($selector[$website], 'nodeValue');
+		  		$Option = Doctrine::getTable('Option')->findOneByOptionKey($website);
+		  		if ($Option)
+		  			$Option->delete();
+		  		
+		  		$newOption = new Option;
+		  		$newOption->option_key = $website;
+		  		$newOption->option_value = $string[0];
+		  		$newOption->save();
+		  		
 		  		$strings[$website] = $string[0];
 	  		 
 	  		} catch (Exception $e) {
-	  		}
-  		}
-  		 
-    }
-  	
-  	
-  	foreach ($websites as $website) {
-  			 
-  			$q = Doctrine_Query::create()
-  			->select('*')
-		  	->from('Page l')
-		  	->andWhere('website = ?', $website)
-	  		->limit(1)
-	  		->orderBy('created_at ASC');
-  		 
-  		foreach ($q->execute() as $Page) {
-	  		try {
-		  		$Scraper = new scraper($Page->url, 0);
-		  		 
-		  		$string = $Scraper->queryPage($selector[$website], 'nodeValue');
-		  		$strings[$website.'-2'] = $string[0];
-	  		 
-	  		} catch (Exception $e) {
+		  		$strings[$website] = 'erreur';
 	  		}
   		}
   		 
     }
   	
   	$this->strings = $strings;
+  }
+  
+  public function executeOption(sfWebRequest $request) {
+    require_once(dirname(__FILE__).'/../../../../../lib/vendor/simplement/scraper.class.php');
+  	$this->options = Doctrine::getTable('Option')->findAll();
   }
 }
