@@ -352,7 +352,7 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = scraper::cleanString(scraper::encodingCorrection($result->nodeValue, 'alpha')));
+  			$quote = scraper::cleanString(scraper::encodingCorrection($result->nodeValue, 'alpha'));
   		}
   		 
   		$query_results = $dom2->query('h4 span');
