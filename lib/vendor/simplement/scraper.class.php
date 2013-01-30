@@ -1,6 +1,8 @@
 <?php
 
 
+setlocale(LC_ALL, 'fr_FR.UTF8');
+
 function get_contents_utf8($content) {
 	return mb_convert_encoding($content, 'UTF-8',
 			mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
@@ -137,7 +139,6 @@ class scraper
   }
   
   public static function toAscii($str) {
-    setlocale(LC_ALL, 'fr_FR.UTF8');
     
     $replace = array("'", '’', '&#039;');
     if( !empty($replace) ) {

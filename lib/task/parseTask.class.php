@@ -115,6 +115,8 @@ EOF;
     		}
     		 
     		sfTask::log($Page->id.' ('.$Page->website.') ++ '.$new_quote.' ['.$total_quote.']');
+    		if ($total_quote == 0)
+    			sfTask::log($Page->url);
     	}
     	
     }
@@ -341,7 +343,7 @@ EOF;
   	}*/
   	
   	
-  	$values = $dom->query('.evene-content .block-cdc-citations');
+  	$values = $dom->query('.evene-content .block-cdc-citations .txt');
   	 
   	foreach($values as $value) {
   		$item = simplexml_import_dom($value)->asXML();
@@ -350,7 +352,7 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = trim(get_contents_utf8($result->nodeValue));
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
   			$quote = htmlentities($quote);
   			$quote = str_replace('&nbsp;', '', $quote);
   			$quote = str_replace('&laquo;', '', $quote);
@@ -358,19 +360,25 @@ EOF;
   			$quote = html_entity_decode($quote);
   		}
   		 
-  		$query_results = $dom2->query('h4');
+  		$query_results = $dom2->query('h4 span');
   		$author = '';
   		foreach($query_results as $result) {
-  			$author = scraper::cleanAuthor(get_contents_utf8($result->nodeValue));
+  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
   			$author = str_replace('De ', '', $author);
   			$author = str_replace('[+]', '', $author);
   			$author = trim($author);
+  			if (strlen($author) > 50) {
+  				sfTask::log($quote);
+  				sfTask::log($author);
+  				sfTask::log($Page->url);
+  				die;
+  			}
   		}
   		 
   		$query_results = $dom2->query('.author a');
   		$source = '';
   		foreach($query_results as $result) {
-  			$source_temp = scraper::cleanAuthor(get_contents_utf8($result->nodeValue));
+  			$source_temp = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
   			if ($source_temp != '[+]')
   				$source = $source_temp;
   		}
@@ -378,7 +386,7 @@ EOF;
   		$query_results = $dom2->query('h3 a');
   		$tags = array();
   		foreach($query_results as $result) {
-  			$tag =  scraper::cleanTag(get_contents_utf8($result->nodeValue));
+  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
   			if ($tag != '#')
   				$tags[] = $tag;
   		}
