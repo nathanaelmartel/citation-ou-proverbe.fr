@@ -352,12 +352,7 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-  			$quote = htmlentities($quote);
-  			$quote = str_replace('&nbsp;', '', $quote);
-  			$quote = str_replace('&laquo;', '', $quote);
-  			$quote = str_replace('&raquo;', '', $quote);
-  			$quote = html_entity_decode($quote);
+  			$quote = scraper::cleanString(scraper::encodingCorrection($result->nodeValue, 'alpha')));
   		}
   		 
   		$query_results = $dom2->query('h4 span');
