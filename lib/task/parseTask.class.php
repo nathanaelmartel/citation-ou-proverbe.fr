@@ -353,7 +353,7 @@ EOF;
   		$quote = '';
   		foreach($query_results as $result) {
   			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
-  			$quote = trim(substr($quote, 2, -2));
+  			$quote = trim(substr($quote, 4, -4));
   		}
   		 
   		$query_results = $dom2->query('h4 span');
