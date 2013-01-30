@@ -223,7 +223,7 @@ class scraper
   public static function cleanString($text) {
     
     $text = strip_tags($text);
-    $text = htmlentities($text, ENT_COMPAT, 'ISO-8859-1');
+    $text = htmlentities($text, ENT_COMPAT, 'UTF-8');
     
     $text = str_replace(
       array("\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", "\xe2\x80\xa6"),
