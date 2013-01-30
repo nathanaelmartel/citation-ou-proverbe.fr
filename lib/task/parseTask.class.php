@@ -352,7 +352,8 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = scraper::cleanString(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$quote = trim(substr($quote, 2, -2));
   		}
   		 
   		$query_results = $dom2->query('h4 span');
@@ -362,12 +363,6 @@ EOF;
   			$author = str_replace('De ', '', $author);
   			$author = str_replace('[+]', '', $author);
   			$author = trim($author);
-  			if (strlen($author) > 50) {
-  				sfTask::log($quote);
-  				sfTask::log($author);
-  				sfTask::log($Page->url);
-  				die;
-  			}
   		}
   		 
   		$query_results = $dom2->query('.author a');
