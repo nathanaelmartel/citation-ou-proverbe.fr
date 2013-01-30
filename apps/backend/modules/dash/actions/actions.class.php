@@ -66,7 +66,7 @@ class dashActions extends sfActions
 	  		->orderBy('created_at ASC');
   		 
   		foreach ($q->execute() as $Page) {
-  			echo $Page;
+  			
 	  		try {
 		  		$Scraper = new scraper($Page->url, $Page->id);
 		  		 

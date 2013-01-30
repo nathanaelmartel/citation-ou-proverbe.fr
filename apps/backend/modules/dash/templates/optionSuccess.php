@@ -8,20 +8,12 @@
 					<tr>
 						<th>key</th>
 						<th>brut</th>
-						<th>scraper::cleanAuthor</th>
-						<th>scraper::cleanTag</th>
-						<th>gamma</th>
-						<th>epsilon</th>
 					</tr>
 				</thead>
 				<?php foreach ($options as $Option): ?>
 					<tr>
 						<td><?php echo $Option->option_key ?></td>
 						<td><?php echo $Option->option_value ?></td>
-						<td><?php echo scraper::cleanAuthor($Option->option_value) ?></td>
-						<td><?php echo scraper::cleanTag($Option->option_value) ?></td>
-						<td><?php echo scraper::encodingCorrection($Option->option_value, 'gamma') ?></td>
-						<td><?php echo scraper::encodingCorrection($Option->option_value, 'epsilon') ?></td>
 					</tr>
 				<?php endforeach; ?>
 			</table>
