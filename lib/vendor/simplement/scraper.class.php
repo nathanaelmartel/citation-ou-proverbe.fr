@@ -237,8 +237,8 @@ class scraper
     $text = html_entity_decode($text);
     
     $text = str_replace(
-      array('&#13;', '&#amp;', '&#039;', '’', '&#160;'), 
-      array(" ", '&', "'", "'", ' '),
+      array('&#13;', '&#amp;', '&#039;', '’', '&#160;', '&#171;', '&#187;', '&laquo;', '&raquo;'), 
+      array(" ", '&', "'", "'", ' ', '', '', '', ''),
       $text);
     
     return $text;
