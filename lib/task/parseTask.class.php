@@ -64,7 +64,7 @@ EOF;
     	->where('http_code = 200')
     	->andWhere('website = ?', $website)
     	->andWhere('parsed_date is ?', null)
-    	//->offset(rand(0, 50))
+    	->offset(rand(0, 10))
     	->limit($limit)
     	->orderBy('downloaded_date ASC');
     	
