@@ -28,13 +28,16 @@ class TagTable extends Doctrine_Table
 	        	return false;
 	        }
         }
-        
-	      $newTag = new Tag;
-	      $newTag->name = $tag;
-	      $newTag->is_active = true;
-	      if ($newTag->isValid()) {
-	      	$newTag->save();
-	      	return true;
+        try {
+		      $newTag = new Tag;
+		      $newTag->name = $tag;
+		      $newTag->is_active = true;
+		      if ($newTag->isValid()) {
+		      	$newTag->save();
+						$newTag->free(true);
+		      	return true;
+		      }
+	      } catch (\PDOException $e) {
 	      }
       }
       

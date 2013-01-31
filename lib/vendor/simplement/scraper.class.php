@@ -1,6 +1,6 @@
 <?php
 
-
+mysql_set_charset('utf8');
 setlocale(LC_ALL, 'fr_FR.UTF8');
 
 function get_contents_utf8($content) {
