@@ -45,7 +45,9 @@ class CitationTable extends Doctrine_Table
   }
     
   public static function addCitation($quote) {
-    
+  	
+  		$is_new = false;
+  	
       if ($quote['quote'] != '')
       {
       	$hash = CitationTable::buidHash($quote['quote']);
@@ -65,12 +67,9 @@ class CitationTable extends Doctrine_Table
           $Citation->is_active = true;
           $Citation->hash = $hash;
         } else {
-          $is_new = false;
-          
         	$Citation = $citations[0];
           $Citation->note = $Citation->note + 1;
         }
-      }
       
            
 	    if (array_key_exists('source', $quote) && ($quote['source'] == ''))
