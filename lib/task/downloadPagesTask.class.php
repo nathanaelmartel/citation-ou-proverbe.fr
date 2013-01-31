@@ -44,8 +44,8 @@ EOF;
     		'linternaute', 
     		'citation-et-proverbe',
     		'les-citations',*/
-    		'evene',
-    //		'lexode'
+    //		'evene',
+    		'lexode'
     );
     
     shuffle($websites);
