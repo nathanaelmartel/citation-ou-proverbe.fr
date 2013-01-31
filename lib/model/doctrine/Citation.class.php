@@ -13,6 +13,8 @@
 class Citation extends BaseCitation
 {
 	public function addTags($tags) {
+		array_unique($tags, SORT_LOCALE_STRING);
+		
 		if (count($tags) > 0) {
 			foreach ($tags as $tag) {
 				$this->addTag($tag);

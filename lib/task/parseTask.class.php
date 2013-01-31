@@ -45,8 +45,8 @@ EOF;
     		'linternaute', 
     		'citation-et-proverbe',
     		'les-citations',*/
-    		'evene',
-    //		'lexode'
+    //		'evene',
+    		'lexode'
     );
     
     shuffle($websites);
@@ -113,6 +113,9 @@ EOF;
           } else {
         		$quote['author'] = 'Anonyme';
           }
+          if (in_array($quote['author'], array('Auteur Inconnu', 'Inconnu', 'Artiste Inconnue')))
+        		$quote['author'] = 'Anonyme';
+          	
     			if (AuthorTable::addAuthor($quote['author']))
     				sfTask::log('++ author : '.$quote['author']);
     			if (CitationTable::addCitation($quote)) {
@@ -366,20 +369,20 @@ EOF;
 	    $query_results = $dom2->query('.nolink');
 	    $quote = '';
     	foreach($query_results as $result) {
-    	  $quote = trim(scraper::encodingCorrection($result->nodeValue, 'gamma'));
+    	  $quote = trim(scraper::utf8($result->nodeValue));
     	}
     	
 	    $query_results = $dom2->query('legend');
 	    $author = '';
     	foreach($query_results as $result) {
-    	  $author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'gamma'));
+    	  $author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
   			$author = trim(str_replace('Auteur inconnu', 'Anonyme', $author));
     	}
     	
 	    $query_results = $dom2->query('.legende a');
 	    $tags = array();
     	foreach($query_results as $result) {
-    		$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'gamma'));
+    		$tag =  scraper::cleanTag(scraper::utf8($result->nodeValue));
     		if ($tag != '#')
     	  	$tags[] = $tag;
     	}
