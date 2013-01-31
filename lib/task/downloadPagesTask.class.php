@@ -38,12 +38,12 @@ EOF;
     $begin_time = time();
     $max_time = 50;
     
-    $websites = array(
+    $websites = array(/*
     		'citations', 
     		'1001-citations',
     		'citation-et-proverbe',
     		'evene',
-    		'lexode',
+    		'lexode',*/
     		'leproverbe'
     );
     
