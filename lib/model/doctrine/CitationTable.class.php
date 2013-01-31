@@ -53,6 +53,8 @@ class CitationTable extends Doctrine_Table
         $citations = Doctrine::getTable('Citation')->findByHash($hash);
         if (count($citations) == 0)
         {
+          $is_new = true;
+          
           $Citation = new Citation;
           $Citation->quote = trim($quote['quote']);
           
@@ -62,24 +64,25 @@ class CitationTable extends Doctrine_Table
           $Citation->last_published_at  = '0000-00-00 00:00:00';
           $Citation->is_active = true;
           $Citation->hash = $hash;
-          
-          return true;
         } else {
+          $is_new = false;
+          
         	$Citation = $citations[0];
           $Citation->note = $Citation->note + 1;
-          
         }
       }
       
            
-    if (array_key_exists('source', $quote) && ($quote['source'] == ''))
-     $Citation->source = $quote['source'];
+	    if (array_key_exists('source', $quote) && ($quote['source'] == ''))
+	     $Citation->source = $quote['source'];
+	    
+	    $Citation->save();
+	    $Citation->addTags($quote['tags']);
+	    $Citation->setSlug();
+	    $Citation->save();
+			$Citation->free(true);
+    }
     
-    $Citation->save();
-    $Citation->addTags($quote['tags']);
-    $Citation->setSlug();
-    $Citation->save();
-		$Citation->free(true);
-		return false;
+		return $is_new;
   }
 }

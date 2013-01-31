@@ -18,6 +18,7 @@ generator:
       list:
           display: [=quote, Author, is_active, note, view, updated_at]
           max_per_page: 50
+          sort: [updated_at, desc]
       filter:  ~
       form:    ~
       edit:    ~
