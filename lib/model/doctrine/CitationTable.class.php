@@ -59,32 +59,27 @@ class CitationTable extends Doctrine_Table
         	$author = Doctrine::getTable('Author')->findOneByName($quote['author']);
           $Citation->author_id = $author->id;
           
-          if (array_key_exists('source', $quote) && ($quote['source'] == ''))
-          	$Citation->source = $quote['source'];
-          
           $Citation->last_published_at  = '0000-00-00 00:00:00';
           $Citation->is_active = true;
           $Citation->hash = $hash;
-          $Citation->save();
-          
-          $Citation->addTags($quote['tags']);
-          $Citation->setSlug();
-          $Citation->save();
           
           return true;
         } else {
         	$Citation = $citations[0];
           $Citation->note = $Citation->note + 1;
-        	
-          if (array_key_exists('source', $quote) && ($quote['source'] == ''))
-          	$Citation->source = $quote['source'];
           
-          $Citation->save();
-          $Citation->addTags($quote['tags']);
-          $Citation->setSlug();
-          $Citation->save();
         }
       }
+      
+           
+    if (array_key_exists('source', $quote) && ($quote['source'] == ''))
+     $Citation->source = $quote['source'];
+    
+    $Citation->save();
+    $Citation->addTags($quote['tags']);
+    $Citation->setSlug();
+    $Citation->save();
+		$Citation->free(true);
 		return false;
   }
 }

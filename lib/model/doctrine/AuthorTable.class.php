@@ -28,6 +28,7 @@ class AuthorTable extends Doctrine_Table
           $Author->name = $author_name;
           $Author->is_active = true;
           $Author->save();
+					$Author->free(true);
           return true;
         }
       }

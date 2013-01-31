@@ -24,18 +24,22 @@ class Citation extends BaseCitation
 		$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
 		
 		foreach ($this->Tags as $Linked_Tag) {
-	    if (scraper::toAscii($Linked_Tag->name) == scraper::toAscii($tag)) {
+	    if ($Linked_Tag->id == $Tag->id) {
 				return false;
 			}
 		}
-		   	
-		$TagCitation = new TagCitation;
-		$TagCitation->tag_id = $Tag->id;
-		$TagCitation->citation_id = $this->id;
-		if ($TagCitation->isValid()) {
-			$TagCitation->save();
-	  	return true;
-		}
+		
+		try {
+			$TagCitation = new TagCitation;
+			$TagCitation->tag_id = $Tag->id;
+			$TagCitation->citation_id = $this->id;
+			if ($TagCitation->isValid()) {
+				$TagCitation->save();
+				$TagCitation->free(true);
+		  	return true;
+			}
+	  } catch (\PDOException $e) {
+	  }
 		
 		return false;
 	}
