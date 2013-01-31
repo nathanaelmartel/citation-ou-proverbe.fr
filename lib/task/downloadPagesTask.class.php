@@ -40,10 +40,11 @@ EOF;
     
     $websites = array(
     		'citations', 
-    //		'1001-citations',
-    //		'citation-et-proverbe',
-    //		'evene',
-    //		'lexode'
+    		'1001-citations',
+    		'citation-et-proverbe',
+    		'evene',
+    		'lexode',
+    		'leproverbe'
     );
     
     shuffle($websites);
@@ -51,7 +52,7 @@ EOF;
     foreach ($websites as $website) {
       if (time() - $begin_time > $max_time) break;
     	//$limit = 40;
-    	$limit = ceil(50/count($websites));
+    	$limit = ceil(40/count($websites));
     	if ($website == 'les-citations') 
     		$limit = 5;
     	
