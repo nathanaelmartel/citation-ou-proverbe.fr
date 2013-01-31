@@ -43,14 +43,15 @@ EOF;
     
     $websites = array(
     		'citations', 
-    //		'1001-citations',
-    //		'citation-et-proverbe',
-    //		'evene',
-    //		'lexode'
+    		'1001-citations',
+    		'citation-et-proverbe',
+    		'evene',
+    		'lexode',
+    		'leproverbe'
     );
     
     shuffle($websites);
-    $limit = ceil(50/count($websites));
+    $limit = ceil(40/count($websites));
     //$limit = 50;
     
     foreach ($websites as $website) {
@@ -97,6 +98,9 @@ EOF;
     				break;
     			case 'lexode':
     				$quotes = $this->parse_lexode($Page);
+    				break;
+    			case 'leproverbe':
+    				$quotes = $this->parse_leproverbe($Page);
     				break;
     		}
     		 
@@ -296,33 +300,33 @@ EOF;
   }
   
   function parse_evene($Page) {
-  	 
+  
   	$quotes = array();
   	$Scraper = new scraper($Page->url, $Page->id);
   	$html = $Scraper->getPage();
   	$dom = new Zend_Dom_Query($html);
-  	
-  	
-  	$values = $dom->query('.evene-content .block-cdc-citations .txt');
   	 
+  	 
+  	$values = $dom->query('.evene-content .block-cdc-citations .txt');
+  
   	foreach($values as $value) {
   		$item = simplexml_import_dom($value)->asXML();
   		$dom2 = new Zend_Dom_Query($item);
-  	  
+  			
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
   			$quote = trim(scraper::utf8($result->nodeValue));
   			$quote = trim(substr($quote, 4, -4));
   		}
-  		 
+  			
   		$query_results = $dom2->query('h4 span');
   		$author = '';
   		foreach($query_results as $result) {
   			$author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
-  		} 
+  		}
   		if ($author == '')
-  		$query_results = $dom2->query('h4');
+  			$query_results = $dom2->query('h4');
   		foreach($query_results as $result) {
   			$author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
   			$author = str_replace('De ', '', $author);
@@ -333,7 +337,7 @@ EOF;
   			sfTask::log('author look too long: '.$author);
   			continue;
   		}
-  		 
+  			
   		$query_results = $dom2->query('.author a');
   		$source = '';
   		foreach($query_results as $result) {
@@ -341,7 +345,7 @@ EOF;
   			if ($source_temp != '[+]')
   				$source = $source_temp;
   		}
-  		 
+  			
   		$query_results = $dom2->query('h3 a');
   		$tags = array();
   		foreach($query_results as $result) {
@@ -349,9 +353,47 @@ EOF;
   			if ($tag != '#')
   				$tags[] = $tag;
   		}
-  		 
+  			
   		//sfTask::log('==== '.$quote.' - '.$author.' - '.$source.' - '.json_encode($tags));
   		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags, SORT_LOCALE_STRING));
+  	}
+  
+  	return $quotes;
+  }
+  
+  function parse_leproverbe($Page) {
+  	 
+  	$quotes = array();
+  	$Scraper = new scraper($Page->url, $Page->id);
+  	$html = $Scraper->getPage();
+  	$dom = new Zend_Dom_Query($html);
+  	
+  	
+  	$values = $dom->query('#content .block');
+  	 
+  	foreach($values as $value) {
+  		$item = simplexml_import_dom($value)->asXML();
+  		$dom2 = new Zend_Dom_Query($item);
+  	  
+  		$query_results = $dom2->query('.proverbe');
+  		$quote = '';
+  		foreach($query_results as $result) {
+  			$quote = trim(scraper::utf8($result->nodeValue));
+  		}
+  		 
+  		$query_results = $dom2->query('.proverbe-source a');
+  		$author = '';
+  		foreach($query_results as $result) {
+  			$temp_author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
+    		if (substr_count($temp_author, '#') == 0)
+  				$author = $temp_author;
+  		}
+      if (strlen($author) == 0) {
+  			$author = 'Proverbe';
+      }
+  		 
+  		//sfTask::log('==== '.$quote.' - '.$author);
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'tags' => array());
   	}
   
   	return $quotes;
