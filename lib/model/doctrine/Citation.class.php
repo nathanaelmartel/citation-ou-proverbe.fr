@@ -12,4 +12,42 @@
  */
 class Citation extends BaseCitation
 {
+	public function addTags($tags) {
+		if (count($tags) > 0) {
+			foreach ($tags as $tag) {
+				$this->addTag($tag);
+			}
+		}
+	}
+	
+	public function addTag($tag) {
+		$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
+		
+		foreach ($this->Tags as $Linked_Tag) {
+	    if (scraper::toAscii($Linked_Tag->name) == scraper::toAscii($tag)) {
+				return false;
+			}
+		}
+		   	
+		$TagCitation = new TagCitation;
+		$TagCitation->tag_id = $Tag->id;
+		$TagCitation->citation_id = $this->id;
+		if ($TagCitation->isValid()) {
+			$TagCitation->save();
+	  	return true;
+		}
+		
+		return false;
+	}
+	
+	public function setSlug() {
+		$slug = $this->id.'-';
+		
+		foreach ($this->Tags as $Tag) {
+			$slug .= '-'.$Tag->slug;
+		}
+		
+		$this->slug = trim($slug, ' -');
+		$this->save();
+	}
 }

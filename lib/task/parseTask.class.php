@@ -32,7 +32,9 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
-
+    
+    $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+    $q->execute('SHOW COLLATION LIKE "utf8%" ;');
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
@@ -101,10 +103,16 @@ EOF;
     		$Page->save();
     	
     		foreach ($quotes as $quote) {
+    			var_dump($quote);
     			foreach ($quote['tags'] as $tag) {
     				if (TagTable::addTag($tag))
     					sfTask::log('++ tag : '.$tag);
     			}
+          if ((array_key_exists('author', $quote)) && (strlen($quote['author']) > 0)) {
+        		$quote['author'] = $quote['author'];
+          } else {
+        		$quote['author'] = 'Anonyme';
+          }
     			if (AuthorTable::addAuthor($quote['author']))
     				sfTask::log('++ author : '.$quote['author']);
     			if (CitationTable::addCitation($quote)) {
@@ -276,7 +284,7 @@ EOF;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
-    	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags));
+    	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags, SORT_LOCALE_STRING));
     }
     
     return $quotes;
@@ -352,23 +360,32 @@ EOF;
   		$query_results = $dom2->query('h3');
   		$quote = '';
   		foreach($query_results as $result) {
-  			$quote = trim(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$quote = trim(scraper::utf8($result->nodeValue));
   			$quote = trim(substr($quote, 4, -4));
   		}
   		 
   		$query_results = $dom2->query('h4 span');
   		$author = '';
   		foreach($query_results as $result) {
-  			$author = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
+  		} 
+  		if ($author == '')
+  		$query_results = $dom2->query('h4');
+  		foreach($query_results as $result) {
+  			$author = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
   			$author = str_replace('De ', '', $author);
   			$author = str_replace('[+]', '', $author);
   			$author = trim($author);
+  		}
+  		if (strlen($author) > 50){
+  			sfTask::log('author look too long: '.$author);
+  			next();
   		}
   		 
   		$query_results = $dom2->query('.author a');
   		$source = '';
   		foreach($query_results as $result) {
-  			$source_temp = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$source_temp = scraper::cleanAuthor(scraper::utf8($result->nodeValue));
   			if ($source_temp != '[+]')
   				$source = $source_temp;
   		}
@@ -376,13 +393,13 @@ EOF;
   		$query_results = $dom2->query('h3 a');
   		$tags = array();
   		foreach($query_results as $result) {
-  			$tag =  scraper::cleanTag(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+  			$tag =  scraper::cleanTag(scraper::utf8($result->nodeValue));
   			if ($tag != '#')
   				$tags[] = $tag;
   		}
   		 
   		//sfTask::log('==== '.$quote.' - '.$author.' - '.$source.' - '.json_encode($tags));
-  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags));
+  		$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags, SORT_LOCALE_STRING));
   	}
   
   	return $quotes;

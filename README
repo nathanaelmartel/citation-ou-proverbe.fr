@@ -6,3 +6,7 @@
 * * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony parse >> /home/nat/www/v2.citation-et-proverbe.fr/log/parse.log
 
 
+DELETE FROM tag_citation;
+DELETE FROM tag;
+DELETE FROM author;
+DELETE FROM citation;

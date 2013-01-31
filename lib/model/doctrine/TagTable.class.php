@@ -19,17 +19,23 @@ class TagTable extends Doctrine_Table
     
   	public static function addTag($tag) {
   		
-      if ($tag != '')
+      if (($tag != '') && (strlen($tag)>0))
       {
         $tags = Doctrine::getTable('Tag')->findByName($tag);
-        if (count($tags) == 0)
-        {
-          $Tag = new Tag;
-          $Tag->name = $tag;
-          $Tag->is_active = true;
-          $Tag->save();
-          return true;
+        foreach ($tags as $Tag) {
+	        if (scraper::toAscii($Tag->name) == scraper::toAscii($tag))
+	        {
+	        	return false;
+	        }
         }
+        
+	      $newTag = new Tag;
+	      $newTag->name = $tag;
+	      $newTag->is_active = true;
+	      if ($newTag->isValid()) {
+	      	$newTag->save();
+	      	return true;
+	      }
       }
       
       return false;
