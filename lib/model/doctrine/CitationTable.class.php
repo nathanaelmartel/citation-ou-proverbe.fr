@@ -17,8 +17,8 @@ class CitationTable extends Doctrine_Table
         return Doctrine_Core::getTable('Citation');
     }
     
-  public static function buidHash($quote, $author) {
-  	$text = $quote.' '.$author;
+  public static function buidHash($quote) {
+  	$text = $quote;
   	
 	  // replace non letter or digits by -
 	  $text = preg_replace('~[^\\pL\d]+~u', ' ', $text);
@@ -48,7 +48,7 @@ class CitationTable extends Doctrine_Table
     
       if ($quote['quote'] != '')
       {
-      	$hash = CitationTable::buidHash($quote['quote'], $quote['author']);
+      	$hash = CitationTable::buidHash($quote['quote']);
       	
         $citations = Doctrine::getTable('Citation')->findByHash($hash);
         if (count($citations) == 0)
@@ -56,10 +56,8 @@ class CitationTable extends Doctrine_Table
           $Citation = new Citation;
           $Citation->quote = trim($quote['quote']);
           
-          if ((array_key_exists('author', $quote)) && ($quote['author'] != '')) {
-        		$author = Doctrine::getTable('Author')->findOneByName($quote['author']);
-          	$Citation->author_id = $author->id;
-          }
+        	$author = Doctrine::getTable('Author')->findOneByName($quote['author']);
+          $Citation->author_id = $author->id;
           
           if (array_key_exists('source', $quote) && ($quote['source'] == ''))
           	$Citation->source = $quote['source'];
@@ -69,19 +67,8 @@ class CitationTable extends Doctrine_Table
           $Citation->hash = $hash;
           $Citation->save();
           
-          
-          $slug = $Citation->id;
-          foreach ($quote['tags'] as $tag) {
-          	$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
-          	
-          	$slug .= '-'.$Tag->slug;
-          	
-          	$TagCitation = new TagCitation;
-          	$TagCitation->tag_id = $Tag->id;
-          	$TagCitation->citation_id = $Citation->id;
-          	$TagCitation->save();
-          }
-          $Citation->slug = trim($slug, '-');
+          $Citation->addTags($quote['tags']);
+          $Citation->setSlug();
           $Citation->save();
           
           return true;
@@ -93,30 +80,9 @@ class CitationTable extends Doctrine_Table
           	$Citation->source = $quote['source'];
           
           $Citation->save();
-          
-	          if (count($quote['tags']) > 0) {
-	          	foreach ($quote['tags'] as $tag) {
-		          	$Tag = Doctrine::getTable('Tag')->findOneByName($tag);
-		          	
-		          	$already = false;
-		          	foreach ($Citation->Tags as $Linked_Tag) {
-		          		if ($Linked_Tag->id = $Tag->id) {
-		          			$already = true;
-		          			break;
-		          		}
-		          	}
-			          try {
-					          	if (!$already) {
-						          	$TagCitation = new TagCitation;
-						          	$TagCitation->tag_id = $Tag->id;
-						          	$TagCitation->citation_id = $Citation->id;
-						          	$TagCitation->save();
-					          	}
-			          } catch (Exception $e) {
-			          	echo '*******************erreur**************************';
-			          }
-	          	}
-	          }
+          $Citation->addTags($quote['tags']);
+          $Citation->setSlug();
+          $Citation->save();
         }
       }
 		return false;
