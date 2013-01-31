@@ -43,9 +43,9 @@ EOF;
     
     $websites = array(
     /*		'citations', 
-    		'1001-citations', 
-    		'linternaute', */
-    		'citation-et-proverbe',
+    		'1001-citations', */ 
+    		'linternaute', 
+    //		'citation-et-proverbe',
     //		'les-citations', // trop lent
     //		'evene',
     //		'lexode'
