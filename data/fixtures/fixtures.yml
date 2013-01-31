@@ -6,9 +6,9 @@ Page:
   citation-et-proverbe:
     url: http://www.citation-et-proverbe.fr/
     website: citation-et-proverbe
-  linternaute:
-    url: http://www.linternaute.com/citation/
-    website: linternaute
+#  linternaute: #403 forbiden 
+#    url: http://www.linternaute.com/citation/
+#    website: linternaute
   1001:
     url: http://www.1001-citations.com/
     website: 1001-citations
@@ -21,9 +21,9 @@ Page:
   lexode:
     url: http://www.lexode.com/citations/
     website: lexode
-  lescitations:
-    url: http://www.les-citations.com/index.php
-    website: les-citations
+#  lescitations: #trop lent
+#    url: http://www.les-citations.com/index.php
+#    website: les-citations
 #  wikiquote:
 #    url: http://fr.wikiquote.org/
 #    website: wikiquote
