@@ -40,9 +40,9 @@ EOF;
     
     $websites = array(
     /*		'citations', 
-    		'1001-citations', 
-    		'linternaute', */
-    		'citation-et-proverbe',
+    		'1001-citations',*/ 
+    		'linternaute', 
+    //		'citation-et-proverbe',
     //		'les-citations', // trop lent
     //		'evene',
     //		'lexode'
@@ -52,7 +52,8 @@ EOF;
     
     foreach ($websites as $website) {
       if (time() - $begin_time > $max_time) break;
-    	$limit = 40;
+    	//$limit = 40;
+    	$limit = ceil(50/count($websites));
     	if ($website == 'les-citations') 
     		$limit = 5;
     	
