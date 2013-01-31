@@ -38,15 +38,17 @@ EOF;
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
+    $begin_time = time();
+    $max_time = 50;
     
     $websites = array(
     /*		'citations', 
     		'1001-citations', 
-    		'linternaute', 
+    		'linternaute', */
     		'citation-et-proverbe',
-    		'les-citations',*/
+    //		'les-citations', // trop lent
     //		'evene',
-    		'lexode'
+    //		'lexode'
     );
     
     shuffle($websites);
@@ -54,6 +56,7 @@ EOF;
     //$limit = 50;
     
     foreach ($websites as $website) {
+      if (time() - $begin_time > $max_time) break;
     	sfTask::log('**** '.$website.' '.date('r').' ****');    	
     	
     	$q = Doctrine_Query::create()
@@ -69,6 +72,7 @@ EOF;
     	//echo $q->getSqlQuery();echo "\n";die;
     	
     	foreach ($q->execute() as $Page) {
+      	if (time() - $begin_time > $max_time) break;
     		$total_quote = 0;
     		$new_quote = 0;
     		 

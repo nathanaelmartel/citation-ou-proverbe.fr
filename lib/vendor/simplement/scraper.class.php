@@ -77,6 +77,8 @@ class scraper
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       $output = curl_exec($ch);
       $this->curl_info = curl_getinfo($ch);
+      //var_dump($output);
+      //var_dump($this->curl_info);
       curl_close($ch);
       
       //$output = file_get_contents($this->url);
