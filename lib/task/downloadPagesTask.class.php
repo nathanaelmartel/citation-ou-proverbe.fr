@@ -39,11 +39,9 @@ EOF;
     $max_time = 50;
     
     $websites = array(
-    /*		'citations', 
-    		'1001-citations',*/ 
-    		'linternaute', 
+    //		'citations', 
+    		'1001-citations',
     //		'citation-et-proverbe',
-    //		'les-citations', // trop lent
     //		'evene',
     //		'lexode'
     );
