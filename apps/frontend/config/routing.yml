@@ -1,16 +1,14 @@
-# You can find more information about this file on the symfony website:
-# http://www.symfony-project.org/reference/1_4/en/10-Routing
 
-# default rules
+
+
+
+citation_image:
+  url:   /medias/:author/:slug.:sf_format
+  param: { module: media, action: show }
+citation_image_short:
+  url:   /i/:id
+  param: { module: media, action: short }
+
 homepage:
   url:   /
   param: { module: default, action: index }
-
-# generic rules
-# please, remove them by adding more specific rules
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*

@@ -3,3 +3,12 @@
 
 # default values
 #all:
+
+all:
+  medias:
+    dir: /medias/citations/
+    jpg_quality: 90
+    
+  sfImageTransformPlugin:
+    mime_type:
+      auto_detect: true

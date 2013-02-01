@@ -46,14 +46,24 @@ class Citation extends BaseCitation
 		return false;
 	}
 	
-	public function setSlug() {
-		$slug = $this->id.'-';
+	public function generateSlug() {
+		$slug = $this->id;
 		
 		foreach ($this->Tags as $Tag) {
 			$slug .= '-'.$Tag->slug;
 		}
 		
-		$this->slug = trim($slug, ' -');
+		if (strlen($slug) == 0) {
+			$slug = $this->id.'-'.$hash;
+		}
+		
+		if (strlen($slug) == 0) {
+			$slug = $this->id;
+		}
+		
+		$this->slug = $slug;
 		$this->save();
+		
+		return $this->slug;
 	}
 }
