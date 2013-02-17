@@ -44,7 +44,7 @@ EOF;
     	//->where('slug = ""')
     	->Where('slug is null')
     	->offset(rand(0, 10))
-    	->limit(1000)
+    	->limit(100)
     	->orderBy('updated_at ASC');
     	 
     	//echo $q->getSqlQuery();echo "\n";die;
