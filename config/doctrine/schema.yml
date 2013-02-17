@@ -47,21 +47,44 @@ Author:
     
   columns:
     name: {type: string(255), unique: true}
-#    abstract: {type: string(), default: null}
-#    comment: {type: string(), default: null}
-#    thumbnail: {type: string(255), default: null}
-#    birth_date: {type: string(255), default: null}
-#    death_date: {type: string(255), default: null}
-#    wikipedia_url: {type: string(255), default: null}
-#    dbpedia_url: {type: string(255), default: null}
-    dbpedia_at: {type: datetime, default: null}
-    wikipedia_at: {type: datetime, default: null}
     is_active: {type: boolean}
       
   options:
     collate: utf8_unicode_ci
     charset: utf8
 
+
+AuthorDBPedia:
+  connection: doctrine
+  tableName: author_dbpedia
+  actAs:
+    Timestampable:
+    
+  columns:
+    author_id: {type: integer, notnull: true}
+    name: {type: string(255), unique: true}
+    abstract: {type: string(), default: null}
+    comment: {type: string(), default: null}
+    thumbnail: {type: string(255), default: null}
+    birth_date: {type: string(255), default: null}
+    death_date: {type: string(255), default: null}
+    wikipedia_url: {type: string(255), default: null}
+    dbpedia_url: {type: string(255), default: null}
+    dbpedia_at: {type: datetime, default: null}
+    is_active: {type: boolean}
+    
+  relations:
+    Author:
+      class: Author
+      foreignAlias: DBPedia
+      local: author_id
+      foreign: id
+      onDelete: cascade
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
 Citation:
   connection: doctrine
   tableName: citation
