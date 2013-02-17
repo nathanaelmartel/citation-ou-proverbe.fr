@@ -77,6 +77,8 @@ Citation:
     note: {type: int, default: 0}
     view: {type: int, default: 0}
     slug: {type: string(255), unique: true}
+    color: {type: string(255)}
+    text_color: {type: string(255)}
     
   relations:
     Author:

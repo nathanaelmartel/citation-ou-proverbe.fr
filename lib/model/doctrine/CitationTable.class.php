@@ -77,7 +77,7 @@ class CitationTable extends Doctrine_Table
 	    
 	    $Citation->save();
 	    $Citation->addTags($quote['tags']);
-	    $Citation->setSlug();
+	    $Citation->generateSlug();
 	    $Citation->save();
 			$Citation->free(true);
     }

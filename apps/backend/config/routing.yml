@@ -50,14 +50,6 @@ dash_author:
 dash_page:
   url:   /dashboard/page
   param: { module: dash, action: page }
-  
-check_encoding:
-  url:   /dashboard/checkencoding
-  param: { module: dash, action: checkEncoding }
-  
-option:
-  url:   /dashboard/option
-  param: { module: dash, action: option }
 
 # generic rules
 # please, remove them by adding more specific rules
