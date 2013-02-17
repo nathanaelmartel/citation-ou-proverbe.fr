@@ -2,6 +2,14 @@
 
 
 
+#citation:
+#  url:   /:author/:slug
+#  param: { module: citation, action: show }
+#citation_short:
+#  url:   /c/:id
+#  param: { module: citation, action: short }
+
+
 citation_image:
   url:   /medias/:author/:slug.:sf_format
   param: { module: media, action: show }

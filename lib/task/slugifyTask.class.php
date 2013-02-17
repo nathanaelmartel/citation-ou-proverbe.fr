@@ -44,7 +44,7 @@ EOF;
     	//->where('slug = ""')
     	->Where('slug is null')
     	->offset(rand(0, 10))
-    	->limit(100)
+    	->limit(1000)
     	->orderBy('updated_at ASC');
     	 
     	//echo $q->getSqlQuery();echo "\n";die;
@@ -53,6 +53,7 @@ EOF;
     		if (time() - $begin_time > $max_time) break;
     		
     		$Citation->generateSlug();
+    		$Citation->getRGBColor();
     		$Citation->save();
     		 
     		sfTask::log($Citation->id.': '.$Citation->slug);

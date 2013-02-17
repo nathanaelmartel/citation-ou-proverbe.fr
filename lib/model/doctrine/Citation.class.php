@@ -66,4 +66,54 @@ class Citation extends BaseCitation
 		
 		return $this->slug;
 	}
+	
+	public function generateColor() {
+			include_once(sfConfig::get('sf_web_dir').'/../lib/vendor/simplement/couleur.class.php');
+			
+			$hue = rand(0, 100)/100;
+			
+			$rgb = couleur::hsl_rgb($hue, .8, .8);
+			$this->color = json_encode($rgb);
+			
+			$rgb = couleur::hsl_rgb($hue, .5, .25);
+			$this->text_color = json_encode($rgb);
+			
+			$this->save();
+	}
+	
+	public function getRGBColor() {
+		if (!$this->color)
+			$this->generateColor();
+		
+		return json_decode($this->color);
+	}
+	
+	public function getRGBColorHex() {
+		if (!$this->color)
+			$this->generateColor();
+		
+		include_once(sfConfig::get('sf_web_dir').'/../lib/vendor/simplement/couleur.class.php');
+		$rgb = json_decode($this->color);
+		$rgb_string = couleur::rgb_in_hex($rgb[0], $rgb[1], $rgb[2]);
+		
+		return $rgb_string;
+	}
+	
+	public function getTextRGBColor() {
+		if (!$this->text_color)
+			$this->generateColor();
+		
+		return json_decode($this->text_color);
+	}
+	
+	public function getTextRGBColorHex() {
+		if (!$this->text_color)
+			$this->generateColor();
+		
+		include_once(sfConfig::get('sf_web_dir').'/../lib/vendor/simplement/couleur.class.php');
+		$rgb = json_decode($this->text_color);
+		$rgb_string = couleur::rgb_in_hex($rgb[0], $rgb[1], $rgb[2]);
+		
+		return $rgb_string;
+	}
 }

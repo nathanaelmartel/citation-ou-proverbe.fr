@@ -43,19 +43,9 @@ all:
             url:          dash_page
             image:        generic.png
             credentials:  [admin]
-          Check Encoding:
-            url:          check_encoding
-            image:        generic.png
-            credentials:  [admin]
           Page:
             url:          page
             image:        searchtext.png
-            credentials:  [admin]
-      Option:
-        items:
-          Option:
-            url:          option
-            image:        generic.png
             credentials:  [admin]
             
             

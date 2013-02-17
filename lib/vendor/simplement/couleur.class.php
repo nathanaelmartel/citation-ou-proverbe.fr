@@ -44,5 +44,9 @@ class couleur
 	  if ( ( 2 * $vH ) < 1 ) return $v2;
 	  if ( ( 3 * $vH ) < 2 ) return $v1 + ( $v2 - $v1 ) * ( ( 2 / 3 ) - $vH ) * 6;
 	}
+	
+	public static function rgb_in_hex($r, $g, $b) {
+		return sprintf('#%02x%02x%02x', $r, $g, $b);
+	}
 }
 
