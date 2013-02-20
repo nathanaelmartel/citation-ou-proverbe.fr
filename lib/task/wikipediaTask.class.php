@@ -43,7 +43,7 @@ EOF;
     ->select('*')
     ->from('Author a')
     ->offset(rand(0, 50))
-    ->limit(100)
+    ->limit(50)
    	->orderBy('dbpedia_at ASC');;
     
     $authors = $q->execute();
