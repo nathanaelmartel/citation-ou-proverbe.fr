@@ -47,6 +47,8 @@ Author:
     
   columns:
     name: {type: string(255), unique: true}
+    dbpedia_at: {type: datetime, default: null}
+    wikipedia_at: {type: string(255), default: null}
     is_active: {type: boolean}
       
   options:
@@ -68,15 +70,43 @@ AuthorDBPedia:
     thumbnail: {type: string(255), default: null}
     birth_date: {type: string(255), default: null}
     death_date: {type: string(255), default: null}
+#    birth_place: {type: string(255), default: null}
+#    death_place: {type: string(255), default: null}
     wikipedia_url: {type: string(255), default: null}
     dbpedia_url: {type: string(255), default: null}
-    dbpedia_at: {type: datetime, default: null}
-    is_active: {type: boolean}
+#    occupation: {type: string(255), default: null}
+#    notableworks: {type: string(255), default: null}
     
   relations:
     Author:
       class: Author
       foreignAlias: DBPedia
+      local: author_id
+      foreign: id
+      onDelete: cascade
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+
+
+AuthorWikipedia:
+  connection: doctrine
+  tableName: author_wikipedia
+  actAs:
+    Timestampable:
+    
+  columns:
+    author_id: {type: integer, notnull: true}
+    name: {type: string(255), unique: true}
+    abstract: {type: string(), default: null}
+    thumbnail: {type: string(255), default: null}
+    wikipedia_url: {type: string(255), default: null}
+    
+  relations:
+    Author:
+      class: Author
+      foreignAlias: Wikipedia
       local: author_id
       foreign: id
       onDelete: cascade

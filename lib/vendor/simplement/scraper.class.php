@@ -127,6 +127,8 @@ class scraper
     
     if (substr($url, 0, 4) == 'http')
       return $url;
+    else if (substr($url, 0, 2) == '//')
+      return $url_info['scheme'].':'.$url;
     else if (substr($url, 0, 1) == '/')
       return $url_info['scheme'].'://'.$url_info['host'].$url;
     else if (substr($url, 0, 1) == '#')

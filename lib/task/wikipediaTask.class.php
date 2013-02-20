@@ -36,98 +36,63 @@ EOF;
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
     
+    if (!file_exists('data/scraper_cache/wikipedia'))
+    	mkdir('data/scraper_cache/wikipedia');
+    
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author a')
-    ->where('dbpedia_url IS NULL')
-    ->andWhere('wikipedia_url IS NULL')
     ->offset(rand(0, 50))
-    ->limit(50)
-   	->orderBy('updated_at ASC');;
+    ->limit(100)
+   	->orderBy('dbpedia_at ASC');;
     
     $authors = $q->execute();
     
-    foreach ($authors as $author) {
-      $file = 'data/scraper_cache/wikipedia/'.$author->id.'.html';
-      $log = '';
-      $is_merged = false;
-      
-      if ($author->wikipedia_url == null) {
-        if ($url = $this->searchWikipedia($author->name)) {
-          
-        	$log = 'url, ';
-        	$name = '';
-        	
-          // l'url est déja renseigné pour un autre auteur -> merge
-          /*$authors = Doctrine::getTable('Author')->findByWikipediaUrl($url);
-          if (count($authors) == 1)
-          {
-          	$is_merged = $this->mergeAuthor($authors[0], $author);
-          } else if (count($authors) > 1) {
-    				sfTask::log('author: duplicate url '.$author->name.' '.count($authors));
-          }*/
-          
-          // l'url n'est pas trouvé dans la base, on chercre le nom (de wikipedia), si on le trouve -> merge
-      		if (!$is_merged) {
-	          $html = $this->retrievePage($url, $file);
-	          if (file_exists($file)) {
-	          	$fp = fopen($file, "r");
-	          	$html = fread($fp, filesize($file));
-	          	fclose($fp);
-	          
-	          	$html = str_replace(
-	          			array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
-	          			array(" ", '&', "'", "'", ' '),
-	          			$html);
-	          	
-	          	$name = $this->retrieveName($html);
-	          	$abstract = $this->retrieveBio($html);
-	          	$thumbnail = $this->retrievePhoto($html);
-	          	
-		          /*$authors = Doctrine::getTable('Author')->findByName($name);
-		          if (count($authors) == 1)
-		          {
-		          	$is_merged = $this->mergeAuthor($authors[0], $author);
-		          	$authors[0]->name = $name;
-		          	$authors[0]->save();
-		          } else if (count($authors) > 1) {
-		    				sfTask::log('author duplicate name in database '.$author->name.' '.count($authors));
-		          }*/
-	          }
-      		}
-      		
-      		
-      		if (($name != '') && ($name != $author->name)) {
-      			$log .= ' name updated ('.$author->name.' -> '.$name.') ';
-      			$author->name = $name;
-      		} else {
-      			$log .= ' not updated ('.$author->name.' -> '.$name.') ';
-      		}
-      		
-      		if (($abstract != '') && ($abstract != $author->abstract)) {
-      			$log .= ' abstract updated ';
-      			$author->abstract = $abstract;
-      		}
-      		
-      		if (($thumbnail != '') && ($thumbnail != $author->thumbnail)) {
-      			$log .= ' thumbnail updated ';
-      			$author->thumbnail = $thumbnail;
-      		}
-          
-          $author->wikipedia_url = $url;
-          $author->save();
-          
-          
-        } else {
-          $author->wikipedia_url = '';
-          $author->save();
-        }
-      }
-      
-    	sfTask::log($author->name.' '.$log);
+    foreach ($authors as $Author) {
+    	if (!$Author->hasWikipedia()) {
+    		$log = $this->pass($Author);
+    		sfTask::log($Author->name.$log);
+    	}
     }
     
     sfTask::log('==== end on '.date('r').' ====');
+  }
+  
+  public function pass($Author)
+  {
+      $file = 'data/scraper_cache/wikipedia/'.$Author->id.'.html';
+      $file_thumb = 'data/scraper_cache/wikipedia/'.$Author->id.'-thumb.html';
+      $log = '';
+      $is_merged = false;
+      
+      if ($url = $this->searchWikipedia($Author->name)) {
+		  	$AuthorWikipedia = new AuthorWikipedia;
+		  	$AuthorWikipedia->author_id = $Author->id;
+		  	$AuthorWikipedia->wikipedia_url = $url;
+        $log = ' url, ';
+        
+        $this->retrievePage($url, $file);
+        if (file_exists($file)) {
+	        $fp = fopen($file, "r");
+	        $html = fread($fp, filesize($file));
+	        fclose($fp);
+	          
+	        $html = str_replace(
+	           array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
+	           array(" ", '&', "'", "'", ' '),
+	           $html);
+	          	
+	        $AuthorWikipedia->name = $this->retrieveName($html);
+	        $AuthorWikipedia->abstract = $this->retrieveBio($html);
+	        $AuthorWikipedia->thumbnail = $this->retrievePhoto($html, $url, $file_thumb);
+      	}
+		  	$AuthorWikipedia->save();
+      }
+      
+	  	$Author->wikipedia_at = new Doctrine_Expression('NOW()');
+	  	$Author->save();
+      
+      return $log;
   }
   
   public function searchWikipedia($name)
@@ -196,13 +161,40 @@ EOF;
     }
   }
   
-  public function retrievePhoto($html) {
+  public function retrievePhoto($html, $base_url, $file_thumb) {
     $dom = new Zend_Dom_Query($html);
-    $results = $dom->query('.infobox_v3 .thumbinner a.image img');
+    $results = $dom->query('.infobox_v3 .thumbinner a.image');
+    $has_photo = false;
     
     foreach ($results as $result) {
-        return $result->getAttribute('src');
+      $image_page = $result->getAttribute('href');
+    	$has_photo = true;
     }
+    
+    if (!$has_photo)
+    	return null;
+    
+    $image_url = scraper::absoluteUrl($image_page, $base_url);
+    
+    $this->retrievePage($image_url, $file_thumb);
+    if (file_exists($file_thumb)) {
+	    $fp = fopen($file_thumb, "r");
+	    $html = fread($fp, filesize($file_thumb));
+	    fclose($fp);
+	          
+	    $html = str_replace(
+	      array('&#13;', '&#amp;', '&#039;', '’', '&#160;'),
+	      array(" ", '&', "'", "'", ' '),
+	      $html);
+    	
+	    $dom = new Zend_Dom_Query($html);
+    	$results = $dom->query('.fullMedia a');
+	    foreach ($results as $result) {
+	      return scraper::absoluteUrl($result->getAttribute('href'), $image_url);
+	    }
+    }
+
+    return '';
   }
   
   public function mergeAuthor($newAuthor, $oldAuthor) {

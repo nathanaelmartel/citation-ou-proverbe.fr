@@ -15,4 +15,12 @@ class Author extends BaseAuthor
 	public function getNbCitations() {
 		return count($this->Citations);
 	}
+	
+	public function hasDBPedia() {
+		return count($this->DBPedia) != 0;
+	}
+	
+	public function hasWikipedia() {
+		return count($this->Wikipedia) != 0;
+	}
 }
