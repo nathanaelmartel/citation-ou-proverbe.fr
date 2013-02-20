@@ -35,6 +35,8 @@ EOF;
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
     sfTask::log('==== begin on '.date('r').' ====');
+    $begin_time = time();
+    $max_time = 50;
     
     if (!file_exists('data/scraper_cache/wikipedia'))
     	mkdir('data/scraper_cache/wikipedia');
@@ -43,12 +45,13 @@ EOF;
     ->select('*')
     ->from('Author a')
     ->offset(rand(0, 50))
-    ->limit(50)
+    ->limit(100)
    	->orderBy('dbpedia_at ASC');;
     
     $authors = $q->execute();
     
     foreach ($authors as $Author) {
+      if (time() - $begin_time > $max_time) break;
     	if (!$Author->hasWikipedia()) {
     		$log = $this->pass($Author);
     		sfTask::log($Author->name.$log);

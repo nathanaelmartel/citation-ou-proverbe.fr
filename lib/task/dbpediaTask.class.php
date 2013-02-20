@@ -34,6 +34,8 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     
     sfTask::log('==== begin on '.date('r').' ====');
+    $begin_time = time();
+    $max_time = 50;
     
     $data = array(
     		'name' => 'name',
@@ -54,10 +56,11 @@ EOF;
     ->select('*')
     ->from('Author l')
     ->offset(rand(0, 5))
-    ->limit(50)
+    ->limit(100)
     ->orderBy('dbpedia_at ASC');
      
     foreach ($q->execute() as $Author) {
+      if (time() - $begin_time > $max_time) break;
     	if (!$Author->hasDBPedia()) {
     		$log = $this->pass($Author, $data);
     		sfTask::log($Author->name.$log);
