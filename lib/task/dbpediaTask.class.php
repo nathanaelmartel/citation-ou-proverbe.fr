@@ -43,60 +43,26 @@ EOF;
     		'wikipedia_url' => 'wikipedia_url', 
     		'thumbnail' => 'thumbnail',
     		'birth_date' => 'dateDeNaissance',
-    		'death_date' => 'dateDeDécès');
+    		'death_date' => 'dateDeDécès',
+    		//'birth_place' => 'lieuDeNaissance',
+    		//'death_place' => 'lieuDeDécès',
+    		//'occupation' => 'activité',
+    		//'notableworks' => 'œuvre'
+    		);
     
     $q = Doctrine_Query::create()
     ->select('*')
     ->from('Author l')
-    ->where('dbpedia_url is ?', null)
     ->offset(rand(0, 5))
     ->limit(50)
     ->orderBy('dbpedia_at ASC');
      
     foreach ($q->execute() as $Author) {
-    	$log = $this->pass($Author, $data);
-    	
-    	sfTask::log($Author->name.$log);
+    	if (!$Author->hasDBPedia()) {
+    		$log = $this->pass($Author, $data);
+    		sfTask::log($Author->name.$log);
+    	}
     }
-    
-    /*sfTask::log('==== second pass on '.date('r').' ====');
-
-    $q = Doctrine_Query::create()
-    ->select('*')
-    ->from('Author l')
-    ->where('dbpedia_url is null')
-    ->andWhere('wikipedia_url <> ""')
-    //->offset(rand(0, 5))
-    ->limit(50)
-    ->orderBy('dbpedia_at ASC');
-    
-    //echo $q->getSqlQuery();echo "\n";die;
-    
-    foreach ($q->execute() as $Author) {
-    	$log = '';
-    	
-  		$response = json_decode($this->request($Author->wikipedia_url, 'label'), true);
-  		if (count($response['results']['bindings'])) {
-  			$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
-  			sfTask::log($key."\t".$value);
-  			if ($value != '') {
-    			$log .= $this->pass($value, $data);
-  			}
-  		} else {
-  			$response = json_decode($this->request($Author->wikipedia_url, 'label', 'dbpedia.org/sparql'), true);
-  			if (count($response['results']['bindings'])) {
-  				$value = $response['results']['bindings'][0]['dbpedia_url']['value'];
-  				sfTask::log($key." (en) \t".$value);
-  				//sfTask::log($key);
-	  			if ($value != '') {
-	    			$log .= $this->pass($value, $data);
-	  			}
-  			}
-  		}
-    	//$log = $this->pass($Author, $data);
-    	
-    	sfTask::log($Author->name."\t".$Author->wikipedia_url.$log);
-    }*/
      
     
     sfTask::log('==== end on '.date('r').' ====');
@@ -104,15 +70,19 @@ EOF;
   
   function pass($Author, $data) {
   	$log = ' ';
+  	$AuthorDBPedia = new AuthorDBPedia;
+  	$AuthorDBPedia->author_id = $Author->id;
+  	$find = false;
   	
   	foreach ($data as $key => $key_fr) {
   		$response = json_decode($this->request($Author->name, $key_fr), true);
   		if (count($response['results']['bindings'])) {
   			$value = $response['results']['bindings'][0][$key]['value'];
   			//sfTask::log($key."\t".$value);
-  			if (($key != 'name') || ($value != '')) {
-  				$Author->$key = $value;
+  			if ($value != '') {
+  				$AuthorDBPedia->$key = $value;
   				$log .= ' '.$key_fr;
+  				$find = true;
   			}
   		} else {
   			$response = json_decode($this->request($Author->name, $key, 'dbpedia.org/sparql'), true);
@@ -120,14 +90,19 @@ EOF;
   				$value = $response['results']['bindings'][0][$key]['value'];
   				//sfTask::log($key." (en) \t".$value);
   				//sfTask::log($key);
-  				if (($key != 'name') || ($value != '')) {
-  					$Author->$key = $value;
+  				if ($value != '') {
+  					$AuthorDBPedia->$key = $value;
   					$log .= ' '.$key;
+  					$find = true;
   				}
   			}
   		}
   	}
-  	 
+  	
+  	if ($find) {
+  		$AuthorDBPedia->save();
+  		$log = ' saved '.$log;
+  	}
   	$Author->dbpedia_at = new Doctrine_Expression('NOW()');
   	$Author->save();
   	
@@ -156,6 +131,14 @@ EOF;
 			'death_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathDate ?death_date. }',
 			'dateDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeNaissance ?birth_date. }',
 			'dateDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeDécès ?death_date. }',
+			'birth_place' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:birthPlace ?birth_place. }',
+			'death_place' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathPlace ?death_place. }',
+			'lieuDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:lieuDeNaissance ?birth_place. }',
+			'lieuDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:lieuDeDécès ?death_place. }',
+			'occupation' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:occupation ?occupation. }',
+			'activité' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:activité ?occupation. }',
+			'notableworks' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:notableworks ?notableworks. }',
+			'œuvre' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:œuvre ?notableworks. }',
 				
 			'label' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:isPrimaryTopicOf "'.$author_name.'"@fr. }',
 		);
