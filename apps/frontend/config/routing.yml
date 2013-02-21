@@ -2,13 +2,6 @@
 
 
 
-#citation:
-#  url:   /:author/:slug
-#  param: { module: citation, action: show }
-#citation_short:
-#  url:   /c/:id
-#  param: { module: citation, action: short }
-
 
 citation_image:
   url:   /medias/:author/:slug.:sf_format
@@ -16,6 +9,23 @@ citation_image:
 citation_image_short:
   url:   /i/:id
   param: { module: media, action: short }
+
+
+author_short:
+  url:   /a/:id
+  param: { module: author, action: short }
+
+citation_short:
+  url:   /c/:id
+  param: { module: citation, action: short }
+  
+citation:
+  url:   /:author/:slug
+  param: { module: citation, action: show }
+  
+author:
+  url:   /:slug
+  param: { module: author, action: show }
 
 homepage:
   url:   /
