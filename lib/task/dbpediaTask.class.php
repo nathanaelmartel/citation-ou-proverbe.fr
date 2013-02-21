@@ -65,6 +65,8 @@ EOF;
     		$log = $this->pass($Author, $data);
     		sfTask::log($Author->name.$log);
     	}
+	  	$Author->dbpedia_at = new Doctrine_Expression('NOW()');
+	  	$Author->save();
     }
      
     
@@ -106,8 +108,6 @@ EOF;
   		$AuthorDBPedia->save();
   		$log = ' saved '.$log;
   	}
-  	$Author->dbpedia_at = new Doctrine_Expression('NOW()');
-  	$Author->save();
   	
   	return $log;
   }

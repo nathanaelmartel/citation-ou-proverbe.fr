@@ -56,6 +56,9 @@ EOF;
     		$log = $this->pass($Author);
     		sfTask::log($Author->name.$log);
     	}
+      
+	  	$Author->wikipedia_at = new Doctrine_Expression('NOW()');
+	  	$Author->save();
     }
     
     sfTask::log('==== end on '.date('r').' ====');
@@ -91,9 +94,6 @@ EOF;
       	}
 		  	$AuthorWikipedia->save();
       }
-      
-	  	$Author->wikipedia_at = new Doctrine_Expression('NOW()');
-	  	$Author->save();
       
       return $log;
   }
