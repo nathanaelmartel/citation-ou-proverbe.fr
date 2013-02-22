@@ -64,7 +64,7 @@ AuthorDBPedia:
     
   columns:
     author_id: {type: integer, notnull: true}
-    name: {type: string(255), unique: true}
+    name: {type: string(255)}
     abstract: {type: string(), default: null}
     comment: {type: string(), default: null}
     thumbnail: {type: string(255), default: null}
@@ -98,7 +98,7 @@ AuthorWikipedia:
     
   columns:
     author_id: {type: integer, notnull: true}
-    name: {type: string(255), unique: true}
+    name: {type: string(255)}
     abstract: {type: string(), default: null}
     thumbnail: {type: string(255), default: null}
     wikipedia_url: {type: string(255), default: null}
