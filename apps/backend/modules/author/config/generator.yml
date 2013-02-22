@@ -16,7 +16,7 @@ generator:
       actions: ~
       fields:  ~
       list:
-          display: [=name, nb_citations, slug, is_active, updated_at]
+          display: [=name, nb_citations, slug, is_active, hasWikipedia, hasDBPedia, updated_at]
           max_per_page: 50
           sort: [updated_at, desc]
       filter:  ~
