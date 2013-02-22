@@ -4,7 +4,7 @@
 
 
 citation_image:
-  url:   /medias/:author/:slug.:sf_format
+  url:   /medias/:author/:authorb.:slug.:sf_format
   param: { module: media, action: show }
 citation_image_short:
   url:   /i/:id
@@ -18,6 +18,14 @@ author_short:
 citation_short:
   url:   /c/:id
   param: { module: citation, action: short }
+
+tag_short:
+  url:   /t/:id
+  param: { module: tag, action: short }
+  
+tag:
+  url:   /theme/:slug
+  param: { module: tag, action: show }
   
 citation:
   url:   /:author/:slug
@@ -29,4 +37,4 @@ author:
 
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: home, action: index }

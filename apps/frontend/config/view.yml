@@ -6,13 +6,18 @@ default:
     content-type: text/html
 
   metas:
-    #title:        symfony project
+    title:        Citation ou Proverbe
     #description:  symfony project
     #keywords:     symfony, project
-    #language:     en
-    #robots:       index, follow
+    language:     fr
+    robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:
+    - /css/cssreset.css
+    - /css/cssbase.css
+    - /css/960.css
+    - /css/960-reset.css
+    - /css/main.css
 
   javascripts:    []
 

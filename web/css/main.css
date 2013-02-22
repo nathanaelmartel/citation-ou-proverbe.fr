@@ -1,0 +1,22 @@
+
+html {
+	background: #fff url(../images/background.png) repeat center center;
+}
+
+body {
+}
+
+.logo a {
+	display: block;
+	margin: 1em auto;
+	width: 230px;
+}
+
+.page {
+  background-color: #bfbfbf;
+  background-color: rgba(0, 0, 0, .2);
+	min-height: 600px;
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .8);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .8);
+}
