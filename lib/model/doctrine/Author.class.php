@@ -20,7 +20,15 @@ class Author extends BaseAuthor
 		return count($this->DBPedia) != 0;
 	}
 	
+	public function getHasDBPedia() {
+		return $this->hasDBPedia();
+	}
+	
 	public function hasWikipedia() {
 		return count($this->Wikipedia) != 0;
+	}
+	
+	public function getHasWikipedia() {
+		return $this->hasWikipedia();
 	}
 }
