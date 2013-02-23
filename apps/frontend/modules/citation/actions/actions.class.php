@@ -30,7 +30,7 @@ class citationActions extends sfActions
     $this->forward404Unless($citation->is_active);
     
     $response = $this->getResponse();
-    $response->addMeta('description', substr($citation->getQuote(), 0, stripos($citation->quote, ' ', 50)+1 ).'... - '.$citation->getAuthor().'. Retrouvez d\'autre citations et proverbe sur notre site.');
+    $response->addMeta('description', $citation->getShortQuote().' - '.$citation->getAuthor().'. Retrouvez d\'autre citations et proverbe sur notre site.');
     $response->setTitle($citation->Author->name.' : '.$citation->quote );
     
     $citation->view = $citation->view + 1;
