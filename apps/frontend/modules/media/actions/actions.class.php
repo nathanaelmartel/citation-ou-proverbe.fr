@@ -28,9 +28,6 @@ class mediaActions extends sfActions
     if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
       $format = 'jpg';
     
-    $width = '1200';
-    $height = '768';
-    
     $filename = sfConfig::get('sf_web_dir').'/medias/'.$citation->Author->slug; 
     if (!file_exists($filename))
     	mkdir($filename);
@@ -40,17 +37,69 @@ class mediaActions extends sfActions
     if (file_exists($filename)) {
       $img = new sfImage($filename);
     } else {
+      
+      $img = $this->build($citation, 1200, 768);
+      
+      $img->setMIMEType('image/'.$format);
+      $img->saveAs($filename, 'image/'.$format);
+    }
+    
+    $response = $this->getResponse();
+    $response->setContentType($img->getMIMEType());    
+    $response->setContent($img); 
+    
+    return sfView::NONE;
+  }
+  
+  public function executeTwitter(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id');
+    $this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneById(array($id)), sprintf('Object citation does not exist (%s).', $id));
+    $this->forward404Unless($citation->is_active);
+      
+    $format = $request->getParameter('sf_format');
+    if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
+      $format = 'jpg';
+    
+    $filename = sfConfig::get('sf_web_dir').'/twitter/'.$citation->Author->slug; 
+    if (!file_exists($filename))
+    	mkdir($filename);
+    
+    $filename .= '/'.$citation->id.'.'.$format;
+    
+    if (file_exists($filename)) {
+      $img = new sfImage($filename);
+    } else {
+      
+      $img = $this->build($citation, 600, 600, false, false, false);
+      $img->thumbnail(120, 120,  'center');
+      
+      $img->setMIMEType('image/'.$format);
+      $img->saveAs($filename, 'image/'.$format);
+    }
+    
+    $response = $this->getResponse();
+    $response->setContentType($img->getMIMEType());    
+    $response->setContent($img); 
+    
+    return sfView::NONE;
+  }
+  
+  public function build($citation, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true)
+  {
       $overlay_file = sfConfig::get('sf_web_dir').'/images/overlay.png';
       $rgb = $citation->getRGBColor();
-      $overlay = new sfImage($overlay_file);
       
       $img = new sfImage();
       $img->transparency('#000000');
       $img->thumbnail($width, $height, 'center');
       
-      //$img->negate();
       $img->colorize($rgb[0], $rgb[1], $rgb[2], 1);
-      $img->overlay($overlay, array($width-150, $height-80));
+      
+      if ($show_overlay) {
+	      $overlay_img = new sfImage($overlay_file);
+	      $img->overlay($overlay_img, array($width-150, $height-80));
+      }
       
       $text_font_name = 'Quicksand/Quicksand_Bold';
       $text_font_size = 50;
@@ -70,36 +119,28 @@ class mediaActions extends sfActions
       $img->text($text, $width*.1, floor(($height-$textheight)*.4)-$lineHeight*(count($lines)-1), $text_font_size, $text_font_name, $citation->getTextRGBColorHex());
       
       
-      $author_font_name = 'Quicksand/Quicksand_Book_Oblique';
-      $author_font_size = 20;
-      $author_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$author_font_name.'.ttf';
-      $box = imagettfbbox($author_font_size, 0, $author_font_dir, $citation->Author->name);
-      $textwidth = abs($box[4] - $box[0]) - 4;
+      if ($show_author) {
+	      $author_font_name = 'Quicksand/Quicksand_Book_Oblique';
+	      $author_font_size = 20;
+	      $author_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$author_font_name.'.ttf';
+	      $box = imagettfbbox($author_font_size, 0, $author_font_dir, $citation->Author->name);
+	      $textwidth = abs($box[4] - $box[0]) - 4;
+	      
+	      $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $citation->getTextRGBColorHex());
+      }
       
-      $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $citation->getTextRGBColorHex());
+      if ($show_url) {
+	      $url_font_name = 'Quicksand/Quicksand_Light';
+	      $url_font_size = 10;
+	      $url_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$url_font_name.'.ttf';
+	      $url = 'http://citation-ou-proverbe.fr/c/'.$citation->id;
+	      $box = imagettfbbox($url_font_size, 0, $url_font_dir, $url);
+	      $textwidth = abs($box[4] - $box[0]) - 4;
+	      
+	      $img->text($url, $width-$textwidth-10, $height-20, $url_font_size, $url_font_name, '#000000');
+      }
       
-      
-      $url_font_name = 'Quicksand/Quicksand_Light';
-      $url_font_size = 10;
-      $url_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$url_font_name.'.ttf';
-      $url = 'http://citation-ou-proverbe.fr/c/'.$citation->id;
-      $box = imagettfbbox($url_font_size, 0, $url_font_dir, $url);
-      $textwidth = abs($box[4] - $box[0]) - 4;
-      
-      $img->text($url, $width-$textwidth-10, $height-20, $url_font_size, $url_font_name, '#000000');
-      
-      
-      
-      $img->setMIMEType('image/'.$format);
-      $img->saveAs($filename, 'image/'.$format);
-    }
-    
-    
-    $response = $this->getResponse();
-    $response->setContentType($img->getMIMEType());    
-    $response->setContent($img); 
-    
-    return sfView::NONE;
+      return $img;
   }
   
   private function wrap($fontSize, $angle, $fontFace, $string, $width)

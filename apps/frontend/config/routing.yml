@@ -6,6 +6,9 @@
 citation_image:
   url:   /medias/:author/:authorb.:slug.:sf_format
   param: { module: media, action: show }
+citation_twitter_image:
+  url:   /twitter/:author/:id.:sf_format
+  param: { module: media, action: twitter }
 citation_image_short:
   url:   /i/:id
   param: { module: media, action: short }
