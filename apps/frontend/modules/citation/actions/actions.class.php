@@ -82,4 +82,33 @@ class citationActions extends sfActions
     $this->setLayout(false);
 	  $this->feed = $feed;
   }
+  
+  public function executeSitemap(sfWebRequest $request)
+  {
+  	$page = $request->getParameter('page', 0);
+  	$nb = 2500;
+  	
+    $this->authors = Doctrine::getTable('Author')
+      ->createQuery('a')
+      ->where('is_active = ?', 1)
+      ->limit($nb/2)
+      ->offset($nb/2*$page)
+      ->execute();
+    $this->tags = Doctrine::getTable('Tag')
+      ->createQuery('a')
+      ->where('is_active = ?', 1)
+      ->limit($nb/2)
+      ->offset($nb/2*$page)
+      ->execute();
+    $this->citations = Doctrine::getTable('Citation')
+      ->createQuery('a')
+      ->where('is_active = ?', 1)
+      ->limit($nb)
+      ->offset($nb*$page)
+      ->orderBy('last_published_at desc')
+      ->execute();
+    
+    $this->setLayout(false);
+    $this->getResponse()->addHttpMeta('content-type', 'text/xml');
+  }
 }

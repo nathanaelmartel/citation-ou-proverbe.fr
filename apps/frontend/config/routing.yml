@@ -39,6 +39,12 @@ tags:
 feed:
   url:   /feed
   param: { module: citation, action: feed }
+sitemap:
+  url:   /sitemap
+  param: { module: citation, action: sitemap }
+sitemap_page:
+  url:   /sitemap/:page
+  param: { module: citation, action: sitemap }
   
   
 tag:
