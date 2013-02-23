@@ -1,6 +1,7 @@
 
 html {
-	background: #fff url(../images/background.png) repeat center center;
+	background: #bfbfbf url(../images/background.png) repeat fixed center center;
+	font-family: Georgia, time, serif 
 }
 
 body {
@@ -8,15 +9,162 @@ body {
 
 .logo a {
 	display: block;
-	margin: 1em auto;
+	margin: 0 auto;
+	padding-top: 1em;
 	width: 230px;
 }
 
 .page {
-  background-color: #bfbfbf;
-  background-color: rgba(0, 0, 0, .2);
-	min-height: 600px;
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .8);
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .8);
-  box-shadow: 0 0 3px rgba(0, 0, 0, .8);
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, .9);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .6);
 }
+
+.sep {
+	height: 2px;
+	background: #bfbfbf;
+  background-image: linear-gradient(right, #f4a300 0%, #f4bb00 5%, #f4d400 10%, #f4ec00 15%, #e4f400 20%, #ccf400 25%, #b3f400 30%, #00f4ab 35%, #00f4c3 40%, #00f4dc 45%, #00f4f4 50%, #00dcf4 55%, #00c3f4 60%, #00abf4 65%, #b300f4 70%, #cb00f4 75%, #e400f4 80%, #f400ec 85%, #f400d4 90%, #f400bb 95%, #f40000 100%);
+  background-image: -o-linear-gradient(right, #f4a300 0%, #f4bb00 5%, #f4d400 10%, #f4ec00 15%, #e4f400 20%, #ccf400 25%, #b3f400 30%, #00f4ab 35%, #00f4c3 40%, #00f4dc 45%, #00f4f4 50%, #00dcf4 55%, #00c3f4 60%, #00abf4 65%, #b300f4 70%, #cb00f4 75%, #e400f4 80%, #f400ec 85%, #f400d4 90%, #f400bb 95%, #f40000 100%);
+  background-image: -moz-linear-gradient(right, #f4a300 0%, #f4bb00 5%, #f4d400 10%, #f4ec00 15%, #e4f400 20%, #ccf400 25%, #b3f400 30%, #00f4ab 35%, #00f4c3 40%, #00f4dc 45%, #00f4f4 50%, #00dcf4 55%, #00c3f4 60%, #00abf4 65%, #b300f4 70%, #cb00f4 75%, #e400f4 80%, #f400ec 85%, #f400d4 90%, #f400bb 95%, #f40000 100%);
+  background-image: -webkit-linear-gradient(right, #f4a300 0%, #f4bb00 5%, #f4d400 10%, #f4ec00 15%, #e4f400 20%, #ccf400 25%, #b3f400 30%, #00f4ab 35%, #00f4c3 40%, #00f4dc 45%, #00f4f4 50%, #00dcf4 55%, #00c3f4 60%, #00abf4 65%, #b300f4 70%, #cb00f4 75%, #e400f4 80%, #f400ec 85%, #f400d4 90%, #f400bb 95%, #f40000 100%);
+  background-image: -ms-linear-gradient(right, #f4a300 0%, #f4bb00 5%, #f4d400 10%, #f4ec00 15%, #e4f400 20%, #ccf400 25%, #b3f400 30%, #00f4ab 35%, #00f4c3 40%, #00f4dc 45%, #00f4f4 50%, #00dcf4 55%, #00c3f4 60%, #00abf4 65%, #b300f4 70%, #cb00f4 75%, #e400f4 80%, #f400ec 85%, #f400d4 90%, #f400bb 95%, #f40000 100%);
+}
+
+header {
+  margin-bottom: 4em;
+  border-bottom: 1px solid #bfbfbf;
+}
+
+footer {
+  margin-top: 5em;
+  border-top: 1px solid #bfbfbf;
+}
+
+nav {
+	font-size: .8em;
+}
+
+nav ul {
+  margin: 1em 0;
+  height: 1.2em;
+}
+
+nav li {
+  list-style: none;
+  margin: 0;
+  float: left;
+  margin: 0 5px;
+}
+
+nav a {
+	color: #000;
+  padding: 0 5px;
+	text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+nav a:hover, nav a:active, nav a:focus {
+  color: #1F5F1F;
+}
+
+.card-container {
+	margin-bottom: 2em;
+}
+
+blockquote {
+  padding: 1em;
+	height: 8em;
+	font-family: 'QuicksandBold';
+	font-size: 1.8em;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+.author-card {
+  font-family: 'QuicksandBook';
+}
+
+.author-card h2 a {
+  color: #000;
+  text-decoration: none;
+}
+
+.author-card {
+  font-size: .8em;
+  line-height: 1.5em;
+}
+
+.action {
+  font-size: .8em;
+  color: #000;
+}
+
+.action a {
+  color: #000;
+  text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.action a:hover, .action a:active, .action a:focus {
+  color: #CB00F4;
+}
+
+.tags {
+  font-size: .8em;
+  color: #000;
+  font-family: 'QuicksandBookOblique';
+}
+
+.tags h2 {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 0 5px;
+}
+
+.tags ul {
+	margin: 0;
+}
+
+.tags li {
+  margin: 0 5px;
+  list-style: none;
+  display: inline;
+}
+
+.tags a {
+  color: #000;
+  text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.tags a:before {
+	content: "♦ ";
+  font-size: .8em;
+}
+
+.tags a:hover, .tags a:active, .tags a:focus {
+  color: #00ABF4;
+}
+
+
+@media (max-width: 960px), (max-device-width: 960px) {
+	html {
+	  background: none;
+	}
+}
+

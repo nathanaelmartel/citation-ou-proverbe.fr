@@ -20,6 +20,7 @@
 		<meta name="msapplication-TileImage" content="/pinned-favicon.png">
 		<meta name="application-name" content="Citation ou Proverbe">
     <link rel="author" href="/humans.txt" />
+    <link rel="alternate" type="application/rss+xml" title="flux" href="<?php echo url_for('@feed') ?>" />
     <?php if (has_slot('header')): ?>
       <?php include_slot('header') ?>
     <?php endif; ?>
@@ -34,5 +35,6 @@
     </div>
     <?php include_partial('global/piwik')?>
     <?php include_javascripts() ?>
+    <link rel="stylesheet" type="text/css" href="/fonts/Quicksand/stylesheet.css" />
   </body>
 </html>

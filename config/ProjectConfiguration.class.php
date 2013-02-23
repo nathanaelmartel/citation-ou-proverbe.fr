@@ -12,6 +12,7 @@ class ProjectConfiguration extends sfProjectConfiguration
              'sfDoctrineGuardPlugin',
              'sfAdminDashPlugin',
              'sfImageTransformPlugin',
+        		 'sfFeed2Plugin',
              //'swCombinePlugin'
          ));
   }

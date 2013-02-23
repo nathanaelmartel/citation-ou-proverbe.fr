@@ -31,4 +31,32 @@ class Author extends BaseAuthor
 	public function getHasWikipedia() {
 		return $this->hasWikipedia();
 	}
+	
+	public function getShortDescription($limit = 500) {
+		if (strlen($this->getDescription()) <= $limit)
+			return $this->getDescription();
+		
+		return substr($this->getDescription(), 0, stripos($this->getDescription(), ' ', $limit)+1 );
+	}
+	
+	public function getDescription() {
+		
+		if ($this->hasDBPedia()) {
+			foreach ($this->DBPedia as $dbPedia) {
+				if ($dbPedia->comment != '')
+					return $dbPedia->comment;
+				if ($dbPedia->abstract != '')
+					return $dbPedia->abstract;
+			}
+		}
+		
+		if ($this->hasWikipedia()) {
+			foreach ($this->Wikipedia as $wikipedia) {
+				if ($wikipedia->abstract != '')
+					return $wikipedia->abstract;
+			}
+		}
+		
+		return '';
+	}
 }
