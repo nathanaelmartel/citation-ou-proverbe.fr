@@ -36,7 +36,7 @@ class Author extends BaseAuthor
 		if (strlen($this->getDescription()) <= $limit)
 			return $this->getDescription();
 		
-		return substr($this->getDescription(), 0, stripos($this->getDescription(), ' ', $limit)+1 );
+		return substr($this->getDescription(), 0, stripos($this->getDescription(), ' ', $limit)+1 ).'...';
 	}
 	
 	public function getDescription() {

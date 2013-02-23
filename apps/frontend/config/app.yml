@@ -5,6 +5,8 @@
 #all:
 
 all:
+  pager: 25
+
   medias:
     dir: /medias/citations/
     jpg_quality: 90

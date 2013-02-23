@@ -44,6 +44,9 @@ feed:
 tag:
   url:   /theme/:slug
   param: { module: tag, action: show }
+tag_page:
+  url:   /theme/:slug/:page
+  param: { module: tag, action: show }
   
 citation:
   url:   /:author/:slug
@@ -51,6 +54,9 @@ citation:
   
 author:
   url:   /:slug
+  param: { module: author, action: show }
+author_page:
+  url:   /:slug/page/:page
   param: { module: author, action: show }
 
 homepage:

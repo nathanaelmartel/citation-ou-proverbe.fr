@@ -116,4 +116,11 @@ class Citation extends BaseCitation
 		
 		return $rgb_string;
 	}
+	
+	public function getShortQuote($limit = 50) {
+		if (strlen($this->quote) <= $limit)
+			return $this->quote;
+		
+		return substr($this->quote, 0, stripos($this->quote, ' ', $limit)+1 ).'...';
+	}
 }

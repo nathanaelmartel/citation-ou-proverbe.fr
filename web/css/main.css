@@ -73,7 +73,26 @@ nav a:hover, nav a:active, nav a:focus {
 }
 
 .card-container {
-	margin-bottom: 2em;
+	display: block;
+  margin: 0 auto 2em;
+  text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+a.card-container:hover, a.card-container:hover, a.card-container:hover {
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+}
+
+.card-container, blockquote {
+  width: 460px;
 }
 
 blockquote {
@@ -86,8 +105,16 @@ blockquote {
 	line-height: 1.2em;
 }
 
+h1 {
+  font-family: 'QuicksandBold';
+  font-weight: normal;
+  font-size: 2em;
+}
+
 h2 {
 	margin-top: 0;
+  font-family: 'QuicksandBold';
+  font-weight: normal;
 }
 
 .author-card {
@@ -164,8 +191,24 @@ h2 {
 
 
 @media (max-width: 960px), (max-device-width: 960px) {
-	html {
-	  background: none;
+	.page {
+	  padding: 0 20px;
+    width: 500px;
+	}
+}
+
+
+@media (max-width: 500px), (max-device-width: 500px) {
+  html {
+    background: none;
+  }
+  .page {
+    padding: 0 5px;
+    width: auto;
+  }
+	.card-container, blockquote {
+	  width: 100%;
+	  font-size: 1.1em;
 	}
 }
 
