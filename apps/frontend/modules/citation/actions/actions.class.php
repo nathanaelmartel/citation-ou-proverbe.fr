@@ -108,6 +108,7 @@ class citationActions extends sfActions
       ->orderBy('last_published_at desc')
       ->execute();
     
+    $this->nextpage = $page+1;
     $this->setLayout(false);
     $this->getResponse()->addHttpMeta('content-type', 'text/xml');
   }

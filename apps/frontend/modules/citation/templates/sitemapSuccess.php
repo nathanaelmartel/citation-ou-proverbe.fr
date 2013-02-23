@@ -20,4 +20,11 @@
   </loc>
 </url>
 <?php endforeach; ?>
+<?php if ($nextpage < 50): ?>
+<url>
+  <loc>
+  	<?php echo url_for('@sitemap_page?page='.$nextpage, array('absolute' => true)) ?>
+  </loc>
+</url>
+<?php endif; ?>
 </urlset>
