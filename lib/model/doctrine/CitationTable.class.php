@@ -44,6 +44,16 @@ class CitationTable extends Doctrine_Table
     return $hash;
   }
     
+  public static function retrieveLast($limit = 25) {
+  	$query = Doctrine::getTable('Citation')
+  		->createQuery()
+	    ->where('is_active = ?', 1)
+	    ->limit($limit)
+	    ->orderBy('last_published_at DESC');
+  	
+  	return $query->execute();
+  }
+    
   public static function addCitation($quote) {
   	
   		$is_new = false;

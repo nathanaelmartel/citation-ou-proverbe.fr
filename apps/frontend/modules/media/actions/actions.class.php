@@ -36,7 +36,7 @@ class mediaActions extends sfActions
     if (!file_exists($filename))
     	mkdir($filename);
     
-    $filename .= '/'.$citation->slug.'.'.$format;
+    $filename .= '/'.$citation->Author->slug.'.'.$citation->slug.'.'.$format;
     
     if (file_exists($filename)) {
       $img = new sfImage($filename);
@@ -88,7 +88,7 @@ class mediaActions extends sfActions
       
       
       $img->setMIMEType('image/'.$format);
-      //$img->saveAs($filename, 'image/'.$format);
+      	$img->saveAs($filename, 'image/'.$format);
     }
     
     

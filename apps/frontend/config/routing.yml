@@ -22,6 +22,24 @@ citation_short:
 tag_short:
   url:   /t/:id
   param: { module: tag, action: short }
+
+
+authors:
+  url:   /auteurs
+  param: { module: author, action: index }
+
+random:
+  url:   /citation
+  param: { module: citation, action: random }
+
+tags:
+  url:   /themes
+  param: { module: tag, action: index }
+
+feed:
+  url:   /feed
+  param: { module: citation, action: feed }
+  
   
 tag:
   url:   /theme/:slug
