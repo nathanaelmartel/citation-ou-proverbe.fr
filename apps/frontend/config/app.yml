@@ -22,9 +22,9 @@ all:
       filename: Untitled.png
       width: 100
       height: 100
-      color: '#FFFFFF'
+      color: '#000000'
     font_dir: %SF_LIB_DIR%/fonts
     mime_type:
-      auto_detect: false
+      auto_detect: true
       library: gd_mime_type #  gd_mime_type (GD), Fileinfo (PECL), MIME_Type (PEAR)
       

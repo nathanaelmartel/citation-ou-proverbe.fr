@@ -23,8 +23,7 @@ class mediaActions extends sfActions
     $slug = $request->getParameter('slug');
     $this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneBySlug(array($slug)), sprintf('Object citation does not exist (%s).', $slug));
     $this->forward404Unless($citation->is_active);
-    
-  
+      
     $format = $request->getParameter('sf_format');
     if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
       $format = 'jpg';
@@ -41,13 +40,17 @@ class mediaActions extends sfActions
     if (file_exists($filename)) {
       $img = new sfImage($filename);
     } else {
-      $img = new sfImage();
-      
-      $img->thumbnail($width, $height, 'center');
-      $img->negate();
+      $overlay_file = sfConfig::get('sf_web_dir').'/images/overlay.png';
       $rgb = $citation->getRGBColor();
+      $overlay = new sfImage($overlay_file);
+      
+      $img = new sfImage();
+      $img->transparency('#000000');
+      $img->thumbnail($width, $height, 'center');
+      
+      //$img->negate();
       $img->colorize($rgb[0], $rgb[1], $rgb[2], 1);
-      $citation->getRGBColorHex();
+      $img->overlay($overlay, array($width-150, $height-80));
       
       $text_font_name = 'Quicksand/Quicksand_Bold';
       $text_font_size = 50;
@@ -76,7 +79,6 @@ class mediaActions extends sfActions
       $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $citation->getTextRGBColorHex());
       
       
-      
       $url_font_name = 'Quicksand/Quicksand_Light';
       $url_font_size = 10;
       $url_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$url_font_name.'.ttf';
@@ -87,8 +89,9 @@ class mediaActions extends sfActions
       $img->text($url, $width-$textwidth-10, $height-20, $url_font_size, $url_font_name, '#000000');
       
       
+      
       $img->setMIMEType('image/'.$format);
-      	$img->saveAs($filename, 'image/'.$format);
+      $img->saveAs($filename, 'image/'.$format);
     }
     
     

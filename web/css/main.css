@@ -74,7 +74,7 @@ nav a:hover, nav a:active, nav a:focus {
 
 .card-container {
 	display: block;
-  margin: 0 auto 2em;
+  margin-bottom: 2em;
   text-decoration: none;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;

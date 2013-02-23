@@ -33,7 +33,7 @@
 </div>
 
 <?php if (count($citation->Tags) > 0): ?>
-<div class="grid_7 tags">
+<div class="grid_6 tags">
 	<h2>D'autres citations ou proverbe sur les thèmes :</h2>
 	<ul>
 		<?php foreach ($citation->Tags as $tag):?>
