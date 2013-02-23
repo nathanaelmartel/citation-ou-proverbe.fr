@@ -1,0 +1,14 @@
+modules/*/config/view.yml:
+  # put sfViewConfigHandler to restore the default symfony config handler
+  # class: sfViewConfigHandler
+  class: swCombineViewConfigHandler 
+  param:
+   configuration:
+     stylesheet:
+       public_path:  /sw-combine/%SF_APP%
+       private_path: %SF_WEB_DIR%/sw-combine/%SF_APP%
+       combine:  swCombineStylesheet
+       driver:   swDriverCssmin
+       filename: %s.css                        # %s will by replace by the combined name
+       exclude: []                              # this will include the package on ALL pages
+       packages:
