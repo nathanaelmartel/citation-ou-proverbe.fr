@@ -71,8 +71,7 @@ class mediaActions extends sfActions
       $img = new sfImage($filename);
     } else {
       
-      $img = $this->build($citation, 600, 600, false, false, false);
-      $img->thumbnail(120, 120,  'center');
+      $img = $this->build($citation, 560, 350, false, false, false);
       
       $img->setMIMEType('image/'.$format);
       $img->saveAs($filename, 'image/'.$format);
