@@ -19,7 +19,6 @@
     <meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="/pinned-favicon.png">
 		<meta name="application-name" content="Citation ou Proverbe">
-    <link rel="author" href="/humans.txt" />
     <link rel="alternate" type="application/rss+xml" title="flux" href="<?php echo url_for('@feed') ?>" />
     <?php if (has_slot('header')): ?>
       <?php include_slot('header') ?>

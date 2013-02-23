@@ -50,12 +50,12 @@ class citationActions extends sfActions
   {
   	$citations = Doctrine_Core::getTable('Citation')->retrieveLast();
   	
-    $feed = new sfRss201Feed();
+    $feed = new sfRss10Feed();
 
 	  $feed->setTitle('Citation ou Proverbe');
 	  $feed->setLink('http://www.citation-ou-proverbe.fr/');
 	  $feed->setAuthorEmail('contact@citation-ou-proverbe.fr');
-	  $feed->setAuthorName('Nathanaël Martel');
+	  $feed->setAuthorName('Citation ou Proverbe');
 
 		$feedImage = new sfFeedImage();
 		$feedImage->setLink('http://www.citation-ou-proverbe.fr/images/logo.png');
@@ -65,13 +65,13 @@ class citationActions extends sfActions
 	  foreach ($citations as $citation) {
 	    $item = new sfFeedItem();
       $item->setTitle($citation->quote);
-	    $item->setLink('http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'/'.$citation->slug.'/?pk_campaign=feed&pk_kwd=feed-fink');
+	    $item->setLink('http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'/'.$citation->slug.'?pk_campaign=feed&pk_kwd=feed-fink');
 	    $item->setAuthorName($citation->Author->name);
 	    $item->setAuthorEmail('contact@citation-ou-proverbe.fr');
 	    $item->setPubdate(strtotime($citation->getLastPublishedAt()));
 	    $item->setUniqueId('http://www.citation-ou-proverbe.fr/'.$citation->slug.'/');
 	    
-	    $description = '<img src="http://www.citation-ou-proverbe.fr/medias/'.$citation->Author->slug.'/'.$citation->Author->slug.'-'.$citation->slug.'" alt="'.$citation->quote.'" />' ;
+	    $description = '<img src="http://www.citation-ou-proverbe.fr/medias/'.$citation->Author->slug.'/'.$citation->Author->slug.'.'.$citation->slug.'.png" alt="'.$citation->quote.'" />' ;
 		  $description .= '<p>'.$citation->quote.' <a href="http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'?pk_campaign=feed&pk_kwd=feed-author" >'.$citation->Author->name.'</a></p>' ;
 	    $description .= '<p>Retrouvez plus de citations sur <a href="http://www.citation-ou-proverbe.fr/?pk_campaign=feed&pk_kwd=feed-prefix">www.citation-ou-proverbe.fr</a></p>';
 
