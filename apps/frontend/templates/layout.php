@@ -34,6 +34,5 @@
     </div>
     <?php include_partial('global/piwik')?>
     <?php sw_include_javascripts() ?>
-    <link rel="stylesheet" type="text/css" href="/fonts/Quicksand/stylesheet.css" />
   </body>
 </html>

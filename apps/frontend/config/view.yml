@@ -13,6 +13,7 @@ default:
     robots:       index, follow
 
   stylesheets:
+    - /fonts/Quicksand/stylesheet.css
     - /css/cssreset.css
     - /css/cssbase.css
     - /css/960.css
