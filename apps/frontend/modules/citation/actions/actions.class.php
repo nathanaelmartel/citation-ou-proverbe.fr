@@ -23,6 +23,24 @@ class citationActions extends sfActions
   	$this->redirect('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, 301);
   }
   
+  public function executeRandom(sfWebRequest $request)
+  {
+    $citations = Doctrine::getTable('Citation')
+      ->createQuery('a')
+      ->where('is_active = ?', 1)
+      ->limit(50)
+      ->offset(rand(0, 1000))
+      ->orderBy('last_published_at desc')
+      ->execute(); 
+    
+    $citation = $citations[rand(0, 49)];
+    
+    if($citation)
+      $this->redirect('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug);
+    else 
+      $this->redirect('@homepage');
+  }
+  
   public function executeShow(sfWebRequest $request)
   {
     $slug = $request->getParameter('slug');
