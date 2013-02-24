@@ -18,9 +18,11 @@
 <div class="clear"></div>
 
 <div class="grid_8 prefix_1 action">
-	<a href="<?php echo url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true)) ?>">fond d'écran</a>
-	<!-- <a href="">Personaliser le fond d'écran</a>
-	<a href="">Envoyer la citation par mail</a>-->
+  <?php include_partial('citation/action', array(
+  		'msg' => $citation->quote, 
+  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, array('absolute' => true)), 
+  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true))
+  )) ?>
 </div>
 
 <?php if (count($citation->Tags) > 0): ?>

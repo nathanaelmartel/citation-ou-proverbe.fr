@@ -4,13 +4,18 @@
 	<h1><?php echo $author->name ?></h1>
 </div>
 
-<div class="grid_8 prefix_1">
+<div class="grid_8 prefix_1 author-citations">
 
 <?php foreach ($citations as $citation):?>
 
 	<div class="citation">
-		<div class="card-container">
 			<?php include_partial('citation/card', array('citation' => $citation))?>
+		<div class="action">
+		  <?php include_partial('citation/action', array(
+		  		'msg' => $citation->quote, 
+		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, array('absolute' => true)), 
+		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true))
+		  )) ?>
 		</div>
 	</div>
 	
