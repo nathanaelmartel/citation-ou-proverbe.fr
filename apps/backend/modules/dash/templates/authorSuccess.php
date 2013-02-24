@@ -3,7 +3,7 @@
 	
 	<div id="sf_admin_content">
 	
-		<?php $results = $q->fetchAll('SELECT count( id ) AS total, count( `dbpedia_at` ) AS dbpedia_at, count( `wikipedia_at` ) AS wikipedia_at, count( `has_thumbnail`=true ) AS has_thumbnail FROM `author`');  ?>
+		<?php $results = $q->fetchAll('SELECT count( id ) AS total, count( `dbpedia_at` ) AS dbpedia_at, count( `wikipedia_at` ) AS wikipedia_at FROM `author`');  ?>
 		<div class="sf_admin_list" style="width:300px;float:left;margin-right:50px;">
 			<table>
 				<thead>
@@ -33,6 +33,9 @@
 						<td><?php echo ceil($result['wikipedia_at']/$total*100) ?>%</td>
 						<td><div style="width:<?php echo ceil($result['wikipedia_at']/$total*100) ?>%;background:#C64934;height:1em;"></div></td>
 					</tr>
+				<?php endforeach;?>
+				<?php $results = $q->fetchAll('SELECT count( `has_thumbnail` ) AS has_thumbnail FROM `author` WHERE has_thumbnail > 0');  ?>
+				<?php foreach ($results as $key => $result):  ?>
 					<tr>
 						<td>has thumbnail</td>
 						<td><?php echo $result['has_thumbnail'] ?></td>
