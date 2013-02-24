@@ -42,9 +42,16 @@ class mediaActions extends sfActions
     }
     closedir($handle);
     
-    $filename = sfConfig::get('sf_web_dir').'/portrait/'.$author->slug.'/'.$effect.'.'.$format;
+    $filename = sfConfig::get('sf_web_dir').'/medias/'.$author->slug; 
+    if (!file_exists($filename))
+    	mkdir($filename);
+    
+    $filename = sfConfig::get('sf_web_dir').'/medias/'.$author->slug.'/portrait.'.$author->slug.'.'.$effect.'.'.$format;
+    
+    $overlay_file = sfConfig::get('sf_web_dir').'/images/portrait-overlay.png';
     
     $img = new sfImage($original_file);
+    $img->transparency('#000000');
     	
     if ($effect == 'contour') {
       $img->edgeDetect();
@@ -56,14 +63,18 @@ class mediaActions extends sfActions
       $img->sketchy();
     }
     
+    $img->thumbnail(200, 200, 'scale', '#FFFFFF');
+    
     if ($effect != 'original') {
       $img->greyscale();
+	    $img->colorize(120, 120, 120, 1);
+	    $overlay_img = new sfImage($overlay_file);
+	    $overlay_img->resize($img->getWidth(), $img->getHeight(), true, false);
+	    $img->overlay($overlay_img, 'center');
     }
-    
-    $img->thumbnail(200, 200, 'center');
    
     $img->setMIMEType('image/'.$format);
-    	//$img->saveAs($filename, 'image/'.$format);
+    $img->saveAs($filename, 'image/'.$format);
     
     $response = $this->getResponse();
     $response->setContentType($img->getMIMEType());
@@ -138,7 +149,7 @@ class mediaActions extends sfActions
     return sfView::NONE;
   }
   
-  public function build($citation, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true)
+  public function build($citation, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true, $show_portrait = true)
   {
       $overlay_file = sfConfig::get('sf_web_dir').'/images/overlay.png';
       $rgb = $citation->getRGBColor();
@@ -147,11 +158,24 @@ class mediaActions extends sfActions
       $img->transparency('#000000');
       $img->thumbnail($width, $height, 'center');
       
-      $img->colorize($rgb[0], $rgb[1], $rgb[2], 1);
+      $img->colorize($rgb[0], $rgb[1], $rgb[2], 0);
       
       if ($show_overlay) {
 	      $overlay_img = new sfImage($overlay_file);
-	      $img->overlay($overlay_img, array($width-150, $height-80));
+	      $img->overlay($overlay_img, array(20, $height-80));
+      }
+      
+      if ($show_portrait && $citation->Author->has_thumbnail) {
+    		$overlay_portrait_file = sfConfig::get('sf_web_dir').'/medias/'.$citation->Author->slug.'/portrait.'.$citation->Author->slug.'.contour.jpg';
+    		if (!file_exists($overlay_portrait_file)) {
+    			file_get_contents(str_replace(sfConfig::get('sf_web_dir'), 'http://www.citation-ou-proverbe.fr', $overlay_portrait_file));
+    		}
+    		if (file_exists($overlay_portrait_file)) {
+		      $overlay_portrait_img = new sfImage($overlay_portrait_file);
+		      $opposite = array(255 - $rgb[0], 255 - $rgb[1], 255 - $rgb[2]);
+      		$overlay_portrait_img->colorize(-$opposite[0], -$opposite[1], -$opposite[2], 0);
+		      $img->overlay($overlay_portrait_img, array($width-300, $height-250));
+    		}
       }
       
       $text_font_name = 'Quicksand/Quicksand_Bold';
@@ -190,7 +214,7 @@ class mediaActions extends sfActions
 	      $box = imagettfbbox($url_font_size, 0, $url_font_dir, $url);
 	      $textwidth = abs($box[4] - $box[0]) - 4;
 	      
-	      $img->text($url, $width-$textwidth-10, $height-20, $url_font_size, $url_font_name, '#000000');
+	      $img->text($url, 10, $height-20, $url_font_size, $url_font_name, '#000000');
       }
       
       return $img;
