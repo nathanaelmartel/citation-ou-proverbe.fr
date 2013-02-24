@@ -18,9 +18,10 @@
 		</div>
 		<?php endif ?>
 		<div class="action">
-			<a href="<?php echo url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true)) ?>">Fond d'écran</a>
-			<!--<a href="">Personaliser le fond d'écran</a>
-			<a href="">Envoyer la citation par mail</a>
-			<a href="">Partager</a>-->
+		  <?php include_partial('citation/action', array(
+		  		'msg' => $citation->quote, 
+		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, array('absolute' => true)), 
+		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true))
+		  )) ?>
 		</div>
 	</aside>
