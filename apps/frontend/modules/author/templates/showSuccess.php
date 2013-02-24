@@ -13,8 +13,8 @@
 		<div class="action">
 		  <?php include_partial('citation/action', array(
 		  		'msg' => $citation->quote, 
-		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, array('absolute' => true)), 
-		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true))
+		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$author->slug, array('absolute' => true)), 
+		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$author->slug.'&authorb='.$author->slug, array('absolute' => true))
 		  )) ?>
 		</div>
 	</div>
@@ -24,6 +24,7 @@
 
 <div class="grid_6">
 	<div class="author-card">
+		<img src="<?php echo url_for('@portrait_image?author='.$author->slug.'&effect=contour&sf_format=jpg&authorb='.$author->slug) ?>" alt="" class="portrait" />
 		<p><?php echo $author->getDescription() ?></p>
 	</div>
 	

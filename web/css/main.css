@@ -131,6 +131,12 @@ h2 {
   font-family: 'QuicksandBook';
 }
 
+.author-card .portrait {
+	float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
 .author-card h2 a {
   color: #000;
   text-decoration: none;
