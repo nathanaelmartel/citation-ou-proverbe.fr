@@ -9,6 +9,9 @@ citation_image:
 citation_twitter_image:
   url:   /twitter/:author/:id.:sf_format
   param: { module: media, action: twitter }
+portrait_image:
+  url:   /portrait/:author/:effect.:sf_format
+  param: { module: media, action: portrait }
 citation_image_short:
   url:   /i/:id
   param: { module: media, action: short }

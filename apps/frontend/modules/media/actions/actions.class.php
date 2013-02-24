@@ -18,6 +18,60 @@ class mediaActions extends sfActions
   	$this->redirect('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug, 301);
   }
   
+  public function executePortrait(sfWebRequest $request)
+  {
+    $slug = $request->getParameter('author');
+  	$this->forward404Unless($author = Doctrine_Core::getTable('Author')->findOneBySlug(array($slug)), sprintf('Object citation does not exist (%s).', $slug));
+    $this->forward404Unless($author->is_active);
+    $this->forward404Unless($author->has_thumbnail);
+    
+    $format = $request->getParameter('sf_format');
+    if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
+    	$format = 'jpg';
+    
+    $effect = $request->getParameter('effect');
+    if (($effect != 'original') && ($effect != 'noir-et-blanc') && ($effect != 'contour') && ($effect != 'relief') && ($effect != 'dessin'))
+    	$effect = 'original';
+    
+    $original_file = sfConfig::get('sf_web_dir').'/portrait/'.$author->slug.'/';
+    $handle = opendir($original_file);
+    while (false !== ($entry = readdir($handle))) {
+      if (substr_count($entry, 'original') > 0) {
+        $original_file .= $entry;
+      }
+    }
+    closedir($handle);
+    
+    $filename = sfConfig::get('sf_web_dir').'/portrait/'.$author->slug.'/'.$effect.'.'.$format;
+    
+    $img = new sfImage($original_file);
+    	
+    if ($effect == 'contour') {
+      $img->edgeDetect();
+    }
+    if ($effect == 'relief') {
+      $img->emboss();
+    }
+    if ($effect == 'dessin') {
+      $img->sketchy();
+    }
+    
+    if ($effect != 'original') {
+      $img->greyscale();
+    }
+    
+    $img->thumbnail(200, 200, 'center');
+   
+    $img->setMIMEType('image/'.$format);
+    	//$img->saveAs($filename, 'image/'.$format);
+    
+    $response = $this->getResponse();
+    $response->setContentType($img->getMIMEType());
+    $response->setContent($img);
+    
+    return sfView::NONE;
+  }
+  
   public function executeShow(sfWebRequest $request)
   {
     $slug = $request->getParameter('slug');
