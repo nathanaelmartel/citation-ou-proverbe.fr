@@ -55,19 +55,22 @@ EOF;
     	if (time() - $begin_time > $max_time) break;
     	$log = '';
     	
-    	foreach ($Author->DBPedia as $item) {
+    	foreach ($Author->DBPedia as $dbPedia) {
     
 		    $filename = sfConfig::get('sf_web_dir').'/portrait/'.$Author->slug; 
 		    if (!file_exists($filename))
 		    	mkdir($filename);
 		    
-		    $pathinfo = pathinfo($item->thumbnail);
+		    $pathinfo = pathinfo($dbPedia->thumbnail);
 		    
-    		if (copy($item->thumbnail, $filename.'/original.'.$pathinfo['extension'])) {
+    		if (copy($dbPedia->thumbnail, $filename.'/original.'.$pathinfo['extension'])) {
     			$Author->has_thumbnail = true;
     			$Author->save();
     			$log = ' thumbnail';
     			break;
+    		} else {
+    			$dbPedia->thumbnail = null;
+    			$dbPedia->save();
     		}
     	}
     	 
