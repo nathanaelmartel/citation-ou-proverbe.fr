@@ -147,7 +147,7 @@ h2 {
   line-height: 30px;
 }
 
-.action a {
+.action a, .action span {
   text-decoration: none;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -177,7 +177,7 @@ h2 {
 .action .icon.google-share { background-position: -10px -158px; }
 .action .icon.pinterest-share { background-position: -10px -206px;padding-right: 22px; }
 
-.action a:hover, .action a:active, .action a:focus {
+.action a:hover, .action a:active, .action a:focus, .action span {
   color: #000;
   -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .4);

@@ -37,6 +37,8 @@ EOF;
     $begin_time = time();
     $max_time = 50;
     
+    sfTask::log('==== dbpedia on '.date('r').' ====');
+    
     
     $q = Doctrine_Query::create()
     ->select('*')
@@ -54,15 +56,15 @@ EOF;
     foreach ($q->execute() as $Author) {
     	if (time() - $begin_time > $max_time) break;
     	$log = '';
-    	
+    	 
     	foreach ($Author->DBPedia as $dbPedia) {
     
-		    $filename = sfConfig::get('sf_web_dir').'/portrait/'.$Author->slug; 
-		    if (!file_exists($filename))
-		    	mkdir($filename);
-		    
-		    $pathinfo = pathinfo($dbPedia->thumbnail);
-		    
+    		$filename = sfConfig::get('sf_web_dir').'/portrait/'.$Author->slug;
+    		if (!file_exists($filename))
+    			mkdir($filename);
+    
+    		$pathinfo = pathinfo($dbPedia->thumbnail);
+    
     		if (copy($dbPedia->thumbnail, $filename.'/original.'.$pathinfo['extension'])) {
     			$Author->has_thumbnail = true;
     			$Author->save();
@@ -71,6 +73,47 @@ EOF;
     		} else {
     			$dbPedia->thumbnail = null;
     			$dbPedia->save();
+    		}
+    	}
+    
+    	sfTask::log($Author->id.': '.$Author->name.$log);
+    }
+    
+    sfTask::log('==== wikipedia on '.date('r').' ====');
+    
+    $q = Doctrine_Query::create()
+    ->select('*')
+    ->from('Author a')
+    ->leftJoin('AuthorWikipedia d')
+    ->Where('a.has_thumbnail = false')
+    ->andWhere('d.thumbnail is not null')
+    ->andWhere('d.author_id = a.id')
+    ->offset(rand(0, 10))
+    ->limit(100)
+    ->orderBy('a.updated_at ASC');
+    
+    //echo $q->getSqlQuery();echo "\n";die;
+    
+    foreach ($q->execute() as $Author) {
+    	if (time() - $begin_time > $max_time) break;
+    	$log = '';
+    	
+    	foreach ($Author->Wikipedia as $wikipedia) {
+    
+		    $filename = sfConfig::get('sf_web_dir').'/portrait/'.$Author->slug; 
+		    if (!file_exists($filename))
+		    	mkdir($filename);
+		    
+		    $pathinfo = pathinfo($wikipedia->thumbnail);
+		    
+    		if (copy($wikipedia->thumbnail, $filename.'/original.'.$pathinfo['extension'])) {
+    			$Author->has_thumbnail = true;
+    			$Author->save();
+    			$log = ' thumbnail';
+    			break;
+    		} else {
+    			$wikipedia->thumbnail = null;
+    			$wikipedia->save();
     		}
     	}
     	 
