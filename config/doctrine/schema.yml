@@ -49,6 +49,7 @@ Author:
     name: {type: string(255), unique: true}
     dbpedia_at: {type: datetime, default: null}
     wikipedia_at: {type: string(255), default: null}
+    has_thumbnail: {type: boolean, default: null}
     is_active: {type: boolean}
       
   options:
