@@ -147,6 +147,34 @@ h2 {
   line-height: 1.5em;
 }
 
+.wikipedia, .author-link {
+  color: #000;
+  text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.wikipedia {
+  font-family: 'QuicksandBookOblique';
+}
+
+.author-link {
+  font-family: 'QuicksandBold';
+}
+
+.dates {
+  font-family: 'QuicksandBold';
+  float: right;
+  color: #999;
+}
+
+a.wikipedia:hover, a.wikipedia:active, a.wikipedia:focus,
+a.author-link:hover, a.author-link:active, a.author-link:focus {
+	color: #005f26;
+}
+
 .action {
   font-size: .8em;
   color: #000;

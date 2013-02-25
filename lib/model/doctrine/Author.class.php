@@ -59,4 +59,37 @@ class Author extends BaseAuthor
 		
 		return '';
 	}
+	
+	public function getWikipediaUrl() {
+		
+		if ($this->hasDBPedia()) {
+			foreach ($this->DBPedia as $dbPedia) {
+				if ($dbPedia->wikipedia_url != '')
+					return $dbPedia->wikipedia_url;
+			}
+		}
+		
+		if ($this->hasWikipedia()) {
+			foreach ($this->Wikipedia as $wikipedia) {
+				if ($wikipedia->wikipedia_url != '')
+					return $wikipedia->wikipedia_url;
+			}
+		}
+		
+		return '';
+	}
+	
+	public function getDates() {
+		
+		if ($this->hasDBPedia()) {
+			foreach ($this->DBPedia as $dbPedia) {
+				if ($dbPedia->death_date && $dbPedia->birth_date)
+					return $dbPedia->birth_date.' - '.$dbPedia->death_date;
+				elseif ($dbPedia->birth_date)
+					return 'né(e) le '.$dbPedia->birth_date;
+			}
+		}
+		
+		return '';
+	}
 }
