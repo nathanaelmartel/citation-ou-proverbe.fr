@@ -40,4 +40,17 @@ class tagActions extends sfActions
     
     $this->tag = $tag;
   }
+  
+  public function executeIndex(sfWebRequest $request)
+  {
+    $response = $this->getResponse();
+    $response->setTitle('Thèmes des Citations' );
+    
+    $this->tags = new sfDoctrinePager('Tag', sfConfig::get('app_pager'));
+		$this->tags->setQuery(Doctrine_Query::create()
+	    ->select('*')
+	    ->from('Tag'));
+		$this->tags->setPage($request->getParameter('page', 1));
+		$this->tags->init();
+  }
 }

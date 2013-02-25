@@ -38,4 +38,17 @@ class authorActions extends sfActions
     
     $this->author = $author;
   }
+  
+  public function executeIndex(sfWebRequest $request)
+  {
+    $response = $this->getResponse();
+    $response->setTitle('Auteurs de Citations' );
+    
+    $this->authors = new sfDoctrinePager('Author', sfConfig::get('app_pager'));
+		$this->authors->setQuery(Doctrine_Query::create()
+	    ->select('*')
+	    ->from('Author'));
+		$this->authors->setPage($request->getParameter('page', 1));
+		$this->authors->init();
+  }
 }
