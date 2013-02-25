@@ -150,6 +150,7 @@ h2 {
 .action {
   font-size: .8em;
   color: #000;
+  margin-top: .2em;
 }
 
 .action a, .action span {
