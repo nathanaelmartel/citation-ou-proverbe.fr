@@ -6,7 +6,9 @@
     		<?php echo $author->name ?>
     	</a>
     </h2>
-		<img src="<?php echo url_for('@portrait_image?author='.$author->slug.'&effect=contour&sf_format=jpg&authorb='.$author->slug) ?>" alt="" class="portrait" />
+    <?php if ($author->has_thumbnail): ?>
+			<img src="<?php echo url_for('@portrait_image?author='.$author->slug.'&effect=contour&sf_format=jpg&authorb='.$author->slug) ?>" alt="" class="portrait" />
+		<?php endif; ?>
     <p><?php echo $author->getShortDescription() ?></p>
   </div>
   

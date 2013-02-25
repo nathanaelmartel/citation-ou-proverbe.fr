@@ -33,6 +33,9 @@ tag_short:
 authors:
   url:   /auteurs
   param: { module: author, action: index }
+authors_page:
+  url:   /auteurs/:page
+  param: { module: author, action: index }
 
 random:
   url:   /citation
@@ -40,6 +43,9 @@ random:
 
 tags:
   url:   /themes
+  param: { module: tag, action: index }
+tags_page:
+  url:   /themes/:page
   param: { module: tag, action: index }
 
 feed:
