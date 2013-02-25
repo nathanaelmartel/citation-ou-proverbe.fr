@@ -27,6 +27,13 @@
 
   </head>
   <body>
+  	<!--[if lte IE 7]>
+      <link rel="stylesheet" href="/css/styles-ie.css" />
+      <div class="alert-ie">
+      	<p><strong>Attention ! </strong> Votre navigateur présente de sérieuses lacunes en terme de sécurité et de performances, dues à son obsolescence.<br>En conséquence, ce site sera consultable mais de manière moins optimale qu'avec un navigateur récent (<a href="http://www.browserforthebetter.com/download.html" >Internet Explorer</a>, <a href="http://www.mozilla-europe.org/fr/firefox/" >Firefox</a>, <a href="http://www.google.com/chrome?hl=fr" >Chrome</a>, <a href="http://www.apple.com/fr/safari/download/" >Safari</a>,...)</p>
+      </div>
+  	<![endif]-->
+  
   	<div class="page container_16">
 	   	<?php include_partial('global/header')?>
 	    <?php echo $sf_content ?>
