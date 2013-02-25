@@ -150,7 +150,6 @@ h2 {
 .action {
   font-size: .8em;
   color: #000;
-  line-height: 30px;
 }
 
 .action a, .action span {
@@ -170,18 +169,19 @@ h2 {
   -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   margin-right: .3em;
+  display: inline-block;
 }
 
 .action .icon {
 	background: #555 url(../images/share-icons.png) no-repeat 0 0;
-	padding-right: 25px;
+	padding-right: 20px;
 }
 
 .action .icon.mail-share { background-position: -10px -20px; }
-.action .icon.facebook-share { background-position: -10px -65px; padding-right: 18px; }
+.action .icon.facebook-share { background-position: -10px -65px; padding-right: 13px; }
 .action .icon.twitter-share { background-position: -11px -112px; }
 .action .icon.google-share { background-position: -10px -158px; }
-.action .icon.pinterest-share { background-position: -10px -206px;padding-right: 22px; }
+.action .icon.pinterest-share { background-position: -10px -206px;padding-right: 17px; }
 
 .action a:hover, .action a:active, .action a:focus, .action span {
   color: #000;
