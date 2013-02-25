@@ -179,3 +179,23 @@ TagCitation:
     collate: utf8_unicode_ci
     charset: utf8
     
+    
+    
+    
+Contact:
+  tableName: contact
+  actAs:
+    Timestampable:
+
+  columns:
+    name: { type: string(255), notnull: true }
+    email: { type: string(255), notnull: true }
+    comments: clob
+
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
+    
+    
+    

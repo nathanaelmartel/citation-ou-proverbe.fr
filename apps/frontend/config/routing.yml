@@ -1,6 +1,11 @@
 
 
-
+contact:
+  url:   /contact
+  param: { module: contact, action: index }
+contact_validation:
+  url:   /contact/validation
+  param: { module: contact, action: create }
 
 
 portrait_image:
