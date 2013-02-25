@@ -27,4 +27,14 @@ all:
     mime_type:
       auto_detect: true
       library: gd_mime_type #  gd_mime_type (GD), Fileinfo (PECL), MIME_Type (PEAR)
-      
+
+  Contact:
+    email_subject: '[citation-ou-proverbe] Formulaire de contact'
+    email_from: contact@citation-ou-proverbe.fr
+    email_to: contact@citation-ou-proverbe.fr
+    email_bcc: []
+  
+  newsletter:
+    mail_subject_newsletter: "Confirmation de votre abonnement à la citation quotidienne"
+    mail_from: contact@citation-ou-proverbe.fr
+    mail_to: contact@citation-ou-proverbe.fr
