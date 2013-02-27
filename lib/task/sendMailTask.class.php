@@ -63,7 +63,7 @@ EOF;
       $personalized_message = str_replace('[encoded_mail]', base64_encode($newsletter->getEmail()), $message_text);
       
 	  	$message = $this->getMailer()->compose(
-	      'contact@citation-et-proverbe.fr',
+	      sfConfig::get('app_newsletter_mail_from'),
 	      $newsletter->getEmail(),
 	      'citation du jour',
 	  	  $personalized_message
