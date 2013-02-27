@@ -50,6 +50,7 @@ class newsletterActions extends sfActions
       
 			$message = Swift_Message::newInstance()
 			->setFrom(sfConfig::get('app_newsletter_mail_from'))
+			->setsetReplyTo(sfConfig::get('app_newsletter_mail_from'))
 			->setTo($newsletter->getEmail())
 			->setSubject(sfConfig::get('app_newsletter_mail_subject_newsletter'))
 			->setContentType('text/html')
