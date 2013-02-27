@@ -34,8 +34,16 @@
       </div>
   	<![endif]-->
   
-  	<div class="page container_16">
+  	<div class="page grid-container">
 	   	<?php include_partial('global/header')?>
+			<?php if ($sf_user->hasFlash('confirmation')): ?>
+				<div class="grid_14 prefix_1">
+			    <div id="confirmation">
+			        <?php echo$sf_user->getFlash('confirmation') ?>
+			    </div>
+			  </div>
+			  <div class="clear"></div>
+			<?php endif ?>
 	    <?php echo $sf_content ?>
 	    <?php include_partial('global/footer')?>
     </div>

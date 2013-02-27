@@ -6,19 +6,20 @@
 <?php end_slot() ?>
 
 
-<div class="grid_8 prefix_1 card-container">
+<div class="grid-60">
 	<?php include_partial('citation/card', array('citation' => $citation))?>
 </div>
 
 
-<div class="grid_6">
+<div class="grid-40">
   <?php include_partial('author/card', array('author' => $citation->Author))?>
 </div>
 
 <div class="clear"></div>
 
-<div class="grid_8 prefix_1 action">
+<div class="grid-60 action">
   <?php include_partial('citation/action', array(
+  		'id' => $citation->id, 
   		'msg' => $citation->quote, 
   		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, array('absolute' => true)), 
   		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true))
@@ -26,7 +27,7 @@
 </div>
 
 <?php if (count($citation->Tags) > 0): ?>
-<div class="grid_6 tags">
+<div class="grid-40 tags">
 	<h2>D'autres citations ou proverbe sur les thèmes :</h2>
 	<ul>
 		<?php foreach ($citation->Tags as $tag):?>

@@ -199,3 +199,23 @@ Contact:
     
     
     
+Send:
+  tableName: send
+  actAs:
+    Timestampable:
+
+  columns:
+    citation_id:  {type: integer}
+    image_url:  { type: string(255) }
+    email_from: { type: string(255), notnull: true }
+    email: { type: string(255), notnull: true }
+    subject: { type: string(255) }
+    comments: clob
+
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
+    
+    
+    

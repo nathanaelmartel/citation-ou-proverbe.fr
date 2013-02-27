@@ -20,6 +20,7 @@ body {
   -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .6);
   box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  max-width: 1000px;
 }
 
 .sep {
@@ -102,12 +103,12 @@ a.card-container:hover, a.card-container:active, a.card-container:focus {
 }
 
 .card-container, blockquote {
-  width: 460px;
+  width: 100%;
 }
 
 blockquote {
   padding: 1em;
-	height: 8em;
+	height: 10em;
 	font-family: 'QuicksandBold';
 	font-size: 1.8em;
 	display: table-cell;
@@ -179,6 +180,7 @@ a.author-link:hover, a.author-link:active, a.author-link:focus {
   font-size: .8em;
   color: #000;
   margin-top: .2em;
+  margin-bottom: 1em;
 }
 
 .action a, .action span {
@@ -269,25 +271,14 @@ aside .tags {
   color: #00ABF4;
 }
 
-
-@media (max-width: 960px), (max-device-width: 960px) {
-	.page {
-	  padding: 0 20px;
-    width: 500px;
-	}
-}
-
-
 @media (max-width: 500px), (max-device-width: 500px) {
   html {
     background: none;
   }
   .page {
-    padding: 0 5px;
     width: auto;
   }
 	.card-container, blockquote {
-	  width: 100%;
 	  font-size: 1.1em;
 	}
 }
