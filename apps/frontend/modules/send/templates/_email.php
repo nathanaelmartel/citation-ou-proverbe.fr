@@ -9,7 +9,7 @@
 	</a>
 	
  
-<p>Retrouver d'autre citations de <a style="color:#000;" href="<?php echo url_for('@author?slug='.$citation->Author->slug, array('absolute' => true)) ?>?pk_campaign=email&pk_kwd=email-auteur"><?php echo $citation->Author->name; ?></a></p> 
+<p>Retrouver d'autres citations de <a style="color:#000;" href="<?php echo url_for('@author?slug='.$citation->Author->slug, array('absolute' => true)) ?>?pk_campaign=email&pk_kwd=email-auteur"><?php echo $citation->Author->name; ?></a></p> 
 
 <p>
 -- <br />

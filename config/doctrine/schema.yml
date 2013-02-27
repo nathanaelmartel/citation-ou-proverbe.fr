@@ -216,6 +216,19 @@ Send:
     collate: utf8_unicode_ci
     charset: utf8
     
+
+Newsletter:
+  columns:
+    email: varchar(255)
+    is_confirmed: {type: boolean, default: false} 
+    
+  actAs:
+    Timestampable:
+  
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
     
     
     
