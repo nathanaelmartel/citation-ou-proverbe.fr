@@ -1,4 +1,29 @@
 
+# Newsletter
+newsletter_desabonnement:
+  url: /desabonnement/:code
+  param: { module: newsletter, action: del }
+  
+newsletter:
+  url: /abonnement
+  param: { module: newsletter, action: new }
+  
+newsletter_confirmation:
+  url: /abonnement/confirmation/:code
+  param: { module: newsletter, action: confirmation }
+  
+newsletter_create:
+  url: /abonnement/create
+  param: { module: newsletter, action: create }
+  
+newsletter_update:
+  url: /abonnement/update
+  param: { module: newsletter, action: update }
+  
+newsletter_edit:
+  url: /abonnement/edit
+  param: { module: newsletter, action: edit }
+  
 
 contact:
   url:   /contact
