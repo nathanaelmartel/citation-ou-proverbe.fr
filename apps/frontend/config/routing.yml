@@ -7,6 +7,13 @@ contact_validation:
   url:   /contact/validation
   param: { module: contact, action: create }
 
+send_mail_validation:
+  url:   /envoyer/validation
+  param: { module: send, action: create }
+send_mail:
+  url:   /envoyer/:id
+  param: { module: send, action: index }
+
 
 portrait_image:
   url:   /medias/:author/portrait.:authorb.:effect.:sf_format

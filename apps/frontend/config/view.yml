@@ -16,8 +16,7 @@ default:
     - /fonts/Quicksand/stylesheet.css
     - /css/cssreset.css
     - /css/cssbase.css
-    - /css/960.css
-    - /css/960-reset.css
+    - /css/unsemantic-grid-responsive.css
     - /css/main.css
 
   javascripts:    []

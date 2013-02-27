@@ -1,12 +1,19 @@
 
 
-== cron:
 
-* * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony downloadPages >> /home/nat/www/v2.citation-et-proverbe.fr/log/download.log
-* * * * * php /home/nat/www/v2.citation-et-proverbe.fr/symfony parse >> /home/nat/www/v2.citation-et-proverbe.fr/log/parse.log
+pages Auteurs
+pages Thèmes
 
+trouver les autheurs en double par url wikipedia
+seconde passe dbpedia sur le nom wikipedia
+seconde passe wikipedia sur l'url dbpedia
 
-DELETE FROM tag_citation;
-DELETE FROM tag;
-DELETE FROM author;
-DELETE FROM citation;
+Envoyer par mail
+Recevoir une citation quotidienne
+Proposer une citation
+Noter les citations
+Personaliser le fond d'écran (couleur de fond, couleur du texte, auteur ou nom, photo de fond…)
+
+Publier sur twitter
+
+piwik

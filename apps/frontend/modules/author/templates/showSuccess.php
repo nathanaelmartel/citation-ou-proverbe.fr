@@ -1,10 +1,10 @@
 
 
-<div class="grid_14 prefix_1">
+<div class="grid-100">
 	<h1><?php echo $author->name ?></h1>
 </div>
 
-<div class="grid_8 prefix_1 author-citations">
+<div class="grid-60 author-citations">
 
 <?php foreach ($citations as $citation):?>
 
@@ -12,6 +12,7 @@
 			<?php include_partial('citation/card', array('citation' => $citation))?>
 		<div class="action">
 		  <?php include_partial('citation/action', array(
+  				'id' => $citation->id, 
 		  		'msg' => $citation->quote, 
 		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$author->slug, array('absolute' => true)), 
 		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$author->slug.'&authorb='.$author->slug, array('absolute' => true))
@@ -22,7 +23,7 @@
 <?php endforeach ?>
 </div>
 
-<div class="grid_6">
+<div class="grid-40">
 	<div class="author-card">
     <?php if ($author->getDates() != '' ): ?>
     	<span class="dates"><?php echo $author->getDates() ?></span>
