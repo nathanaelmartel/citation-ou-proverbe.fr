@@ -45,10 +45,10 @@ EOF;
     <blockquote style="color: '.$citation->getTextRGBColorHex().';background-color: '.$citation->getRGBColorHex() .';width: 460px;display: table-cell;font-size: 1.8em;height: 8em;line-height: 1.2em;padding: 1em;vertical-align: middle;">
     			'. $citation->quote .'</blockquote></a>
     <p>Retrouver d\'autres citations de <a style="color:#000;" href="http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'?pk_campaign=abonnement&pk_kwd=abonnement-auteur">'. $citation->Author->name.'</a></p>
-    <p><a href="http://www.citation-ou-proverbe.fr/desabonnement/[encoded_mail]">désabonnement</a></p>
     <p>
 		-- <br />
-		L\'équipe de <a href="http://www.citation-ou-proverbe.fr?pk_campaign=abonnement&pk_kwd=abonnement-footer" style="color:#000;">Citation ou Proverbe</a>
+		L\'équipe de <a href="http://www.citation-ou-proverbe.fr?pk_campaign=abonnement&pk_kwd=abonnement-footer" style="color:#000;">Citation ou Proverbe</a><br />
+		<a href="http://www.citation-ou-proverbe.fr/desabonnement/[encoded_mail]">désabonnement</a>
 		</p>'; 
         
     

@@ -1,0 +1,25 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Newsletter
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          newsletter
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+    css:                   nothing
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+          display: [=email, is_confirmed, updated_at]
+          max_per_page: 50
+          sort: [updated_at, desc]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~
