@@ -43,14 +43,18 @@ class tagActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
+  	$dbh = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
+  	
+		$query = 'SELECT t.name, t.slug, count(c.citation_id) as nb 
+			FROM tag t left join tag_citation c ON t.id = c.tag_id 
+			WHERE t.is_active = 1  
+			GROUP BY t.name HAVING nb > 400 LIMIT 200';
+		
+		$this->tags = $dbh->query($query); 
+		
+  	
     $response = $this->getResponse();
-    $response->setTitle('Thèmes des Citations' );
-    
-    $this->tags = new sfDoctrinePager('Tag', sfConfig::get('app_pager'));
-		$this->tags->setQuery(Doctrine_Query::create()
-	    ->select('*')
-	    ->from('Tag'));
-		$this->tags->setPage($request->getParameter('page', 1));
-		$this->tags->init();
+    $response->addMeta('description', 'Thèmes de Citations ou Proverbes ');
+    $response->setTitle('Thèmes de Citations ou Proverbes ' );
   }
 }
