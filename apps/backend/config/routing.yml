@@ -1,3 +1,30 @@
+contact:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Contact
+    module:               contact
+    prefix_path:          /contact
+    column:               id
+    with_wildcard_routes: true
+
+send:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Send
+    module:               send
+    prefix_path:          /send
+    column:               id
+    with_wildcard_routes: true
+
+newsletter:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Newsletter
+    module:               newsletter
+    prefix_path:          /newsletter
+    column:               id
+    with_wildcard_routes: true
+
 page:
   class: sfDoctrineRouteCollection
   options:

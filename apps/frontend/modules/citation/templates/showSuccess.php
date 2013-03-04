@@ -6,16 +6,19 @@
 <?php end_slot() ?>
 
 
-<div class="grid-60">
-	<?php include_partial('citation/card', array('citation' => $citation))?>
+<div id="citation-<?php echo $citation->id ?>" class="citation">
+	<div class="grid-60">
+		<?php include_partial('citation/card', array('citation' => $citation))?>
+	</div>
+	
+	
+	<div class="grid-40">
+	  <?php include_partial('author/card', array('author' => $citation->Author))?>
+	</div>
+	
+	<div class="clear"></div>
 </div>
 
-
-<div class="grid-40">
-  <?php include_partial('author/card', array('author' => $citation->Author))?>
-</div>
-
-<div class="clear"></div>
 
 <div class="grid-60 action">
   <?php include_partial('citation/action', array(

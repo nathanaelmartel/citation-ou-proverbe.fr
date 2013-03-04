@@ -1,0 +1,25 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Send
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          send
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+    css:                   nothing
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+          display: [citation_id, email_from, email, =subject, updated_at]
+          max_per_page: 50
+          sort: [updated_at, desc]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

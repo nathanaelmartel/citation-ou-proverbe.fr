@@ -15,6 +15,20 @@ all:
     logout_route:                 @sf_guard_signout
     
     categories:
+      Social:
+        items:
+          Contact:
+            url:          contact
+            image:        inbox.png
+            credentials:  [admin]
+          Abonnement:
+            url:          newsletter
+            image:        users.png
+            credentials:  [admin]
+          Send:
+            url:          send
+            image:        messaging.png
+            credentials:  [admin]
       Citation:
         items:
           Citation Dashboard:
