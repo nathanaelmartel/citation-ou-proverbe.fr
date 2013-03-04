@@ -131,6 +131,20 @@ h2 {
 .author-card {
   font-family: 'QuicksandBook';
 }
+.top-authors h2 {
+  margin-bottom: 0;
+}
+.top-authors .author-card {
+  min-height: 7em;
+}
+.top-authors-10 .author-card {
+  height: 250px;
+}
+.top-authors-10 img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
 
 .author-card .portrait {
 	float: right;

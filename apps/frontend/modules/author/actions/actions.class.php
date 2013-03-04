@@ -41,14 +41,25 @@ class authorActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
+  	$dbh = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
+  	
+		$top_query = 'SELECT a.name, a.slug, count(c.id) as nb 
+			FROM author a left join citation c ON a.id = c.author_id 
+			WHERE a.is_active = 1 and c.is_active = 1 and a.has_thumbnail = 1 
+			GROUP BY a.name HAVING nb > 100 LIMIT 10';
+		
+		$this->top_authors = $dbh->query($top_query); 
+  	
+		$query = 'SELECT a.name, a.slug, count(c.id) as nb 
+			FROM author a left join citation c ON a.id = c.author_id 
+			WHERE a.is_active = 1 and c.is_active = 1 
+			GROUP BY a.name HAVING nb > 70 LIMIT 10, 100';
+		
+		$this->authors = $dbh->query($query); 
+		
+  	
     $response = $this->getResponse();
-    $response->setTitle('Auteurs de Citations' );
-    
-    $this->authors = new sfDoctrinePager('Author', sfConfig::get('app_pager'));
-		$this->authors->setQuery(Doctrine_Query::create()
-	    ->select('*')
-	    ->from('Author'));
-		$this->authors->setPage($request->getParameter('page', 1));
-		$this->authors->init();
+    $response->addMeta('description', 'Auteurs de Citations ');
+    $response->setTitle('Auteurs de Citations ' );
   }
 }
