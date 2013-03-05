@@ -19,7 +19,7 @@
 		      <?php include_partial('send/input', array('field' => $field)); ?>
 		    <?php endforeach; ?>
 		
-		    <div class="grid-40 prefix-30 mobile-grid-50 mobile-prefix-50 row-control">
+		    <div class="grid-35 prefix-40 mobile-grid-35 mobile-prefix-40 row-control">
 		      <input type="submit" value="Envoyer" class="buton"/>
 		    </div>
 		

@@ -1,6 +1,7 @@
 
 
     <nav class="clearfix">
+    	<label for="toggle-menu" data-icon="≡" title="menu" role="navigation" onclick=""></label><input type="checkbox" id="toggle-menu">
 	    <ul>
 	    	<li><a href="<?php echo url_for('@homepage')?>">Dernières Citations</a></li>
 	    	<li><a href="<?php echo url_for('@authors')?>">Auteurs</a></li>

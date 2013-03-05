@@ -18,7 +18,7 @@
       <?php include_partial('contact/input', array('field' => $field)); ?>
     <?php endforeach; ?>
 
-    <div class="grid-20 prefix-20 mobile-grid-50 mobile-prefix-50 row-control">
+    <div class="grid-20 prefix-20 mobile-grid-30 mobile-prefix-40 row-control">
       <input type="submit" value="Envoyer" class="buton"/>
     </div>
 
