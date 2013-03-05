@@ -1,0 +1,15 @@
+/* TEAM */
+	design by Nathanaël Martel
+	Site : http://nathanael.fam-martel.eu/
+  Twitter: @simplementNat
+	Contact: contact[at]citation-ou-proverbe.fr
+	From: France
+
+
+/* SITE */
+	Language: Français
+	Doctype: HTML5
+	Components: symfony, HTML5, CSS3
+  Library: YUI 3.5.1 reset, base ; unsemantic ; piwik ; sfImageTransform ; swCombine ;  Flat UI 
+	IDE: Eclipse, Zen coding
+	

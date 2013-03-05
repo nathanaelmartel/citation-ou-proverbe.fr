@@ -16,7 +16,7 @@
     <?php foreach($form as $name => $field): ?>
         <?php include_partial('newsletter/input', array('field' => $field, 'name' => $name)) ?>
     <?php endforeach; ?>
-    <div class="row grid-20 prefix-20" >
+    <div class="row grid-20 prefix-20 mobile-grid-30 mobile-prefix-40" >
       <input type="submit" value="Inscription" class="bouton" />
     </div>
   </fieldset>
