@@ -13,6 +13,9 @@ class contactActions extends sfActions
     public function executeIndex(sfWebRequest $request)
     {
         $this->form = new ContactForm();
+        
+    		$response = $this->getResponse();
+    		$response->setTitle('Contact');
     }
 
 
@@ -34,7 +37,7 @@ class contactActions extends sfActions
             $contact = $form->save();
 
             $message = Swift_Message::newInstance()
-                    ->setFrom(sfConfig::get('app_Contact_email_from'))
+                    ->setFrom($contact->email)
                     ->setTo(sfConfig::get('app_Contact_email_to'))
                     ->setSubject(sfConfig::get('app_Contact_email_subject') . ' ' . $contact->getName())
                     ->setContentType('text/html')
@@ -47,6 +50,18 @@ class contactActions extends sfActions
             $this->getMailer()->send($message);
 
             $this->getUser()->setFlash('confirmation', 'Votre message a bien été envoyé !');
+            
+            if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
+            {
+            	require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
+            	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
+            
+            	$piwikTracker = new PiwikTracker( $idSite = 17 );
+            	$piwikTracker->doTrackPageView('Contact');
+            	$piwikTracker->doTrackGoal($idGoal = 3, $revenue = 1);
+            	$piwikTracker->setCustomVariable( 1, 'email', $contact->email );
+            }
+            
             $this->redirect('@contact');
         }
     }
