@@ -65,6 +65,8 @@ class sendActions extends sfActions
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
             	$piwikTracker->doTrackPageView($sf_context->getResponse()->getTitle());
             	$piwikTracker->doTrackGoal($idGoal = 2, $revenue = 100);
+            	$t->setCustomVariable( 1, 'email', $send->email_from );
+            	$t->setCustomVariable( 2, 'citation', $send->citation_id );
             }
             
             $this->redirect('@citation_short?id='.$send->citation_id);
