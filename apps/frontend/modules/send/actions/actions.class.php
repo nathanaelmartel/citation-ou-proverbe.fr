@@ -63,7 +63,7 @@ class sendActions extends sfActions
             	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
             
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
-            	$piwikTracker->doTrackPageView($sf_context->getResponse()->getTitle());
+            	$piwikTracker->doTrackPageView('Envoyer la citation par mail');
             	$piwikTracker->doTrackGoal($idGoal = 2, $revenue = 100);
             	$t->setCustomVariable( 1, 'email', $send->email_from );
             	$t->setCustomVariable( 2, 'citation', $send->citation_id );
