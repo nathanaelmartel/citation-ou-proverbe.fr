@@ -40,7 +40,7 @@
 	   	<?php include_partial('global/header')?>
 	   	
 			<?php if ($sf_user->hasFlash('confirmation')): ?>
-				<div class="grid-100">
+				<div class="grid-80 prefix-10">
 			    <div id="confirmation">
 			        <?php echo $sf_user->getFlash('confirmation') ?>
 			    </div>
