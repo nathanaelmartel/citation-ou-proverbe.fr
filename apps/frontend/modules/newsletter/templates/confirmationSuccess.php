@@ -4,8 +4,10 @@
               
 	<h1>Abonnement : confirmation</h1>
 	
+	<div class="grid-80 prefix-10">
     <div id="confirmation">
-		<p>Merci pour votre inscription.</p>
+		Merci pour votre inscription.
     </div>
+  </div>
 	
 	
