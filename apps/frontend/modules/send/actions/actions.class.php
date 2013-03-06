@@ -19,6 +19,9 @@ class sendActions extends sfActions
         $this->form = new SendForm();
     		$this->form->setDefault('citation_id', $id);
     		$this->form->setDefault('image_url', $this->getController()->genUrl('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true)));
+    		
+    		$response = $this->getResponse();
+    		$response->setTitle('Envoyer la citation par mail');
     }
 
 
