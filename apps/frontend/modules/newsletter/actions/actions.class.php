@@ -3,9 +3,9 @@
 /**
  * newsletter actions.
  *
- * @package    evasion
- * @subpackage newsletter
- * @author     Your name here
+ * @package    citations
+ * @subpackage citation
+ * @author     Nathanaël Martel <nathanael@fam-martel.eu>
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class newsletterActions extends sfActions
@@ -13,6 +13,9 @@ class newsletterActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new NewsletterForm();
+    
+    $response = $this->getResponse();
+    $response->setTitle('Abonnement');
   }
   
 	public function executeCreate(sfWebRequest $request)
@@ -66,7 +69,18 @@ class newsletterActions extends sfActions
 		$email = base64_decode($request->getParameter('code'));
 
 		$this->forward404Unless($newsletter = Doctrine_Core::getTable('Newsletter')->findOneByEmail(array($email)), sprintf('Object newsletter does not exist (%s).', $request->getParameter('code')));
-
+		
+		if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
+		{
+			require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
+			PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
+		
+			$piwikTracker = new PiwikTracker( $idSite = 17 );
+			$piwikTracker->doTrackPageView('Abonnement');
+			$piwikTracker->doTrackGoal($idGoal = 4, $revenue = 100);
+			$piwikTracker->setCustomVariable( 1, 'email', $email );
+		}
+		
 		$newsletter->is_confirmed = true;
 		$newsletter->save();
 	}
