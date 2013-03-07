@@ -130,6 +130,8 @@ EOF;
 	    	if ($do_modif) {
 	    		$old_author->delete();
 		    	$new_author->name = $final_name;
+		    	$new_author->wikipedia_at = null;
+		    	$new_author->dbpedia_at = null;
 		    	$new_author->save();
 	    	}
     	} else {
@@ -137,6 +139,9 @@ EOF;
 	    	sfTask::log(count($new_author->Citations).' citations');
 	    	sfTask::log(count($new_author->DBPedia).' dbpedia');
 	    	sfTask::log(count($new_author->Wikipedia).' wikipedia');
+	    	$new_author->wikipedia_at = null;
+	    	$new_author->dbpedia_at = null;
+	    	$new_author->save();
     	}
     	
     }
