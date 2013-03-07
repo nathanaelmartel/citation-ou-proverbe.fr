@@ -42,9 +42,9 @@ all:
       transport:
         class: Swift_SmtpTransport
         param:
-          host:       smtp.validname.com
-          port:       25
+          host:       smtp.sendgrid.net
+          port:       587
           encryption: ~
-          username:   contact@citation-et-proverbe.fr
-          password:   u@amabevumazu
+          username:   citations
+          password:   anedapyry4a
           
