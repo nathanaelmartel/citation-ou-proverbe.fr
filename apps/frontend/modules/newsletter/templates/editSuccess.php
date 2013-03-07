@@ -1,8 +1,12 @@
 
-           
+         
+              
 	<h1>Abonnement : confirmation</h1>
 	
+	<div class="grid-80 prefix-10">
     <div id="confirmation">
-		<p>Voux allez recevoir un email, cliquez sur le lien qu'il contient afin de confirmer votre inscription.</p>
+		Merci pour votre inscription.
     </div>
+  </div>
+	
 	
