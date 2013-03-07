@@ -33,7 +33,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     sfTask::log('==== begin on '.date('r').' ====');
-    $do_modif = false;
+    $do_modif = true;
 
     // SELECT * FROM `author_dbpedia` , `author_wikipedia` WHERE `author_dbpedia`.`wikipedia_url` = `author_wikipedia`.`wikipedia_url` AND `author_dbpedia`.`author_id` <> `author_wikipedia`.`author_id`
     $duplicate = array(
@@ -46,7 +46,7 @@ EOF;
     		14227 => 4346,
     		1165 => 5677,
     		236 => 13881,
-    		3249 => 10054,
+    		//3249 => 10054, http://fr.wikipedia.org/wiki/Philippe_Aubert
     		5614 => 9292,
     		9350 => 4687,
     		354 => 13149,
