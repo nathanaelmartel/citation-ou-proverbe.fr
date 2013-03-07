@@ -43,6 +43,24 @@
 						<td><div style="width:<?php echo ceil($result['has_thumbnail']/$total*100) ?>%;background:#C64934;height:1em;"></div></td>
 					</tr>
 				<?php endforeach;?>
+				<?php $results = $q->fetchAll('SELECT count( `id` ) AS is_active FROM `author` WHERE is_active = 1');  ?>
+				<?php foreach ($results as $key => $result):  ?>
+					<tr>
+						<td>is active</td>
+						<td><?php echo $result['is_active'] ?></td>
+						<td><?php echo ceil($result['is_active']/$total*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['is_active']/$total*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+				<?php endforeach;?>
+				<?php $results = $q->fetchAll('SELECT count( `action_at` ) AS action_at FROM `author` WHERE action_at is not null');  ?>
+				<?php foreach ($results as $key => $result):  ?>
+					<tr>
+						<td>action</td>
+						<td><?php echo $result['action_at'] ?></td>
+						<td><?php echo ceil($result['action_at']/$total*100) ?>%</td>
+						<td><div style="width:<?php echo ceil($result['action_at']/$total*100) ?>%;background:#C64934;height:1em;"></div></td>
+					</tr>
+				<?php endforeach;?>
 			</table>
 		</div>
 	
