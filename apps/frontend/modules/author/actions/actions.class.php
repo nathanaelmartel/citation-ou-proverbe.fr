@@ -28,6 +28,9 @@ class authorActions extends sfActions
     $response->addMeta('description', 'Citation ou Proverbe de : '.$author->name.'. Retrouvez d\'autre citations et proverbe sur notre site.');
     $response->setTitle('Citation ou Proverbe de : '.$author->name );
     
+    $author->view = $author->view + 1;
+    $author->save();
+    
     $this->citations = new sfDoctrinePager('Citation', sfConfig::get('app_pager'));
 		$this->citations->setQuery(Doctrine_Query::create()
 	    ->select('*')
