@@ -61,6 +61,26 @@ EOF;
 	  	$Author->save();
     }
     
+    $q = Doctrine_Query::create()
+    ->select('*')
+    ->from('Author a')
+    ->offset(rand(0, 50))
+    ->limit(100)
+   	->orderBy('wikipedia_at ASC');;
+    
+    $authors = $q->execute();
+    
+    foreach ($authors as $Author) {
+      if (time() - $begin_time > $max_time) break;
+    	if (!$Author->hasWikipedia()) {
+    		$log = $this->pass($Author);
+    		sfTask::log($Author->name.$log);
+    	}
+      
+	  	$Author->wikipedia_at = new Doctrine_Expression('NOW()');
+	  	$Author->save();
+    }
+    
     sfTask::log('==== end on '.date('r').' ====');
   }
   

@@ -13,7 +13,7 @@
     <?php include_metas() ?>
     <?php include_title() ?>
     
-    <?php use_helper('swCombine'); sw_include_stylesheets() ?>
+    <?php include_stylesheets() ?>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -54,6 +54,6 @@
 	    
     </div>
     <?php include_partial('global/piwik')?>
-    <?php sw_include_javascripts() ?>
+    <?php include_javascripts() ?>
   </body>
 </html>

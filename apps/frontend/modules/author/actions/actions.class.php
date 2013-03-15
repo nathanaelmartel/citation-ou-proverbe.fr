@@ -18,6 +18,36 @@ class authorActions extends sfActions
   	$this->redirect('@author?slug='.$author->slug, 301);
   }
   
+  public function executeRecherche(sfWebRequest $request)
+  {
+  	$term = $request->getParameter('author_search');
+  	
+  	$authors = Doctrine::getTable('Author')->retrieveForSelect($term, false);
+  	
+  	if (count($authors) == 1)
+  		$this->redirect('@author?slug='.$authors[0]->slug, 301);
+  	
+  	$this->authors = $authors;
+  	$this->term = $term;
+  	
+		$response = $this->getResponse();
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-jqueryui.min.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
+    $response->addMeta('description', 'Recherche par Auteurs de Citations ');
+    $response->setTitle('Recherche par Auteurs de Citations ' );
+  }
+  
+  public function executeSearch(sfWebRequest $request)
+  {
+  	$term = $request->getParameter('term');
+  	
+  	$auteurs = Doctrine::getTable('Author')->retrieveForSelect($term);
+  	 
+  	$this->getResponse()->setContentType('application/json');
+  	$this->setLayout(false);
+  	return $this->renderText(json_encode($auteurs));
+  }
+  
   public function executeShow(sfWebRequest $request)
   {
     $slug = $request->getParameter('slug');
@@ -60,8 +90,9 @@ class authorActions extends sfActions
 		
 		$this->authors = $dbh->query($query); 
 		
-  	
-    $response = $this->getResponse();
+		$response = $this->getResponse();
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-jqueryui.min.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
     $response->addMeta('description', 'Auteurs de Citations ');
     $response->setTitle('Auteurs de Citations ' );
   }

@@ -146,6 +146,10 @@ h2 {
 	display: block;
 }
 
+.author-search {
+	margin: 4em 0;
+}
+
 .author-card .portrait {
 	float: right;
   margin-left: 1em;
@@ -392,6 +396,49 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 label[for^="toggle"], [type=checkbox] {cursor: pointer}
 label[for^="toggle"] + [type=checkbox] {display: none}
 
+
+.ui-helper-hidden-accessible {
+	display: none;
+}
+
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+	font-family: 'QuicksandBold';
+	font-weight: normal;
+	border: 2px solid #DCE4EC;
+  margin: 0;
+  padding: 0;
+  color: #34495E;
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
+
+.ui-autocomplete li {
+	display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding: .2em 1em;
+  background: #fff;
+  cursor: pointer;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.ui-autocomplete li:nth-child(2n) {
+	background: #DCE4EC;
+}
+
+.ui-autocomplete li:hover {
+  background: #1ABC9C;
+}
+
 @media (max-width: 1000px) {
 
   section {
@@ -483,6 +530,8 @@ label[for^="toggle"] + [type=checkbox] {display: none}
   }
 
 }
+
+
 
 
 
