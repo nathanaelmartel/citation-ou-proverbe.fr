@@ -35,4 +35,27 @@ class AuthorTable extends Doctrine_Table
       
       return false;
   	}
+  	
+    public function retrieveForSelect($q, $is_table = true, $limit = 50) {
+    	
+        $q = $this->createQuery('a')
+            ->where('a.name LIKE ?', '%'.$q.'%')
+            ->limit($limit);
+
+        if ($is_table) {
+	        $authors = array();
+	
+	        foreach ($q->execute() as $author) {
+	            $authors[] = array (
+	            		'id' => $author->getId(),
+	            		'value' => $author->getName()
+	            );
+	        }
+	
+	        return $authors;
+        } 
+	      
+        return $q->execute();
+    }
+  	
 }

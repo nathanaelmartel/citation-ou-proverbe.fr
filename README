@@ -1,6 +1,11 @@
 
+duplicate : 
+- slug terminant par un chiffre
+- 
+
+seconde passe wikipedia sur l'url trouvé par dbpedia
+passe wikipedia pour duplicate result
 seconde passe dbpedia sur le nom wikipedia
-seconde passe wikipedia sur l'url dbpedia
 
 Proposer une citation
 Noter les citations

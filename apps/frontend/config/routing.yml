@@ -25,6 +25,14 @@ newsletter_edit:
   param: { module: newsletter, action: edit }
   
 
+new_citation:
+  url:   /proposer-citation
+  param: { module: proposition, action: index }
+new_citation_validation:
+  url:   /proposer-citation/validation
+  param: { module: proposition, action: create }
+  
+
 contact:
   url:   /contact
   param: { module: contact, action: index }
@@ -67,6 +75,12 @@ tag_short:
   param: { module: tag, action: short }
 
 
+authors_search:
+  url:   /auteurs/search
+  param: { module: author, action: search }
+authors_search_page:
+  url:   /auteurs/recherche
+  param: { module: author, action: recherche }
 authors:
   url:   /auteurs
   param: { module: author, action: index }
