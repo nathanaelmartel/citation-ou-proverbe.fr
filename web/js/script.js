@@ -5,9 +5,8 @@
 		  source: "/auteurs/search",
 		  minLength: 2,
 		  select: function( event, ui ) {
-			  console.log( ui.item ?
-			  "Selected: " + ui.item.value + " id " + ui.item.id :
-			  "Nothing selected, input was " + this.value );
+			  if (ui.item)
+				  $( "#citation_author_id" ).attr('value',  ui.item.id);
 		  }
 	  });
 	  

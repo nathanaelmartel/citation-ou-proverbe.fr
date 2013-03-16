@@ -31,6 +31,9 @@ new_citation:
 new_citation_validation:
   url:   /proposer-citation/validation
   param: { module: proposition, action: create }
+new_citation_validation_approbation:
+  url:   /proposer-citation/validation/approbation/:id
+  param: { module: proposition, action: approbate }
   
 
 contact:
