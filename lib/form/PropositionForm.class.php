@@ -26,5 +26,7 @@ class PropositionForm extends BaseCitationForm
   	);
   	
   	$this->setWidget('author_id', new sfWidgetFormInputHidden());
+  	$this->setDefault ('author_id', 142);
+  	
   }
 }
