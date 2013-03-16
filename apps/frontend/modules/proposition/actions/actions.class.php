@@ -37,10 +37,18 @@ class propositionActions extends sfActions
 
     protected function processForm(sfWebRequest $request, sfForm $form)
     {
+    		
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $citation = $form->save();
-
+		    		if (($citation->author_id == '142') && ($request->getParameter('author_name') != '') && ($request->getParameter('author_name') != 'Anonyme')) {
+		    			AuthorTable::addAuthor($request->getParameter('author_name'));
+		    		    		
+			    		$author = Doctrine::getTable('Author')->findOneByName($request->getParameter('author_name'));
+			    		$citation->author_id = $author->id;
+			    		$citation->save();
+		    		}
+            
             $message = Swift_Message::newInstance()
                     ->setFrom(sfConfig::get('app_proposition_email_from'))
                     ->setTo(sfConfig::get('app_proposition_email_to'))
