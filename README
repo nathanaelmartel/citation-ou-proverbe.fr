@@ -7,7 +7,6 @@ seconde passe wikipedia sur l'url trouvé par dbpedia
 passe wikipedia pour duplicate result
 seconde passe dbpedia sur le nom wikipedia
 
-Proposer une citation
 Noter les citations
 Personaliser le fond d'écran (couleur de fond, couleur du texte, auteur ou nom, photo de fond…)
 
@@ -18,3 +17,5 @@ Publier sur twitter
 piwik
 
 
+cd web/css
+sass --watch styles.scss:styles.css --style compressed

@@ -43,3 +43,11 @@ all:
     mail_subject_newsletter: "Confirmation de votre abonnement à la citation quotidienne"
     mail_from: contact@citation-ou-proverbe.fr
     mail_to: contact@citation-ou-proverbe.fr
+  
+  proposition:
+    email_subject: "proposition de nouvelle citation"
+    email_from: contact@citation-ou-proverbe.fr
+    email_to: nathanael@fam-martel.eu
+    
+    
+    
