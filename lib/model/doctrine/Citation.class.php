@@ -121,6 +121,12 @@ class Citation extends BaseCitation
 		if (strlen($this->quote) <= $limit)
 			return $this->quote;
 		
-		return substr($this->quote, 0, stripos($this->quote, ' ', $limit)+1 ).'...';
+		$short_quote = substr($this->quote, 0, $limit);
+		
+		return substr($short_quote, 0, strrpos($short_quote, ' ', $limit)+1 ).'...';
+	}
+	
+	public function getShortUrl($traker = '?pk_campaign=twitter&pk_kwd=twitter') {
+		return 'http://citation-ou-proverbe.fr/c/'.$this->id.$traker;
 	}
 }
