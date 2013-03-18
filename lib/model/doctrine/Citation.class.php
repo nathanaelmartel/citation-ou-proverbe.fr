@@ -123,7 +123,7 @@ class Citation extends BaseCitation
 		
 		$short_quote = substr($this->quote, 0, $limit);
 		
-		return substr($short_quote, 0, strrpos($short_quote, ' ')+1 ).'...';
+		return substr($short_quote, 0, strrpos($short_quote, ' ')).'...';
 	}
 	
 	public function getShortUrl($traker = '?pk_campaign=twitter&pk_kwd=twitter') {
