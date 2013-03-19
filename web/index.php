@@ -16,6 +16,14 @@ $backend = array(
 if (in_array($_SERVER['HTTP_HOST'], $backend))
 	$application = 'backend';
 
+$api = array(
+		'api.citation-ou-proverbe.fr.dev',
+		'api.citation-ou-proverbe.fr'
+);
+
+if (in_array($_SERVER['HTTP_HOST'], $api))
+	$application = 'api';
+
 if (in_array($_SERVER['HTTP_HOST'], $site_local))
 	$env = 'dev';
 

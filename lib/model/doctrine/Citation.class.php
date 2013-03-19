@@ -129,4 +129,13 @@ class Citation extends BaseCitation
 	public function getShortUrl($traker = '?pk_campaign=twitter&pk_kwd=twitter') {
 		return 'http://citation-ou-proverbe.fr/c/'.$this->id.$traker;
 	}
+	
+	public function getApiData() {
+		return array(
+				'id' => $this->id,
+				'quote' => $this->quote,
+				'author' => $this->Author->name,
+				'url' => 'http://www.citation-ou-proverbe.fr/'.$this->Author->slug.'/'.$this->slug
+		);
+	}
 }
