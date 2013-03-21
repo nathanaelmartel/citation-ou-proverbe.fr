@@ -12,8 +12,7 @@
 			<?php include_partial('citation/card', array('citation' => $citation))?>
 		<div class="action">
 		  <?php include_partial('citation/action', array(
-  				'id' => $citation->id, 
-		  		'msg' => $citation->quote, 
+  				'citation' => $citation, 
 		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$author->slug, array('absolute' => true)), 
 		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$author->slug.'&authorb='.$author->slug, array('absolute' => true))
 		  )) ?>

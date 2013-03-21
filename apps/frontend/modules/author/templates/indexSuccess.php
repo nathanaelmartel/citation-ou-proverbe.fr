@@ -14,7 +14,9 @@
 	    	</a>
 	    </h2>
 	    (<?php echo $author['nb'] ?> citations)
-	    <img src="<?php echo url_for('@portrait_image?author='.$author['slug'].'&effect=contour&sf_format=jpg&authorb='.$author['slug']) ?>" alt="<?php echo $author['name'] ?> "  />
+	    <a href="<?php echo url_for('@author?slug='.$author['slug']) ?>">
+	    	<img src="<?php echo url_for('@portrait_image?author='.$author['slug'].'&effect=contour&sf_format=jpg&authorb='.$author['slug']) ?>" alt="<?php echo $author['name'] ?> "  />
+	    </a>
 	  </div>
 		
 	<?php endforeach ?>
