@@ -18,6 +18,22 @@ class mediaActions extends sfActions
   	$this->redirect('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug, 301);
   }
   
+  public function executeWallpaper(sfWebRequest $request) {
+    $slug = $request->getParameter('slug');
+    $this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneBySlug(array($slug)), sprintf('Object citation does not exist (%s).', $slug));
+    $this->forward404Unless($citation->is_active);
+    
+    $this->citation = $citation;
+  	
+		$response = $this->getResponse();
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-1.9.1.min.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery.uniform.min.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'spectrum.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
+    $response->addMeta('description', 'Fond d\'écran personalisé de citation');
+    $response->setTitle('Fond d\'écran personalisé pour la citation : '.$citation->getShortQuote().' - '.$citation->getAuthor() );
+  }
+  
   public function executePortrait(sfWebRequest $request)
   {
     $slug = $request->getParameter('author');
@@ -103,7 +119,43 @@ class mediaActions extends sfActions
       $img = new sfImage($filename);
     } else {
       
-      $img = $this->build($citation, 1200, 768);
+      $img = $this->build($citation, $citation->getRGBColorHex(), $citation->getTextRGBColorHex(), 1200, 768);
+      
+      $img->setMIMEType('image/'.$format);
+      $img->saveAs($filename, 'image/'.$format);
+    }
+    
+    $response = $this->getResponse();
+    $response->setContentType($img->getMIMEType());    
+    $response->setContent($img); 
+    
+    return sfView::NONE;
+  }
+  
+  public function executeCustom(sfWebRequest $request)
+  {
+  	/// wallpaper/:author.:id.:width.:height.:bgcolor.:textcolor.:authorname.:portrait.:sf_format
+    $id = $request->getParameter('id');
+    $width = $request->getParameter('width');
+    $height = $request->getParameter('height');
+    $bgcolor = $request->getParameter('bgcolor');
+    $textcolor = $request->getParameter('textcolor');
+    $show_author = $request->getParameter('authorname');
+    $show_portrait = $request->getParameter('portrait');
+    $this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneById(array($id)), sprintf('Object citation does not exist (%s).', $id));
+    $this->forward404Unless($citation->is_active);
+      
+    $format = $request->getParameter('sf_format');
+    if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
+      $format = 'jpg';
+    
+    $filename = sfConfig::get('sf_web_dir').'/wallpaper/'.$citation->Author->slug.'.'.$citation->id.'.'.$width.'.'.$height.'.'.$bgcolor.'.'.$textcolor.'.'.$show_author.'.'.$show_portrait.'.'.$format;
+    
+    if (file_exists($filename)) {
+      $img = new sfImage($filename);
+    } else {
+      
+      $img = $this->build($citation, '#'.$bgcolor, '#'.$textcolor, $width, $height, true, true, $show_author, $show_portrait);
       
       $img->setMIMEType('image/'.$format);
       $img->saveAs($filename, 'image/'.$format);
@@ -136,7 +188,7 @@ class mediaActions extends sfActions
       $img = new sfImage($filename);
     } else {
       
-      $img = $this->build($citation, 560, 350, false, false, false);
+      $img = $this->build($citation, $citation->getRGBColorHex(), $citation->getTextRGBColorHex(), $textcolor, 560, 350, false, false, false);
       
       $img->setMIMEType('image/'.$format);
       $img->saveAs($filename, 'image/'.$format);
@@ -149,10 +201,10 @@ class mediaActions extends sfActions
     return sfView::NONE;
   }
   
-  public function build($citation, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true, $show_portrait = true)
+  public function build($citation, $bgcolor, $textcolor, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true, $show_portrait = true)
   {
       $overlay_file = sfConfig::get('sf_web_dir').'/images/overlay.png';
-      $rgb = $citation->getRGBColor();
+			$rgb = sscanf($bgcolor, '#%2x%2x%2x');
       
       $img = new sfImage();
       $img->transparency('#000000');
@@ -193,7 +245,7 @@ class mediaActions extends sfActions
       $box = imagettfbbox($text_font_size, 0, $text_font_dir, 'Test');
       $lineHeight = abs($box[5] - $box[1]);
       $lines = explode("\n", $text);
-      $img->text($text, $width*.1, floor(($height-$textheight)*.4)-$lineHeight*(count($lines)-1), $text_font_size, $text_font_name, $citation->getTextRGBColorHex());
+      $img->text($text, $width*.1, floor(($height-$textheight)*.4)-$lineHeight*(count($lines)-1), $text_font_size, $text_font_name, $textcolor);
       
       
       if ($show_author) {
@@ -203,7 +255,7 @@ class mediaActions extends sfActions
 	      $box = imagettfbbox($author_font_size, 0, $author_font_dir, $citation->Author->name);
 	      $textwidth = abs($box[4] - $box[0]) - 4;
 	      
-	      $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $citation->getTextRGBColorHex());
+	      $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $textcolor);
       }
       
       if ($show_url) {
