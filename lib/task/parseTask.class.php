@@ -41,13 +41,13 @@ EOF;
     $begin_time = time();
     $max_time = 50;
     
-    $websites = array(
+    $websites = array(/*
     		'citations', 
-    		'1001-citations',
-    		'citation-et-proverbe',
+    		'1001-citations',*/
+    		'citation-et-proverbe',/*
     		'evene',
     		'lexode',
-    		'leproverbe'
+    		'leproverbe'*/
     );
     
     shuffle($websites);
@@ -124,6 +124,7 @@ EOF;
           	
     			if (AuthorTable::addAuthor($quote['author']))
     				sfTask::log('++ author : '.$quote['author']);
+    			
     			if (CitationTable::addCitation($quote)) {
     				sfTask::log('++ citation : '.$quote['quote']);
     				$new_quote++;
@@ -281,7 +282,7 @@ EOF;
 	    $query_results = $dom2->query('.source');
 	    $source = '';
     	foreach($query_results as $result) {
-    	  $source = scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha'));
+    	  $source = trim(scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha')));
     	}
     	
 	    $query_results = $dom2->query('blockquote a');
@@ -293,6 +294,7 @@ EOF;
     	}
     	
     	//sfTask::log('==== '.$quote.' - '.$author.' - '.json_encode($tags));
+    	//sfTask::log('==== '.$source);
     	$quotes[] = array('quote' => $quote, 'author' => $author, 'source' => $source, 'tags' => array_unique($tags, SORT_LOCALE_STRING));
     }
     

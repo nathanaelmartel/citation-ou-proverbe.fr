@@ -82,7 +82,7 @@ class CitationTable extends Doctrine_Table
         }
       
            
-	    if (array_key_exists('source', $quote) && ($quote['source'] == ''))
+	    if (array_key_exists('source', $quote) && ($quote['source'] != ''))
 	     $Citation->source = $quote['source'];
 	    
 	    $Citation->save();
