@@ -20,11 +20,16 @@
 						<td><?php $total[$obj] = $q->fetchOne('SELECT COUNT(id) as count FROM '.$obj); echo $total[$obj] ?></td>
 					</tr>
 				<?php endforeach;?>
+				<tr>
+					<td>source</td>
+					<td><?php $total['source'] = $q->fetchOne('SELECT COUNT(id) as count FROM citation WHERE source <> \'\''); echo $total['source'] ?></td>
+				</tr>
 			</table>
 		</div>
 	
 		<div class="clear"></div>
 		
+		<?php if (false) :?>
 		<?php foreach ($object as $obj): ?>
 			<div class="sf_admin_list" style="width:400px;margin-right:50px;float: left;">
 				<table>
@@ -48,6 +53,7 @@
 				</table>
 			</div>
 		<?php endforeach;?>
+		<?php endif;?>
 	
 		<div class="clear"></div>
 	</div>
