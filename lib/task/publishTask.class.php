@@ -49,7 +49,7 @@ EOF;
     $citation->save();
     sfTask::log('publish '.$citation->id.' at '.date('r').' '.$citation->quote);
     
-    die;
+    //die;
     
     $keys['app_consumer_key'] = 'WvZumEx5FGZK88pt9YrUSg';
     $keys['app_consumer_secret'] = 'erXM5DLtL639jVKvW8Wlybo483wwPileliC6ye2c';
