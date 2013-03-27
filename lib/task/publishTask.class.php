@@ -38,6 +38,7 @@ EOF;
     ->select('*')
     ->from('Citation c')
     ->where('is_active = ?', 1)
+    ->andWhere('LENGTH(quote) < ?', 200)
     ->offset(rand(0, rand(0, 10000)))
     ->limit(10)
     ->orderBy('last_published_at asc');
@@ -47,6 +48,8 @@ EOF;
     $citation->last_published_at =  date('Y-m-d G:i:s');
     $citation->save();
     sfTask::log('publish '.$citation->id.' at '.date('r').' '.$citation->quote);
+    
+    die;
     
     $keys['app_consumer_key'] = 'WvZumEx5FGZK88pt9YrUSg';
     $keys['app_consumer_secret'] = 'erXM5DLtL639jVKvW8Wlybo483wwPileliC6ye2c';

@@ -75,7 +75,6 @@ nav a:hover, nav a:active, nav a:focus {
 
 .card-container {
 	display: block;
-  margin-bottom: 2em;
   text-decoration: none;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -96,6 +95,22 @@ a.card-container:hover, a.card-container:active, a.card-container:focus {
 .author-citations .card-container {
   margin-bottom: 0;
   margin-top: 2em;
+}
+
+.context {
+  font-family: 'QuicksandBookOblique';
+  font-size: 0.8em;
+  line-height: 2.5em;
+  text-align: right;
+  color: #000;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.context a {
+  color: #000;
+  text-decoration: none;
 }
 
 .author-citations .citation:first-child .card-container {
@@ -190,7 +205,8 @@ h2 {
 }
 
 a.wikipedia:hover, a.wikipedia:active, a.wikipedia:focus,
-a.author-link:hover, a.author-link:active, a.author-link:focus {
+a.author-link:hover, a.author-link:active, a.author-link:focus,
+.context a:hover, .context a:active, .context a:focus {
 	color: #005f26;
 }
 

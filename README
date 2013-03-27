@@ -27,6 +27,15 @@ API
 
 ajouter les propositions dans mails
 
+typographie : 
+- apostrophe
+- ndash –
+- espace fine
+- saut de ligne
+- mdash —
+
+caractère spéciaux dans les tags et auteur
+
 
 cd web/css
 sass --watch styles.scss:styles.css --style compressed
