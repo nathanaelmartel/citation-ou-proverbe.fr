@@ -33,13 +33,16 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     
-    $citations = Doctrine::getTable('Citation')
-      ->createQuery('a')
-      ->where('is_active = ?', 1)
-      ->limit(5)
-      ->orderBy('last_published_at desc')
-      ->execute();
-    $citation = $citations[0];
+    $q = Doctrine_Query::create()
+    ->select('*')
+    ->from('Citation c')
+    ->where('is_active = ?', 1)
+    ->offset(rand(0, rand(0, 10000)))
+    ->limit(10)
+    ->orderBy('created_at desc');
+    
+    $citation = $q->fetchOne();
+    //sfTask::log($citation->quote);die();
     
     $message_text = '<a href="http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'/'.$citation->slug.'?pk_campaign=abonnement&pk_kwd=abonnement-citation" class="card-container" style="width: 460px;display: block;text-decoration: none;">
     <blockquote style="color: '.$citation->getTextRGBColorHex().';background-color: '.$citation->getRGBColorHex() .';width: 460px;display: table-cell;font-size: 1.8em;height: 8em;line-height: 1.2em;padding: 1em;vertical-align: middle;">
@@ -48,7 +51,8 @@ EOF;
     <p>
 		-- <br />
 		L\'équipe de <a href="http://www.citation-ou-proverbe.fr?pk_campaign=abonnement&pk_kwd=abonnement-footer" style="color:#000;">Citation ou Proverbe</a><br />
-		<a href="http://www.citation-ou-proverbe.fr/desabonnement/[encoded_mail]">désabonnement</a>
+		<a href="http://www.citation-ou-proverbe.fr/desabonnement/[encoded_mail]?pk_campaign=abonnement&pk_kwd=abonnement-auteur">se désabonner</a><br />
+		<a href="http://www.citation-ou-proverbe.fr/proposer-citation?pk_campaign=abonnement&pk_kwd=abonnement-auteur">proposer une citation</a>
 		</p>'; 
         
     
