@@ -58,6 +58,7 @@ class mediaActions extends sfActions
     }
     closedir($handle);
     
+    
     $filename = sfConfig::get('sf_web_dir').'/medias/'.$author->slug; 
     if (!file_exists($filename))
     	mkdir($filename);
@@ -226,7 +227,7 @@ class mediaActions extends sfActions
 		      $overlay_portrait_img = new sfImage($overlay_portrait_file);
 		      $opposite = array(255 - $rgb[0], 255 - $rgb[1], 255 - $rgb[2]);
       		$overlay_portrait_img->colorize(-$opposite[0], -$opposite[1], -$opposite[2], 0);
-		      $img->overlay($overlay_portrait_img, array($width-300, $height-250));
+		      $img->overlay($overlay_portrait_img, array($width*0.75, $height*0.7));
     		}
       }
       
