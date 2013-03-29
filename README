@@ -21,6 +21,14 @@ piwik
 
 API
 
+erreur 500 sur génération de portrait si original manquant -> mettre à jour la base et générer une 404
+
+source : erreur de récupération, lorsqu'il sagit d'un lien, j'ai récupéré le libelé «source»
+
+admin tools : 
+- delete portrait
+- merge author
+
 typographie : 
 - apostrophe
 - ndash –
