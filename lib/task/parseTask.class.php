@@ -282,7 +282,11 @@ EOF;
 	    $query_results = $dom2->query('.source');
 	    $source = '';
     	foreach($query_results as $result) {
-    	  $source = trim(scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha')));
+    		if ($result->tagName == 'a') {
+    	  	$source = trim(scraper::cleanAuthor(scraper::encodingCorrection($result->getAttribute('href'), 'alpha')));
+    		} else {
+    	  	$source = trim(scraper::cleanAuthor(scraper::encodingCorrection($result->nodeValue, 'alpha')));
+    		}
     	}
     	
 	    $query_results = $dom2->query('blockquote a');

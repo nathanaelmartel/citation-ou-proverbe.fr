@@ -35,9 +35,10 @@
       </div>
   	<![endif]-->
   
+	  <?php include_partial('global/header')?>
+	   	
   	<div class="page grid-container">
   	
-	   	<?php include_partial('global/header')?>
 	   	
 			<?php if ($sf_user->hasFlash('confirmation')): ?>
 				<div class="grid-80 prefix-10">
@@ -50,9 +51,10 @@
 			
 	    <?php echo $sf_content ?>
 	    
-	    <?php include_partial('global/footer')?>
-	    
     </div>
+    
+	  <?php include_partial('global/footer')?>
+	  
     <?php include_partial('global/piwik')?>
     <?php include_javascripts() ?>
   </body>
