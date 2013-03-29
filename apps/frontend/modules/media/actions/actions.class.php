@@ -187,8 +187,8 @@ class mediaActions extends sfActions
     if (file_exists($filename)) {
       $img = new sfImage($filename);
     } else {
-      
-      $img = $this->build($citation, $citation->getRGBColorHex(), $citation->getTextRGBColorHex(), $textcolor, 560, 350, false, false, false);
+    	
+      $img = $this->build($citation, $citation->getRGBColorHex(), $citation->getTextRGBColorHex(), 560, 350, false, false, false);
       
       $img->setMIMEType('image/'.$format);
       $img->saveAs($filename, 'image/'.$format);
