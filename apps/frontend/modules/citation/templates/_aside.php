@@ -1,6 +1,6 @@
 
 	<aside>	
-	  <div class="author-card">
+	  <div id="author-<?php echo $citation->Author->id ?>" class="author-card">
 	    <h2 class="author-name">
 	    	<a href="<?php echo url_for('@author?slug='.$citation->Author->slug) ?>">
 	    		<?php echo $citation->Author->name ?>

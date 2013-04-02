@@ -38,12 +38,15 @@ class sfWidgetFormPlain extends sfWidgetForm
 	}
 }
 
+
+
+
 /**
  * Project form base class.
  *
  * @package    citations-vi
  * @subpackage form
- * @author     Your name here
+ * @author     Nathanaël Martel <nathanael@fam-martel.eu>
  * @version    SVN: $Id: sfDoctrineFormBaseTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class BaseFormDoctrine extends sfFormDoctrine

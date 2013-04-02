@@ -1,6 +1,6 @@
 
 
-  <div class="author-card">
+  <div id="author-<?php echo $author->id ?>" class="author-card">
     <?php if ($author->getDates() != '' ): ?>
     	<span class="dates"><?php echo $author->getDates() ?></span>
 		<?php endif; ?>

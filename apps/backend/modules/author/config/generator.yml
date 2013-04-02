@@ -21,5 +21,11 @@ generator:
           sort: [updated_at, desc]
       filter:  ~
       form:    ~
-      edit:    ~
+      edit:
+        actions:
+          _list:         ~
+          _save:         ~
+          _save_and_add: ~
+          _delete:       ~
+          _remove_media:
       new:     ~
