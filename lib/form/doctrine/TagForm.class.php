@@ -14,9 +14,9 @@ class TagForm extends BaseTagForm
   {
   	$citations = '<ul>';
   	foreach ($this->getObject()->Citations as $citation) {
-  		$citations .= '<li>'.$citation->id.' «&nbsp;'.$citation->quote.'&nbsp;»</li>'."\n";
+  		$citations .= '<li><a href="/citation/'.$citation->id.'/edit">'.$citation->id.'</a> «&nbsp;'.$citation->quote.'&nbsp;»</li>'."\n";
   	}
   	$citations .= '</ul>';
-  	$this->setWidget('citations_list', new sfWidgetFormPlain(array('value'=>$citations)));
+  	$this->setWidget('liste_de_citations', new sfWidgetFormPlain(array('value'=>$citations)));
   }
 }
