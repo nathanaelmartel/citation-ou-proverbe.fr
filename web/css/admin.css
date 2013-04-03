@@ -1,0 +1,37 @@
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+  border: 1px solid #999;
+  margin: 0;
+  padding: 0;
+  color: #34495E;
+}
+
+.ui-autocomplete li {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding: .2em 1em;
+  background: #fff;
+  cursor: pointer;
+}
+
+.ui-autocomplete li:nth-child(2n) {
+  background: #DCE4EC;
+}
+
+.ui-autocomplete li:hover {
+  background: #1ABC9C;
+}
+
+#sf_admin_container .sf_admin_form_row {
+	min-height: 16px;
+}

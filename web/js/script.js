@@ -23,7 +23,9 @@
 		  });
 	  }
 	  
-	  $(".checkbox").uniform();
+	  if ($(".checkbox").lenght) {
+		  $(".checkbox").uniform();  
+	  }
 	  
 	  $("#wallpaper-form input").change(function () {
 		    url_to_load = '/wallpaper/' +

@@ -22,7 +22,7 @@
 <?php endforeach ?>
 </div>
 
-<div class="grid-40">
+<div id="author-<?php echo $author->id ?>" class="grid-40">
 	<div class="author-card">
     <?php if ($author->getDates() != '' ): ?>
     	<span class="dates"><?php echo $author->getDates() ?></span>
