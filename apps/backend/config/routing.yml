@@ -73,6 +73,14 @@ dash_citation:
 dash_author:
   url:   /dashboard/author
   param: { module: dash, action: author } 
+
+author_merge:
+  url:   /merge/author
+  param: { module: dash, action: authorMerge } 
+  
+authors_search:
+  url:   /auteurs/search
+  param: { module: dash, action: search }
   
 dash_page:
   url:   /dashboard/page

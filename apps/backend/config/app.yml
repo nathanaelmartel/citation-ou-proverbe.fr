@@ -47,6 +47,10 @@ all:
             url:          author
             image:        users.png
             credentials:  [admin]
+          Merge Auteur:
+            url:          author_merge
+            image:        users.png
+            credentials:  [admin]
           Tag:
             url:          tag
             image:        menu.png
