@@ -15,6 +15,8 @@ Envoyer la citation personalisé
 
 moteur de recherche
 
+microdata http://schema.org
+
 livres
 
 piwik
@@ -23,9 +25,6 @@ API
 
 erreur 500 sur génération de portrait si original manquant -> mettre à jour la base et générer une 404
 
-
-admin tools : 
-- merge author
 
 typographie : 
 - apostrophe
