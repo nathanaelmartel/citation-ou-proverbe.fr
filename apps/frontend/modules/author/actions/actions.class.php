@@ -65,7 +65,8 @@ class authorActions extends sfActions
 		$this->citations->setQuery(Doctrine_Query::create()
 	    ->select('*')
 	    ->from('Citation')
-	    ->where('author_id = ?', $author->id));
+	    ->where('author_id = ?', $author->id)
+			->andWhere('is_active = ?', true));
 		$this->citations->setPage($request->getParameter('page', 1));
 		$this->citations->init();
     

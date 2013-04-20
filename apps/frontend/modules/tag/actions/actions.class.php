@@ -34,7 +34,8 @@ class tagActions extends sfActions
 	    ->from('Citation c')
 			->leftJoin('TagCitation t')
 	    ->where('t.tag_id = ?', $tag->id)
-	    ->andWhere('t.citation_id = c.id'));
+	    ->andWhere('t.citation_id = c.id')
+			->andWhere('is_active = ?', true));
 		$this->citations->setPage($request->getParameter('page', 1));
 		$this->citations->init();
     
