@@ -70,6 +70,7 @@ class propositionActions extends sfActions
             	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
             
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
+            	$piwikTracker->setCustomVariable( 5, 'dernière citation proposée', $citation->id, 'visit');
             	$piwikTracker->doTrackPageView('Proposition');
             	$piwikTracker->doTrackGoal($idGoal = 5, $revenue = 100);
             }
