@@ -35,7 +35,9 @@ class contactActions extends sfActions
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $contact = $form->save();
-
+            
+            $this->getUser()->setAttribute('mail', $contact->email);
+            
             $message = Swift_Message::newInstance()
                     ->setFrom($contact->email)
                     ->setTo(sfConfig::get('app_Contact_email_to'))
@@ -57,9 +59,10 @@ class contactActions extends sfActions
             	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
             
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
+            	$piwikTracker->setCustomVariable( 1, 'email', $contact->email, 'visit');
+            	$piwikTracker->setCustomVariable( 2, 'nom', $contact->getName(), 'visit');
             	$piwikTracker->doTrackPageView('Contact');
             	$piwikTracker->doTrackGoal($idGoal = 3, $revenue = 1);
-            	$piwikTracker->setCustomVariable( 1, 'email', $contact->email );
             }
             
             $this->redirect('@contact');

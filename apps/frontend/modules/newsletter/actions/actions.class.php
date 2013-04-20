@@ -74,11 +74,14 @@ class newsletterActions extends sfActions
 		{
 			require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
 			PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
+            
+      $this->getUser()->setAttribute('mail', $contact->email);
 		
 			$piwikTracker = new PiwikTracker( $idSite = 17 );
+			$piwikTracker->setCustomVariable( 1, 'email', $email, 'visit');
+			$piwikTracker->setCustomVariable( 3, 'newsletter', 'inscrit', 'visit');
 			$piwikTracker->doTrackPageView('Abonnement');
 			$piwikTracker->doTrackGoal($idGoal = 4, $revenue = 100);
-			$piwikTracker->setCustomVariable( 1, 'email', $email );
 		}
 		
 		$newsletter->is_confirmed = true;
