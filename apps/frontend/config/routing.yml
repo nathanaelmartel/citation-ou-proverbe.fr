@@ -129,6 +129,9 @@ tag_page:
 citation:
   url:   /:author/:slug
   param: { module: citation, action: show }
+citation_note:
+  url:   /note/citation/:id
+  param: { module: citation, action: note }
   
 author:
   url:   /:slug

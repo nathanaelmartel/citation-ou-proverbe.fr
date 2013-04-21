@@ -25,6 +25,7 @@ API
 
 erreur 500 sur génération de portrait si original manquant -> mettre à jour la base et générer une 404
 
+http://www.desproges.fr/citations
 
 typographie : 
 - apostrophe
@@ -42,43 +43,3 @@ sass --watch styles.scss:styles.css --style compressed
 
 
 
-ignite:
-
-1 http://loisirs.lemessager.fr/fichier/image/redac/image/1/8/d/grande-18d5a81c9a605521a822590104f5e81e176920d4.jpg
-2 http://www.fonderie-piwi.fr/blog/public/2011/papillotte.JPG
-3 http://a137.idata.over-blog.com/520x389/3/02/89/00/revillon.jpg
-4 http://www.desmotsatelier.com/wp-content/uploads/2012/01/dispositif-de-noel.jpg
-5 http://philippe.gambette.free.fr/Blog/200901Papillotes/PapillotesEchantillon1.jpg
-6 http://www.citation-et-proverbe.fr/
-7 SEO, analytics, serveur dédié
-8 adsens, amazon, traffic, otimisation, 
-9 gain !! pourquoi les citations nous facinent-elles autant ? Nous = 5000 visiteurs/jours -> twitter, opengraphe, wikipdia
-10 Les citations sont à la lecture ce que les bandes annonces sont au cinéma...  - Franck Dunand (entrée en matière, possible résmé)
-11 Il est une bonne chose de lire des livres de citations, car les citations lorsqu’elles sont gravées dans la mémoire vous donnent de bonnes pensées. - Winston Churchill (méditation, matière à penser)
-12 Citations. Comme les proverbes, j'en invente ; et personne jusqu'ici ne semble s'en être aperçu. - Hervé Bazin (le contexte n'a pas beaucoup d'importance et pourtant on le donne toujours)
-13 «Il existe entre les Noirs et les Blancs une différence physique qui, je le crois, empêchera toujours les deux races de vivre en des termes d'égalité sociale et politique. » 
-14 contexte : Abraham Lincoln - 1858 - Fourth Debate with Stephen A. Douglas at Charleston, Illinois
-15 Citations, toujours inexactes. Je me méfie de ces gens qui ne savent même pas recopier. - Jean Rostand (probleme pour s'en souvenir, citation imprécise)
-16 
-17 Résumé : porte un message, court, spéctaculaire, encourageant, à méditer, à se remémorer, mais pas à ressortir n'importe comment.
-18 Il faut toujours se méfier des citations que l'on trouve sur Internet. - Charlemagne (utilisation à tord et à travers comme argument d'autorité)
-19 http://www.frenchselections.com/store/image/large/5210_2.jpg
-20 Quand tu ne sais pas quoi dire, cite un proverbe chinois - proverbe chinois
-
-
-
-Les banalités des écrivains rares nous fournissent de bonnes citations. - Jean Rostand
-Les citations, c'est de la pensée en conserve : c'est pas cher, c'est pas toujours très bon, mais tout le monde en mange. - Nicolas Meyer
-Un dictionnaire sans citations est un squelette. - Voltaire 
-
-
-
-
-
-
-
-
-http://www.melville.fr/wp-content/uploads/2012/06/320x240-Revillon-HD-1.jpg
-http://philippe.gambette.free.fr/Blog/200901Papillotes/PapillotesEchantillon1.jpg
-http://philippe.gambette.free.fr/Blog/200901Papillotes/PapillotesCollage.jpg
-http://philippe.gambette.free.fr/Blog/200901Papillotes/PapillotesEchantillon2.jpg

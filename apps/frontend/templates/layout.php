@@ -56,6 +56,7 @@
 	  <?php include_partial('global/footer')?>
 	  
     <?php include_partial('global/piwik')?>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <?php include_javascripts() ?>
   </body>
 </html>

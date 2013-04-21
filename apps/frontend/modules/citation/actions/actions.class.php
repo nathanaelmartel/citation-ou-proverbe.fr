@@ -23,6 +23,30 @@ class citationActions extends sfActions
   	$this->redirect('@citation?slug='.$citation->slug.'&author='.$citation->Author->slug, 301);
   }
   
+  public function executeNote(sfWebRequest $request)
+  {
+  	$this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneById(array($request->getParameter('id'))), sprintf('Object citation does not exist (%s).', $request->getParameter('id')));
+  	
+  	if (!$this->getUser()->getAttribute('note_'.$citation->id)) {
+	  	$citation->note = $citation->note + 1;
+	  	$citation->save();
+	  	$this->getUser()->setAttribute('note_'.$citation->id, true);
+	  	
+      if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
+      	require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
+        PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
+            
+        $piwikTracker = new PiwikTracker( $idSite = 17 );
+        $piwikTracker->setCustomVariable( 6, 'dernière citation notée', $citation->id, 'visit');
+        $piwikTracker->doTrackPageView('Noter la citation');
+        $piwikTracker->doTrackGoal($idGoal = 2, $revenue = 10000);
+      }
+  	}
+  	
+  	$this->setLayout(false);
+  	return $this->renderText($citation->note);
+  }
+  
   public function executeRandom(sfWebRequest $request)
   {
     $citations = Doctrine::getTable('Citation')

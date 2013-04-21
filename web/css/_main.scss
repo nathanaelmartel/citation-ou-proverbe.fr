@@ -240,13 +240,26 @@ a.author-link:hover, a.author-link:active, a.author-link:focus,
 
 .action .note {
   background: #f5f5f5;
-  cursor: default;
+  cursor: pointer;
 }
 
-.action .note span {
+.action .note span:first-child {
   background: #555 url(../images/share-icons.png) no-repeat -16px -263px;
   cursor: pointer;
-  padding-left: 12px;
+  padding-left: 15px;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.action a.actioned {
+	color: #F4A300;
+}
+
+.action .note.actioned span:first-child,
+.action .icon.actioned {
+  background-color: #F4A300; 
 }
 
 .action .icon.mail-share { background-position: -10px -20px; }
@@ -256,15 +269,15 @@ a.author-link:hover, a.author-link:active, a.author-link:focus,
 .action .icon.pinterest-share { background-position: -10px -206px;padding-right: 17px; }
 
 .action a:hover, .action a:active, .action a:focus {
-  color: #000;
+  color: #000 !important;
   -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   outline: none;
 }
 
-.action a.icon:hover, .action a.icon:active, .action a.icon:focus,
-.action a.note span:hover, .action a.note span:active, .action a.note span:focus {
+.action a.icon:hover, .action a.icon:focus,
+.action a.note:hover span:first-child, .action a.note:focus span:first-child {
   background-color: #000;
 }
 
