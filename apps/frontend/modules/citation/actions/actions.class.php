@@ -37,7 +37,7 @@ class citationActions extends sfActions
         PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
             
         $piwikTracker = new PiwikTracker( $idSite = 17 );
-        $piwikTracker->setCustomVariable( 6, 'dernière citation notée', $citation->id, 'visit');
+        //$piwikTracker->setCustomVariable( 6, 'dernière citation notée', $citation->id, 'visit');
         $piwikTracker->doTrackPageView('Noter la citation');
         $piwikTracker->doTrackGoal($idGoal = 6, $revenue = 10000);
       }
