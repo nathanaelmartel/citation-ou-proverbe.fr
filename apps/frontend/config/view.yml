@@ -15,7 +15,8 @@ default:
   stylesheets:
     - /css/styles.css
 
-  javascripts:    []
+  javascripts:
+    - /js/script.js
 
   has_layout:     true
   layout:         layout

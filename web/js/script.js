@@ -1,5 +1,13 @@
   $(document).ready(function () {
 	  
+	  $(".action .note").on("click", function () {
+		  $(this).find("span+span").load("/note/citation/"+$(this).data("citation"));
+	  });
+	  
+	  $(".action a").on("click", function () {
+		  $(this).addClass("actioned");
+	  });
+	  
 	  if ($("#author_name").length) {
 		  $("#author_name").autocomplete({
 			  appendTo: "#autocomplete",

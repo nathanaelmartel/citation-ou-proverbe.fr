@@ -130,11 +130,20 @@ class Citation extends BaseCitation
 		return 'http://citation-ou-proverbe.fr/c/'.$this->id.$traker;
 	}
 	
+	public function getInfo() {
+		return 	'i:'.$this->id.
+						';v:'.$this->view.
+						';n:'.$this->note.
+						';a:'.$this->Author->id;
+	}
+	
 	public function getApiData() {
 		return array(
 				'id' => $this->id,
 				'quote' => $this->quote,
 				'author' => $this->Author->name,
+				'view' => $this->view,
+				'note' => $this->note,
 				'url' => 'http://www.citation-ou-proverbe.fr/'.$this->Author->slug.'/'.$this->slug
 		);
 	}

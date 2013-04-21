@@ -59,13 +59,12 @@ class sendActions extends sfActions
             $this->getMailer()->send($message);
 
             $this->getUser()->setFlash('confirmation', 'Votre message a bien été envoyé !');
+      			$this->getUser()->setAttribute('mail', $contact->email_from);	
             
             if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
             {
             	require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
             	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
-            
-      				$this->getUser()->setAttribute('mail', $contact->email_from);	
             
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
             	$piwikTracker->setCustomVariable( 1, 'email', $send->email_from, 'visit');
