@@ -39,7 +39,7 @@ class citationActions extends sfActions
         $piwikTracker = new PiwikTracker( $idSite = 17 );
         $piwikTracker->setCustomVariable( 6, 'dernière citation notée', $citation->id, 'visit');
         $piwikTracker->doTrackPageView('Noter la citation');
-        $piwikTracker->doTrackGoal($idGoal = 2, $revenue = 10000);
+        $piwikTracker->doTrackGoal($idGoal = 6, $revenue = 10000);
       }
   	}
   	
