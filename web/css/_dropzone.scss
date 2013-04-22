@@ -171,9 +171,9 @@
   -o-transition: opacity 0.3s ease-in-out;
   -ms-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
-  background-image: url("../images/spritemap.png");
+  /*background-image: url("../images/spritemap.png");
   background-repeat: no-repeat;
-  background-position: 0 0;
+  background-position: 0 0;*/
   position: absolute;
   width: 428px;
   height: 123px;
@@ -181,7 +181,7 @@
   margin-top: -61.5px;
   top: 50%;
   left: 50%;
-}
+}/*
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   .dropzone .default.message {
     background-image: url("../images/spritemap@2x.png");
@@ -189,7 +189,7 @@
     -moz-background-size: 428px 406px;
     background-size: 428px 406px;
   }
-}
+}*/
 .dropzone .default.message span {
   display: none;
 }
@@ -258,9 +258,9 @@
   -o-transition: opacity 0.4s ease-in-out;
   -ms-transition: opacity 0.4s ease-in-out;
   transition: opacity 0.4s ease-in-out;
-  background-image: url("../images/spritemap.png");
-  background-repeat: no-repeat;
-}
+  /*background-image: url("../images/spritemap.png");
+  background-repeat: no-repeat;*/
+}/*
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   .dropzone .preview .error-mark,
   .dropzone-previews .preview .error-mark,
@@ -271,7 +271,7 @@
     -moz-background-size: 428px 406px;
     background-size: 428px 406px;
   }
-}
+}*/
 .dropzone .preview .error-mark span,
 .dropzone-previews .preview .error-mark span,
 .dropzone .preview .success-mark span,
@@ -304,11 +304,11 @@
   top: 0;
   left: 0;
   width: 0%;
-  height: 100%;
+  height: 100%;/*
   background-image: url("../images/spritemap.png");
   background-repeat: repeat-x;
-  background-position: 0px -400px;
-}
+  background-position: 0px -400px;*/
+}/*
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   .dropzone .preview .progress .upload,
   .dropzone-previews .preview .progress .upload {
@@ -317,7 +317,7 @@
     -moz-background-size: 428px 406px;
     background-size: 428px 406px;
   }
-}
+}*/
 .dropzone .preview.success .progress,
 .dropzone-previews .preview.success .progress {
   display: block;
