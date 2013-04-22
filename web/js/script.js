@@ -69,6 +69,7 @@ var xhr_object = false;
 		      });
 		      this.on("sending", function(file, xhr, formData) {
 		    	  xhr_object = xhr;
+		    	  $("figure").addClass("load");
 		      });
 	  }};
 	  
