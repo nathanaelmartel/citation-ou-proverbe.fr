@@ -37,8 +37,8 @@ typographie :
 caractère spéciaux dans les tags et auteur
 
 
-cd web/css
-sass --watch styles.scss:styles.css --style compressed
+
+sass --watch web/css/styles.scss:styles.css --style compressed
 
 
 
