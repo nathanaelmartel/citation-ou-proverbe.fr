@@ -12,7 +12,6 @@ function updateWallpaper() {
 	url_to_load += (background && xhr_object)?"."+xhr_object.responseText:"";
 	url_to_load += '.png';
 	$("#wallpaper").attr("src", url_to_load).load(function() {
-		console.log("loaded");
 		$("figure").removeClass("load");
 	});
     $(".action a:first-child").attr("href", url_to_load);
