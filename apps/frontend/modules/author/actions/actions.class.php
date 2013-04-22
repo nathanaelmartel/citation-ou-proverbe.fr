@@ -32,7 +32,6 @@ class authorActions extends sfActions
   	
 		$response = $this->getResponse();
 		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-jqueryui.min.js');
-		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
     $response->addMeta('description', 'Recherche par Auteurs de Citations ');
     $response->setTitle('Recherche par Auteurs de Citations ' );
   }
@@ -93,7 +92,6 @@ class authorActions extends sfActions
 		
 		$response = $this->getResponse();
 		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-jqueryui.min.js');
-		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
     $response->addMeta('description', 'Auteurs de Citations ');
     $response->setTitle('Auteurs de Citations ' );
   }

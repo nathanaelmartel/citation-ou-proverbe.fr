@@ -26,12 +26,24 @@ class mediaActions extends sfActions
     $this->citation = $citation;
   	
 		$response = $this->getResponse();
-		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery-1.9.1.min.js');
 		$response->addJavascript(sfConfig::get('sf_js_dir'). 'jquery.uniform.min.js');
 		$response->addJavascript(sfConfig::get('sf_js_dir'). 'spectrum.js');
-		$response->addJavascript(sfConfig::get('sf_js_dir'). 'script.js');
+		$response->addJavascript(sfConfig::get('sf_js_dir'). 'dropzone.js');
     $response->addMeta('description', 'Fond d\'écran personalisé de citation');
     $response->setTitle('Fond d\'écran personalisé pour la citation : '.$citation->getShortQuote().' - '.$citation->getAuthor() );
+  }
+  
+  public function executeUpload(sfWebRequest $request) {
+  	
+  	if (!empty($_FILES)) {
+  		$tempFile = $_FILES['file']['tmp_name']; 
+  		//$pathinfo = pathinfo($_FILES['file']['name']);
+  		$fileName = md5($_FILES['file']['name']);//.'.'.$pathinfo['extension'];
+  		move_uploaded_file($tempFile, sfConfig::get('sf_upload_dir').'/'.$fileName);
+  	}
+  	
+  	$this->setLayout(false);
+  	return $this->renderText($fileName);
   }
   
   public function executePortrait(sfWebRequest $request)
@@ -136,6 +148,7 @@ class mediaActions extends sfActions
   public function executeCustom(sfWebRequest $request)
   {
   	/// wallpaper/:author.:id.:width.:height.:bgcolor.:textcolor.:authorname.:portrait.:sf_format
+  	/// wallpaper/:author.:id.:width.:height.:bgcolor.:textcolor.:authorname.:portrait.:background:sf_format
     $id = $request->getParameter('id');
     $width = $request->getParameter('width');
     $height = $request->getParameter('height');
@@ -143,6 +156,7 @@ class mediaActions extends sfActions
     $textcolor = $request->getParameter('textcolor');
     $show_author = $request->getParameter('authorname');
     $show_portrait = $request->getParameter('portrait');
+    $background = $request->getParameter('background', false);
     $this->forward404Unless($citation = Doctrine_Core::getTable('Citation')->findOneById(array($id)), sprintf('Object citation does not exist (%s).', $id));
     $this->forward404Unless($citation->is_active);
       
@@ -150,16 +164,19 @@ class mediaActions extends sfActions
     if (($format != 'jpg') && ($format != 'gif') && ($format != 'png'))
       $format = 'jpg';
     
-    $filename = sfConfig::get('sf_web_dir').'/wallpaper/'.$citation->Author->slug.'.'.$citation->id.'.'.$width.'.'.$height.'.'.$bgcolor.'.'.$textcolor.'.'.$show_author.'.'.$show_portrait.'.'.$format;
+    $filename = sfConfig::get('sf_web_dir').'/wallpaper/'.$citation->Author->slug.'.'.$citation->id.'.'.$width.'.'.$height.'.'.$bgcolor.'.'.$textcolor.'.'.$show_author.'.'.$show_portrait;
+    if ($background)
+    	$filename .= $background;
+    $filename .= '.'.$format;
     
     if (file_exists($filename)) {
       $img = new sfImage($filename);
     } else {
       
-      $img = $this->build($citation, '#'.$bgcolor, '#'.$textcolor, $width, $height, true, true, $show_author, $show_portrait);
+      $img = $this->build($citation, '#'.$bgcolor, '#'.$textcolor, $width, $height, true, true, $show_author, $show_portrait, $background);
       
       $img->setMIMEType('image/'.$format);
-      $img->saveAs($filename, 'image/'.$format);
+      //$img->saveAs($filename, 'image/'.$format);
     }
     
     $response = $this->getResponse();
@@ -202,7 +219,7 @@ class mediaActions extends sfActions
     return sfView::NONE;
   }
   
-  public function build($citation, $bgcolor, $textcolor, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true, $show_portrait = true)
+  public function build($citation, $bgcolor, $textcolor, $width = 1200, $height = 768, $show_overlay = true, $show_url = true, $show_author = true, $show_portrait = true, $background = false)
   {
       $overlay_file = sfConfig::get('sf_web_dir').'/images/overlay.png';
 			$rgb = sscanf($bgcolor, '#%2x%2x%2x');
@@ -211,7 +228,13 @@ class mediaActions extends sfActions
       $img->transparency('#000000');
       $img->thumbnail($width, $height, 'center');
       
-      $img->colorize($rgb[0], $rgb[1], $rgb[2], 0);
+      if ($background) {
+      	$background_img = new sfImage(sfConfig::get('sf_upload_dir').'/'.$background);
+      	$background_img->thumbnail($width, $height, 'center', $bgcolor);
+		    $img->overlay($background_img);
+      } else {
+      	$img->colorize($rgb[0], $rgb[1], $rgb[2], 0);
+      }
       
       if ($show_overlay) {
 	      $overlay_img = new sfImage($overlay_file);
@@ -246,8 +269,12 @@ class mediaActions extends sfActions
       $box = imagettfbbox($text_font_size, 0, $text_font_dir, 'Test');
       $lineHeight = abs($box[5] - $box[1]);
       $lines = explode("\n", $text);
-      $img->text($text, $width*.1, floor(($height-$textheight)*.4)-$lineHeight*(count($lines)-1), $text_font_size, $text_font_name, $textcolor);
-      
+      $left = $width*.1;
+      $top = floor(($height-$textheight)*.4)-$lineHeight*(count($lines)-1);
+      if ($background) {
+      	$img->text($text, $left+1, $top+1, $text_font_size, $text_font_name, $bgcolor);
+      }
+      $img->text($text, $left, $top, $text_font_size, $text_font_name, $textcolor);
       
       if ($show_author) {
 	      $author_font_name = 'Quicksand/Quicksand_Book_Oblique';

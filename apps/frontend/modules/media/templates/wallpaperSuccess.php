@@ -26,12 +26,16 @@
 		  </fieldset>
 		
 		</form>
+		<form action="<?php echo url_for('@wallpaper_upload')?>" class="dropzone" id="dropzone"></form>
 
 	</div>
 	
 	<div class="grid-50">
 		<?php $image = url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug);  ?>
-	  <img src="<?php echo $image ?>" alt="«<?php echo $citation->quote ?>» <?php echo $citation->Author->name ?>" id="wallpaper" class="wallpaper" />
+		<figure>
+	  	<img src="<?php echo $image ?>" alt="«<?php echo $citation->quote ?>» <?php echo $citation->Author->name ?>" id="wallpaper" class="wallpaper" />
+			<div class="progress"></div>
+		</figure>
 		<div class="action">
 	  	<a href="<?php echo $image ?>" target="_blank" title="Télécharger la citation en fond d'écran" >Télécharger le fond d'écran</a>
 			<!--  <a class="mail-share icon" href="<?php echo url_for('@send_mail?id='.$citation->id)?>" title="Envoyer la citation par mail">&nbsp;</a> -->

@@ -385,10 +385,186 @@ label[for^="toggle"] + [type=checkbox] {display: none}
   background: #1ABC9C;
 }
 
+figure {
+	margin: 0;
+	padding: 0;
+	position: relative;
+  width: 100%;
+  min-height: 300px;
+}
+
+
+
+@-moz-keyframes colors{
+  from {background: #f4a300;}
+  5% {background: #f4d400;}
+  10% {background: #e4f400;}
+  15% {background: #b3f400;}
+  20% {background: #00f4c3;}
+  25% {background: #00f4f4;}
+  30% {background: #00c3f4;}
+  35% {background: #b300f4;}
+  40% {background: #e400f4;}
+  45% {background: #f400d4;}
+  50% {background: #f40000;}
+  55% {background: #f400bb;}
+  60% {background: #f400ec;}
+  65% {background: #cb00f4;}
+  70% {background: #00abf4;}
+  75% {background: #00dcf4;}
+  80% {background: #00f4dc;}
+  85% {background: #00f4ab;}
+  90% {background: #ccf400;}
+  95% {background: #f4ec00;}
+  to {background: #f4bb00;}
+}
+  
+@-webkit-keyframes colors{
+  from {background: #f4a300;}
+  5% {background: #f4d400;}
+  10% {background: #e4f400;}
+  15% {background: #b3f400;}
+  20% {background: #00f4c3;}
+  25% {background: #00f4f4;}
+  30% {background: #00c3f4;}
+  35% {background: #b300f4;}
+  40% {background: #e400f4;}
+  45% {background: #f400d4;}
+  50% {background: #f40000;}
+  55% {background: #f400bb;}
+  60% {background: #f400ec;}
+  65% {background: #cb00f4;}
+  70% {background: #00abf4;}
+  75% {background: #00dcf4;}
+  80% {background: #00f4dc;}
+  85% {background: #00f4ab;}
+  90% {background: #ccf400;}
+  95% {background: #f4ec00;}
+  to {background: #f4bb00;}
+}
+  
+@keyframes colors{
+  from {background: #f4a300;}
+  5% {background: #f4d400;}
+  10% {background: #e4f400;}
+  15% {background: #b3f400;}
+  20% {background: #00f4c3;}
+  25% {background: #00f4f4;}
+  30% {background: #00c3f4;}
+  35% {background: #b300f4;}
+  40% {background: #e400f4;}
+  45% {background: #f400d4;}
+  50% {background: #f40000;}
+  55% {background: #f400bb;}
+  60% {background: #f400ec;}
+  65% {background: #cb00f4;}
+  70% {background: #00abf4;}
+  75% {background: #00dcf4;}
+  80% {background: #00f4dc;}
+  85% {background: #00f4ab;}
+  90% {background: #ccf400;}
+  95% {background: #f4ec00;}
+  to {background: #f4bb00;}
+}
+
+
+
+@-moz-keyframes rotating{
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+  
+@-webkit-keyframes rotating{
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+  
+@keyframes rotating{
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+
+.progress {
+  opacity: 0;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -15px;
+  margin-left: -15px;
+	width: 30px;
+	height: 30px;
+  -moz-transition: opacity 1s ease .1s;
+  -o-transition: opacity 1s ease .1s;
+  -webkit-transition: opacity 1s ease .1s;
+  transition: opacity 1s ease .1s;
+  
+  -moz-animation-name: rotating;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-duration: 2s;
+  -moz-animation-timing-function: linear;
+  
+  -webkit-animation-name: rotating;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  
+  animation-name: rotating;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+}
+
+.progress:after, .progress:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  content: "";
+  background: red;
+  border-radius: 5px 5px 5px 5px / 5px 5px 5px 0;
+  
+  -moz-animation-name: colors;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-duration: 4s;
+  -moz-animation-timing-function: linear;
+  
+  -webkit-animation-name: colors;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-timing-function: linear;
+  
+  animation-name: colors;
+  animation-iteration-count: infinite;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+}
+
+.progress:before {
+  top: 20px;
+  left: 20px;
+  background: blue;
+  border-radius: 5px 5px 5px 5px / 5px 0 5px 5px;
+  -moz-animation-delay: 2s;
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.load .progress {
+  opacity: 1;
+}
 
 .wallpaper {
 	width: 100%;
 	height: auto;
+  -moz-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.load .wallpaper {
+  opacity: 0;
 }
 
 .subheader {

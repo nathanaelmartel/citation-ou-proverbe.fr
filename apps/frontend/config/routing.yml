@@ -57,9 +57,15 @@ portrait_image:
 citation_image:
   url:   /medias/:author/:authorb.:slug.:sf_format
   param: { module: media, action: show }
+wallpaper_image_background:
+  url:   /wallpaper/:author.:id.:width.:height.:bgcolor.:textcolor.:authorname.:portrait.:background.:sf_format
+  param: { module: media, action: custom }
 wallpaper_image:
   url:   /wallpaper/:author.:id.:width.:height.:bgcolor.:textcolor.:authorname.:portrait.:sf_format
   param: { module: media, action: custom }
+wallpaper_upload:
+  url:   /wallpaper-upload
+  param: { module: media, action: upload }
 citation_twitter_image:
   url:   /twitter/:author/:id.:sf_format
   param: { module: media, action: twitter }
