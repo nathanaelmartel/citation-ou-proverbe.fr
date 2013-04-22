@@ -58,20 +58,22 @@ var xhr_object = false;
 		  $(".checkbox").uniform();  
 	  }
 	  
-	  $("#wallpaper-form input").change(function () { return updateWallpaper(); });
-	  
-	  Dropzone.options.dropzone = {
-		dictDefaultMessage: 'Image à mettre en fond (Glissez / Déposez)',
-	    init: function() {
-		      this.on("complete", function(file) {
-		    	  background = true;
-		    	  updateWallpaper();
-		      });
-		      this.on("sending", function(file, xhr, formData) {
-		    	  xhr_object = xhr;
-		    	  $("figure").addClass("load");
-		      });
-	  }};
+
+	  if ($("#wallpaper-form input").length) {
+		  $("#wallpaper-form input").change(function () { return updateWallpaper(); });
+		  Dropzone.options.dropzone = {
+			dictDefaultMessage: 'Image à mettre en fond (Glissez / Déposez)',
+		    init: function() {
+			      this.on("complete", function(file) {
+			    	  background = true;
+			    	  updateWallpaper();
+			      });
+			      this.on("sending", function(file, xhr, formData) {
+			    	  xhr_object = xhr;
+			    	  $("figure").addClass("load");
+			      });
+		  }};
+	  }
 	  
   });
   
