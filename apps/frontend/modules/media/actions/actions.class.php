@@ -282,8 +282,12 @@ class mediaActions extends sfActions
 	      $author_font_dir = sfConfig::get('app_sfImageTransformPlugin_font_dir').DIRECTORY_SEPARATOR.$author_font_name.'.ttf';
 	      $box = imagettfbbox($author_font_size, 0, $author_font_dir, $citation->Author->name);
 	      $textwidth = abs($box[4] - $box[0]) - 4;
-	      
-	      $img->text($citation->Author->name, $width-$textwidth-100, floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2, $author_font_size, $author_font_name, $textcolor);
+	      $left = $width-$textwidth-100;
+	      $top = floor(($height-$textheight)*.4)+$lineHeight*count($lines)*2;
+	      if ($background) {
+	      	$img->text($citation->Author->name, $left+1, $top+1, $author_font_size, $author_font_name, $bgcolor);
+	      }
+	      $img->text($citation->Author->name, $left, $top, $author_font_size, $author_font_name, $textcolor);
       }
       
       if ($show_url) {
