@@ -176,7 +176,7 @@ class mediaActions extends sfActions
       $img = $this->build($citation, '#'.$bgcolor, '#'.$textcolor, $width, $height, true, true, $show_author, $show_portrait, $background);
       
       $img->setMIMEType('image/'.$format);
-      //$img->saveAs($filename, 'image/'.$format);
+      $img->saveAs($filename, 'image/'.$format);
     }
     
     $response = $this->getResponse();
