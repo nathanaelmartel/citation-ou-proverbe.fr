@@ -1,7 +1,8 @@
 
 duplicate : 
 - slug terminant par un chiffre
-- 
+- trouver les auteurs commençant par un tiret
+- trouver les auteurs en majuscule
 
 seconde passe wikipedia sur l'url trouvé par dbpedia
 passe wikipedia pour duplicate result
