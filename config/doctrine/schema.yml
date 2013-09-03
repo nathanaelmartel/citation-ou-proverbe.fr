@@ -126,6 +126,7 @@ Citation:
   columns:
     quote: {type: string()}
     author_id: {type: integer, notnull: true}
+    source_id: {type: integer, notnull: true}
     source: {type: string(255)}
     is_active: {type: boolean}
     last_published_at: {type: datetime}
@@ -140,6 +141,37 @@ Citation:
     Author:
       class: Author
       foreignAlias: Citations
+      local: author_id
+      foreign: id
+      onDelete: cascade
+
+    Source:
+      class: Source
+      foreignAlias: Citations
+      local: source_id
+      foreign: id
+      onDelete: cascade
+      
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+    
+Source:
+  connection: doctrine
+  tableName: sources
+  actAs:
+    Timestampable:
+    Sluggable:
+      unique: true
+      fields: [title]
+  columns:
+    title: {type: string(255)}
+    author_id: {type: integer, notnull: true}
+    
+  relations:
+    Author:
+      class: Author
+      foreignAlias: Source
       local: author_id
       foreign: id
       onDelete: cascade
