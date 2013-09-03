@@ -1,6 +1,7 @@
 
 html {
 	font-family: Georgia, time, serif ;
+	color: #333;
 }
 
 body {
@@ -56,7 +57,7 @@ nav li {
 }
 
 nav a {
-	color: #000;
+	color: #333;
   padding: 0 5px;
 	text-decoration: none;
   -moz-transition: all 1s ease;
@@ -98,14 +99,14 @@ a.card-container:hover, a.card-container:active, a.card-container:focus {
   font-size: 0.8em;
   line-height: 2.5em;
   text-align: right;
-  color: #000;
+  color: #333;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
 .context a {
-  color: #000;
+  color: #333;
   text-decoration: none;
 }
 
@@ -131,6 +132,17 @@ h1 {
   font-family: 'QuicksandBold';
   font-weight: normal;
   font-size: 2em;
+}
+
+h1.source-title {
+	text-align: right;
+	
+	i {
+	  display: block;
+    text-align: left;
+	  color: #666;
+	  margin-bottom: .5em;
+	}
 }
 
 h2 {
@@ -168,7 +180,7 @@ h2 {
 }
 
 .author-card h2 a {
-  color: #000;
+  color: #333;
   text-decoration: none;
 }
 
@@ -178,7 +190,7 @@ h2 {
 }
 
 .wikipedia, .author-link {
-  color: #000;
+  color: #333;
   text-decoration: none;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -208,7 +220,7 @@ a.author-link:hover, a.author-link:active, a.author-link:focus,
 
 .action {
   font-size: .8em;
-  color: #000;
+  color: #333;
   margin-top: .2em;
   margin-bottom: 1em;
 }
@@ -269,7 +281,7 @@ a.author-link:hover, a.author-link:active, a.author-link:focus,
 .action .icon.pinterest-share { background-position: -10px -206px;padding-right: 17px; }
 
 .action a:hover, .action a:active, .action a:focus {
-  color: #000 !important;
+  color: #333 !important;
   -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
   box-shadow: 0 0 1px rgba(0, 0, 0, .4);
@@ -278,12 +290,12 @@ a.author-link:hover, a.author-link:active, a.author-link:focus,
 
 .action a.icon:hover, .action a.icon:focus,
 .action a.note:hover span:first-child, .action a.note:focus span:first-child {
-  background-color: #000;
+  background-color: #333;
 }
 
 .tags {
   font-size: .8em;
-  color: #000;
+  color: #333;
   font-family: 'QuicksandBookOblique';
 }
 
@@ -309,7 +321,7 @@ aside .tags {
 }
 
 .tags a {
-  color: #000;
+  color: #333;
   text-decoration: none;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;

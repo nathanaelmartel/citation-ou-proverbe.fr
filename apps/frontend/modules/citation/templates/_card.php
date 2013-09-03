@@ -6,10 +6,10 @@
 	</a>
 	<p class="context">
 		<a href="<?php echo url_for('@author?slug='.$citation->Author->slug) ?>" class="author"><?php echo $citation->Author->name ?></a>
-		<?php if (substr($citation->source, 0, 4) == 'http' ): ?>
-			<a href="<?php echo $citation->source ?>" target="_blank" >source</a>
+		<?php if ($citation->source_id != '' ): ?>
+			<a href="<?php echo url_for('@source?slug='.$citation->Source->slug.'&author='.$citation->Author->slug ) ?>" target="_blank" ><?php echo $citation->getSource() ?></a>
 		<?php else: ?>
-			<span class="source"><?php echo $citation->source ?></span>
+			<span class="source"><?php echo $citation->getSource() ?></span>
 		<?php endif;?>
 	</p>
 	

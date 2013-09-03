@@ -20,6 +20,13 @@
   </loc>
 </url>
 <?php endforeach; ?>
+<?php foreach ($sources as $source): ?>
+<url>
+  <loc>
+  	<?php echo url_for('@source?slug='.$source->slug.'&author='.$source->Author->slug, array('absolute' => true)) ?>
+  </loc>
+</url>
+<?php endforeach; ?>
 <?php if ($nextpage < 50): ?>
 <url>
   <loc>

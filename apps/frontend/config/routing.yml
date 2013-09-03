@@ -77,6 +77,10 @@ citation_wallpaper:
   url:   /fond-ecran/:author/:slug
   param: { module: media, action: wallpaper }
 
+source_short:
+  url:   /s/:id
+  param: { module: source, action: short }
+
 author_short:
   url:   /a/:id
   param: { module: author, action: short }
@@ -131,6 +135,13 @@ tag:
 tag_page:
   url:   /theme/:slug/:page
   param: { module: tag, action: show }
+  
+source:
+  url:   /oeuvre/:author/:slug
+  param: { module: source, action: show }
+source_page:
+  url:   /oeuvre/:author/:slug/page/:page
+  param: { module: source, action: show }
   
 citation:
   url:   /:author/:slug

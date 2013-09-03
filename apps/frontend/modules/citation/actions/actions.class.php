@@ -143,11 +143,19 @@ class citationActions extends sfActions
       ->offset($nb/2*$page)
       ->execute();
     $this->citations = Doctrine::getTable('Citation')
-      ->createQuery('a')
-      ->where('is_active = ?', 1)
+      ->createQuery('c')
+      ->leftJoin('c.Author a')
+      ->addWhere('c.is_active = ?', 1)
       ->limit($nb)
       ->offset($nb*$page)
-      ->orderBy('last_published_at desc')
+      ->orderBy('c.last_published_at desc')
+      ->execute();
+    $this->sources = Doctrine::getTable('Source')
+      ->createQuery('c')
+      ->leftJoin('c.Author a')
+      ->addWhere('c.is_active = ?', 1)
+      ->limit($nb/2)
+      ->offset($nb/2*$page)
       ->execute();
     
     $this->nextpage = $page+1;
