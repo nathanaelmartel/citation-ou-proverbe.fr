@@ -44,39 +44,41 @@ EOF;
     
     $q = Doctrine_Query::create()
     ->select('*')
-    ->from('Source c')
+    ->from('Source s')
     ->where('is_active = ?', 0)
-    ->andWhere('is_link = 0')
+    ->andWhere('is_link = ?', 0)
     ->offset(rand(0, rand(0, 100)))
     ->limit(10)
     ->orderBy('nb_citation desc');
     
-    $Source = $q->fetchOne();
+    $Sources = $q->execute();
+    $Source = $Sources[0];
     
-    $Source->is_active =  1;
-    $Source->save();
+    $Source->is_active = 1;
+		$Source->save();
     sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
     
-    $this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
     
     
     
     $q = Doctrine_Query::create()
     ->select('*')
-    ->from('Source c')
+    ->from('Source s')
     ->where('is_active = ?', 0)
-    ->andWhere('is_link = 1')
+    ->andWhere('is_link = ?', 1)
     ->offset(rand(0, rand(0, 100)))
     ->limit(10)
     ->orderBy('nb_citation desc');
     
-    $Source = $q->fetchOne();
+    $Sources = $q->execute();
+    $Source = $Sources[0];
     
     $Source->is_active =  1;
     $Source->save();
     sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
     
-    $this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
     
     
     
