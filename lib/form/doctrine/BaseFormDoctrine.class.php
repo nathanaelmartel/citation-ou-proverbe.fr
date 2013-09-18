@@ -57,7 +57,8 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
 			$this['created_at'],  
 			$this['updated_at'],  
 			$this['tags_list'],  
-			$this['citations_list']
+			$this['citations_list'],  
+			$this['sources_list']
 		); 
   	
   	$this->setWidget('created_at', new sfWidgetFormPlain(array('value'=>$this->getObject()->created_at)));
