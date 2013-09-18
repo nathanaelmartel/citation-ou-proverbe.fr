@@ -16,4 +16,14 @@ class SourceTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Source');
     }
+    
+  public static function retrieveLast($limit = 25) {
+  	$query = Doctrine::getTable('Source')
+  		->createQuery()
+	    ->where('is_active = ?', 1)
+	    ->limit($limit)
+	    ->orderBy('updated_at DESC');
+  	
+  	return $query->execute();
+  }
 }

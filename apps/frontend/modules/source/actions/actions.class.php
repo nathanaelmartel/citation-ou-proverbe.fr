@@ -67,4 +67,40 @@ class sourceActions extends sfActions
     $response->addMeta('description', 'Auteurs de Citations ');
     $response->setTitle('Auteurs de Citations ' );
   }
+  
+  public function executeFeed(sfWebRequest $request)
+  {
+  	$sources = Doctrine_Core::getTable('Source')->retrieveLast();
+  	
+    $feed = new sfRss10Feed();
+
+	  $feed->setTitle('Citation ou Proverbe');
+	  $feed->setLink('http://www.citation-ou-proverbe.fr/');
+	  $feed->setAuthorEmail('contact@citation-ou-proverbe.fr');
+	  $feed->setAuthorName('Citation ou Proverbe');
+
+		$feedImage = new sfFeedImage();
+		$feedImage->setLink('http://www.citation-ou-proverbe.fr/images/logo.png');
+		$feedImage->setTitle('Citation ou Proverbe');
+		$feed->setImage($feedImage);
+		
+	  foreach ($sources as $source) {
+	    $item = new sfFeedItem();
+      $item->setTitle($source->title.' '.$source->Author->name);
+	    $item->setLink('http://www.citation-ou-proverbe.fr/oeuvre/'.$source->Author->slug.'/'.$source->slug.'?pk_campaign=feed-sources&pk_kwd=feed-sources-fink');
+	    $item->setAuthorName($source->Author->name);
+	    $item->setAuthorEmail('contact@citation-ou-proverbe.fr');
+	    $item->setPubdate(strtotime($source->updated_at));
+	    $item->setUniqueId('http://www.citation-ou-proverbe.fr/s/'.$source->id);
+	    
+	    $description = '<p>Les citations extraitent de «'.$source->title.'» de <a href="http://www.citation-ou-proverbe.fr/'.$source->Author->slug.'?pk_campaign=feed&pk_kwd=feed-author" >'.$source->Author->name.'</a></p>' ;
+	    $description .= '<p>Retrouvez plus de citations sur <a href="http://www.citation-ou-proverbe.fr/?pk_campaign=feed&pk_kwd=feed-prefix">www.citation-ou-proverbe.fr</a></p>';
+
+	    $item->setDescription($description);
+	    $feed->addItem($item);
+	  }
+	
+    $this->setLayout(false);
+	  $this->feed = $feed;
+  }
 }
