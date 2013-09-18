@@ -59,7 +59,7 @@ EOF;
 			$Source->save();
 	    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
 	    
-	    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+	    $this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
     }
     
     
@@ -80,7 +80,7 @@ EOF;
 	    $Source->save();
 	    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
 	    
-	    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+	    $this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
     }
     
     
