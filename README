@@ -44,13 +44,5 @@ sass --watch web/css/styles.scss:web/css/styles.css --style compressed
 
 == Sql update : 
 
-UPDATE citation SET `source` = substring(`source`, 3)  where `source` like '\' %';
-UPDATE citation SET `source` = substring(`source`, 2)  where `source` like '\'%';
-CREATE TABLE sources (id BIGINT AUTO_INCREMENT, title VARCHAR(255), author_id BIGINT NOT NULL, view INT DEFAULT 1, is_active TINYINT(1) DEFAULT '1', is_link TINYINT(1) DEFAULT '1', url VARCHAR(255), editor VARCHAR(255), date VARCHAR(255), isbn VARCHAR(255), cover VARCHAR(255), wikipedia VARCHAR(255), created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, slug VARCHAR(255), UNIQUE INDEX sources_sluggable_idx (slug), INDEX author_id_idx (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = INNODB;
-ALTER TABLE `citation` ADD `source_id` BIGINT( 20 ) NULL AFTER `author_id` , ADD INDEX ( `source_id` ) ;
-ALTER TABLE citation ADD CONSTRAINT citation_source_id_sources_id FOREIGN KEY (source_id) REFERENCES sources(id) ON DELETE CASCADE;
-ALTER TABLE sources ADD CONSTRAINT sources_author_id_author_id FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE, ADD INDEX ( `title` );
-
-+ index sur la table source.title
 
 
