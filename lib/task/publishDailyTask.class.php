@@ -52,14 +52,15 @@ EOF;
     ->orderBy('nb_citation desc');
     
     $Sources = $q->execute();
-    $Source = $Sources[0];
-    
-    $Source->is_active = 1;
-		$Source->save();
-    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
-    
-    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
-    
+    if (count($Sources)) {
+	    $Source = $Sources[0];
+	    
+	    $Source->is_active = 1;
+			$Source->save();
+	    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
+	    
+	    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+    }
     
     
     $q = Doctrine_Query::create()
@@ -72,14 +73,15 @@ EOF;
     ->orderBy('nb_citation desc');
     
     $Sources = $q->execute();
-    $Source = $Sources[0];
-    
-    $Source->is_active =  1;
-    $Source->save();
-    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
-    
-    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
-    
+    if (count($Sources)) {
+	    $Source = $Sources[0];
+	    
+	    $Source->is_active =  1;
+	    $Source->save();
+	    sfTask::log('publish '.$Source->id.' at '.date('r').' '.$Source->title);
+	    
+	    //$this->twitter_statuses_update('Retrouver les citations de '.$Source->title.', '.$Source->Author->name.' '.$Source->getShortUrl(), $json_keys);
+    }
     
     
   }
