@@ -37,6 +37,16 @@
 		<?php endif; ?>
 		<p itemtype="description"><?php echo $author->getDescription() ?></p>
     <p>
+    
+    <?php if (count($sources) > 0): ?>
+    <h2>œuvres</h2>
+    <ul class="sources">
+    	<?php foreach($sources as $source): ?>
+    		<li><a href="<?php echo url_for('@source?slug='.$source->slug.'&author='.$author->slug) ?>"><?php echo $source->title ?></a></li>
+    	<?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+    
     <?php if ($author->getWikipediaUrl() != '' ): ?>
     	<a href="<?php echo $author->getWikipediaUrl() ?>" class="wikipedia" target="_blank" ><?php echo $author->name ?> sur wikipedia</a><br />
 		<?php endif; ?>

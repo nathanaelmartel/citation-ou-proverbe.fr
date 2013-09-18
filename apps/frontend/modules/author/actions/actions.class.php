@@ -69,6 +69,12 @@ class authorActions extends sfActions
 		$this->citations->setPage($request->getParameter('page', 1));
 		$this->citations->init();
     
+		$this->sources = Doctrine::getTable('Source')
+					->createQuery('c')
+		    	->where('author_id = ?', $author->id)
+					->addWhere('c.is_active = ?', 1)
+					->execute();
+		
     $this->author = $author;
   }
   

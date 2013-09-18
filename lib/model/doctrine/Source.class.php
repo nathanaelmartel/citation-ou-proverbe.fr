@@ -12,4 +12,8 @@
  */
 class Source extends BaseSource
 {
+	
+	public function getShortUrl($traker = '?pk_campaign=twitter&pk_kwd=twitter') {
+		return 'http://citation-ou-proverbe.fr/s/'.$this->id.$traker;
+	}
 }

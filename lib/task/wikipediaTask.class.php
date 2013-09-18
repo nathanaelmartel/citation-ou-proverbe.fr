@@ -46,7 +46,7 @@ EOF;
     ->from('Author a')
     ->offset(rand(0, 50))
     ->limit(100)
-   	->orderBy('wikipedia_at ASC');;
+   	->orderBy('wikipedia_at ASC');
     
     $authors = $q->execute();
     

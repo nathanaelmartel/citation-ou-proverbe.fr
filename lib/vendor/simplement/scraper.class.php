@@ -46,6 +46,7 @@ class scraper
 			$filename = $id;
 		
 		$this->filename = $base_path.$url_info['host'].'/'.$filename.'.html';
+		//echo $this->filename;
 	}
 	
 	public function getFilename() {
@@ -76,7 +77,10 @@ class scraper
     	curl_setopt( $ch, CURLOPT_ENCODING, "" );
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       $output = curl_exec($ch);
-      $this->curl_info = curl_getinfo($ch);
+      $curl_info = curl_getinfo($ch);
+      $this->curl_info = $curl_info;
+      if ($curl_info['http_code'] != '200')
+      	$output = '<html></html>';
       //var_dump($output);
       //var_dump($this->curl_info);
       curl_close($ch);
@@ -88,7 +92,6 @@ class scraper
       $fp = fopen($this->filename, 'w');
       fwrite($fp, $output);
       fclose($fp);
-      
     }
     
     return $output;

@@ -168,7 +168,16 @@ Source:
     title: {type: string(255)}
     author_id: {type: integer, notnull: true}
     view: {type: int, default: 1}
-    is_active: {type: boolean, default: 1}
+    is_active: {type: boolean, default: 0}
+    nb_citation: {type: integer, default: 1}
+    is_link: {type: boolean, default: 1}
+    url: {type: string(255)}
+    editor: {type: string(255)}
+    date: {type: string(255)}
+    isbn: {type: string(255)}
+    cover: {type: string(255)}
+    wikipedia: {type: string(255)}
+    
     
   relations:
     Author:

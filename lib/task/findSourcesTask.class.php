@@ -48,6 +48,7 @@ EOF;
     ->orderBy('updated_at ASC');
     
     //echo $q->getSqlQuery();echo "\n";die;
+    // update nb_citation count : UPDATE `sources` SET nb_citation = (select count(citation.id) as nb_citation from citation where citation.source_id = sources.id )
     
     foreach ($q->execute() as $Citation) {
     	if (time() - $begin_time > $max_time) break;
@@ -70,6 +71,7 @@ EOF;
     	} else {
     		
     		$Source = $rs[0];
+    		$Source->nb_citation = $Source->nb_citation + 1; 
     		
     	}
     	
