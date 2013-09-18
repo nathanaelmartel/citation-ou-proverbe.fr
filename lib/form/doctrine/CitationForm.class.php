@@ -17,6 +17,7 @@ class CitationForm extends BaseCitationForm
 			$this['source_id']
 		); 
   	$this->setWidget('auteur', new sfWidgetFormPlain(array('value' => '<a href="/author/'.$this->getObject()->Author->id.'/edit">'.$this->getObject()->Author->name.'</a>')));
+  	$this->setWidget('source', new sfWidgetFormPlain(array('value' => '<a href="/source/'.$this->getObject()->Source->id.'/edit">'.$this->getObject()->Source->title.'</a>')));
   	$tags = '';
   	foreach ($this->getObject()->Tags as $tag) {
   		$tags .= '<a href="/tag/'.$tag->id.'/edit">'.$tag.'</a>, ';
