@@ -20,6 +20,7 @@ class PropositionForm extends BaseCitationForm
   			$this['view'],
   			$this['slug'],
   			$this['color'],
+  			$this['source_id'],
   			$this['text_color'],
   			$this['created_at'],
   			$this['updated_at']
