@@ -1,5 +1,4 @@
 
-
 <div class="grid-100">
 	<h1><?php echo $author->name ?></h1>
 </div>
@@ -67,9 +66,10 @@
 	<?php endif ?>
 	
 	<?php if (count($citations)>2): ?>
-		<?php include_partial('ads/rdb') ?>
+			<?php include_partial('ads/rdb') ?>
 	<?php endif; ?>
 	
 </div>
 
 <?php include_partial('ads/rdb') ?>
+
