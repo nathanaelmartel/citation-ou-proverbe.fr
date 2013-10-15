@@ -38,3 +38,7 @@
 	</ul>
 </div>
 <?php endif ?>
+
+<?php include_partial('ads/rdb') ?>
+
+

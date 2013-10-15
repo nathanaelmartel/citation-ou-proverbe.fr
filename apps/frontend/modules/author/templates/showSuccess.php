@@ -1,5 +1,8 @@
 
 
+
+<?php include_partial('ads/rdb') ?>
+
 <div class="grid-100">
 	<h1><?php echo $author->name ?></h1>
 </div>
@@ -66,4 +69,8 @@
 		</div>    
 	<?php endif ?>
 	
+<?php include_partial('ads/rdb') ?>
+	
 </div>
+
+<?php include_partial('ads/rdb') ?>

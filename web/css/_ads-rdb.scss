@@ -1,0 +1,45 @@
+
+
+.ads-rdb {
+  color: #1E5A41;
+  border-color: 1px solid #1E5A41;
+	background: #C8D08A;
+	font-family: "Karla", 'Ubuntu', sans-serif;
+	
+	p { 
+	 margin: 0;
+	}
+}
+
+.buttons {
+	text-align: right;
+	margin-top: 1em;
+}
+
+.button {
+	text-decoration: none;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  padding: .5em;
+  font-family: Arial;
+  font-weight: bold;
+  background: #FED350;
+  color: #1E5A41;
+  border-radius: 2px;
+  border: 1px solid #C8D08A;
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  margin-right: .3em;
+  display: inline-block;
+  
+  &:hover, &:active, &:focus {
+	  color: #333 !important;
+	  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
+	  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .4);
+	  box-shadow: 0 0 1px rgba(0, 0, 0, .4);
+	  outline: none;
+	}
+}

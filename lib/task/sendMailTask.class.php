@@ -44,10 +44,13 @@ EOF;
     $citation = $q->fetchOne();
     //sfTask::log($citation->quote);die();
     
+    $annonce = '<p>Découvrez <a href="http://revenudebase.info/?utm_source=citation-ou-proverbe.fr&utm_medium=email&utm_campaign=citation-ou-proverbe.fr" style="color:#000;">Le Revenu de base</a>, et vous, que feriez-vous si votre revenu était garanti ?</p>';
+     
     $message_text = '<a href="http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'/'.$citation->slug.'?pk_campaign=abonnement&pk_kwd=abonnement-citation" class="card-container" style="width: 460px;display: block;text-decoration: none;">
     <blockquote style="color: '.$citation->getTextRGBColorHex().';background-color: '.$citation->getRGBColorHex() .';width: 460px;display: table-cell;font-size: 1.8em;height: 8em;line-height: 1.2em;padding: 1em;vertical-align: middle;">
     			'. $citation->quote .'</blockquote></a>
     <p>Retrouver d\'autres citations de <a style="color:#000;" href="http://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'?pk_campaign=abonnement&pk_kwd=abonnement-auteur">'. $citation->Author->name.'</a></p>
+    '.$annonce.'
     <p>
 		-- <br />
 		L\'équipe de <a href="http://www.citation-ou-proverbe.fr?pk_campaign=abonnement&pk_kwd=abonnement-footer" style="color:#000;">Citation ou Proverbe</a><br />

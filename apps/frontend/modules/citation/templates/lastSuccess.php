@@ -1,6 +1,6 @@
 
 
-<?php foreach ($citations as $citation):?>
+<?php $i = 0;foreach ($citations as $citation):?>
 
 	<div id="citation-<?php echo $citation->id ?>" class="citation">
 		
@@ -13,6 +13,10 @@
 		
 		<div class="clear"></div>
 	</div>
+	
+	<?php if ($i++%5 == 0): ?>
+		<?php include_partial('ads/rdb') ?>
+	<?php endif ?>
 	
 <?php endforeach ?>
 

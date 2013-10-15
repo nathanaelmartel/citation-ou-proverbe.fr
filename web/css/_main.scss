@@ -690,4 +690,14 @@ figure {
   }
 }
 
+.ads {
+  display: block;
+  min-height: 120px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 1em 0;
+}
 
