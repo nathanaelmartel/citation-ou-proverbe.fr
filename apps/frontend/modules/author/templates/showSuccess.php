@@ -1,5 +1,7 @@
 
 
+
+
 <div class="grid-100">
 	<h1><?php echo $author->name ?></h1>
 </div>
