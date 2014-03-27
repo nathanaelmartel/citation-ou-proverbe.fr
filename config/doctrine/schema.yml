@@ -173,6 +173,7 @@ Source:
     is_link: {type: boolean, default: 1}
     url: {type: string(255)}
     editor: {type: string(255)}
+    description: {type: string()}
     date: {type: string(255)}
     isbn: {type: string(255)}
     cover: {type: string(255)}
@@ -266,6 +267,7 @@ Newsletter:
   columns:
     email: varchar(255)
     is_confirmed: {type: boolean, default: false} 
+    last_send_at: datetime
     
   actAs:
     Timestampable:

@@ -44,5 +44,5 @@ sass --watch web/css/styles.scss:web/css/styles.css --style compressed
 
 == Sql update : 
 
-
+ALTER TABLE `sources` ADD `description` TEXT NOT NULL AFTER `editor` ;
 

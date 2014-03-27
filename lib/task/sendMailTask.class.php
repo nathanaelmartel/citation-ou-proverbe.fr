@@ -59,10 +59,16 @@ EOF;
 		</p>'; 
         
     
-    $newsletters = Doctrine::getTable('Newsletter')
-    	->createQuery('a')
-        ->where('is_confirmed = ?', 1)
-        ->execute();
+    $q = Doctrine::getTable('Newsletter')
+    ->createQuery('a')
+    ->where('is_confirmed = ?', 1)
+    ->andWhere('hour(TIMEDIFF(now(), last_send_at)) > ?', 36)
+    ->limit(35)
+    ->orderBy('last_send_at ASC');
+    
+    //die($q->getSqlQuery());
+    
+    $newsletters = $q->execute();
  
     
     foreach ($newsletters as $newsletter) {
@@ -76,8 +82,15 @@ EOF;
 	  	  $personalized_message
 	    );
       $message->setContentType("text/html");
-  		$this->getMailer()->send($message);
-    	sfTask::log($newsletter->getEmail());
+      $message->setContentType("text/html");
+      if ($this->getMailer()->send($message)) {
+    		sfTask::log('  -> ok');
+      } else {
+    		sfTask::log('  -> #failed');
+      }
+  		
+    	$newsletter->last_send_at = new Doctrine_Expression('NOW()');
+    	$newsletter->save();
     }
     sfTask::log('send '.$citation->id.' at '.date('r').' to '.count($newsletters).' mails');
   }

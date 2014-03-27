@@ -34,6 +34,8 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     
     require_once(dirname(__FILE__).'/../vendor/simplement/scraper.class.php');
+    if (!file_exists('data/scraper_cache/wikipedia'))
+    	mkdir('data/scraper_cache/wikipedia');
     sfTask::log('==== begin on '.date('r').' ====');
     $begin_time = time();
     $max_time = 50;
@@ -85,13 +87,17 @@ EOF;
     $Source->editor = $url_info['host'];
     
     $date = '';
-    // in url (wordpress)
-    //preg_match(' 	^(0?[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$', $Source->url);
-    var_dump(preg_match('^((19|20)\d\d[- /.](0[1-9]|1[012])[- /.]0?[1-9]|[12][0-9]|3[01])$', $Source->url));
     
-    $rs = $Scraper->queryPage('meta[name="date"]', 'content');
-    if (count($rs) > 0) 
-    	$date = scraper::cleanString($rs[0]);
+    // in url (wordpress)
+    $pattern = '^(((19|20)[0-9][0-9])[-/.](0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01]))^';
+    if (preg_match($pattern, $Source->url, $matches)) {
+    	$date = $matches[0];
+    }
+    if ($date == '') {
+	    $rs = $Scraper->queryPage('meta[name="date"]', 'content');
+	    if (count($rs) > 0) 
+	    	$date = scraper::cleanString($rs[0]);
+    }
     if ($date == '') {
     	$rs = $Scraper->queryPage('meta[name*="date"]', 'content');
 	    if (count($rs) > 0) 
@@ -115,13 +121,88 @@ EOF;
     
     if ($date != '') {
     	$Source->date = $date;
-    	$Source->save();
     }
     
-  	return $date;
+    $description = '';
+    $rs = $Scraper->queryPage('meta[name="description"]', 'content');
+    if (count($rs) > 0) 
+    	$description = scraper::cleanString($rs[0]);
+    if ($description == '') {
+    	$rs = $Scraper->queryPage('meta[name*="description"]', 'content');
+	    if (count($rs) > 0) 
+	    	$description = scraper::cleanString($rs[0]);
+    }
+    
+    if ($description != '') {
+    	$Source->description = $description;
+    }
+    
+    $Source->save();
+  	return '';
   }
   
   protected function infoLivre($Source) {
+  	
+  	$this->infoLivreDbPedia($Source);
+  	
   	return '';
   }
+  
+  protected function infoLivreDbPedia($Source) {
+  	$response = $this->request($Author->name, $key_fr);
+  	
+  	return '';
+  }
+
+	function request($work_name, $query_type = 'dbpedia_url', $base = 'fr.dbpedia.org/sparql'){
+		$prefix = "PREFIX dbp: <http://dbpedia.org/resource/>
+		  PREFIX dbp2: <http://dbpedia.org/ontology/>
+		  PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  ";
+		$filter = '';
+		
+		if ($base == 'dbpedia.org/sparql') {
+			$filter = "FILTER langMatches(lang(?".$query_type."), 'fr')";
+		}
+	  
+		$query = array (
+			'dbpedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr.}',
+			'name' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url foaf:name ?name. '.$filter.'}',
+			'abstract' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:abstract ?abstract. '.$filter.'}',
+			'comment' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url rdfs:comment ?comment. '.$filter.'}',
+			'wikipedia_url' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url foaf:isPrimaryTopicOf ?wikipedia_url. }',
+			'thumbnail' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:thumbnail ?thumbnail. }',
+			'birth_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:birthDate ?birth_date. }',
+			'death_date' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathDate ?death_date. }',
+			'dateDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeNaissance ?birth_date. }',
+			'dateDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:dateDeDécès ?death_date. }',
+			'birth_place' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:birthPlace ?birth_place. }',
+			'death_place' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:deathPlace ?death_place. }',
+			'lieuDeNaissance' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:lieuDeNaissance ?birth_place. }',
+			'lieuDeDécès' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:lieuDeDécès ?death_place. }',
+			'occupation' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:occupation ?occupation. }',
+			'activité' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:activité ?occupation. }',
+			'notableworks' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url dbp2:notableworks ?notableworks. }',
+			'œuvre' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:name "'.$author_name.'"@fr. ?dbpedia_url prop-fr:œuvre ?notableworks. }',
+				
+			'label' => 'SELECT * WHERE { ?dbpedia_url rdf:type foaf:Person. ?dbpedia_url foaf:isPrimaryTopicOf "'.$author_name.'"@fr. }',
+		);
+		
+		// http://fr.dbpedia.org/sparql
+		// SELECT * WHERE { ?dbpedia_url rdf:type dbpedia-owl:Work. ?dbpedia_url foaf:name "Les Misérables"@fr. ?dbpedia_url dbpedia-owl:author ?author. }
+		
+		//if ($query_type == 'label') sfTask::log($prefix.$query[$query_type]);
+		
+	  $url = 'http://'.$base.'?query='.urlencode($prefix.$query[$query_type]).'&format=json';
+	   
+	  $ch= curl_init();
+	  curl_setopt($ch, CURLOPT_URL, $url);
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 5); 
+	  $response = curl_exec($ch);
+	  curl_close($ch);
+	 
+	  return json_decode($response, true);
+	}
 }

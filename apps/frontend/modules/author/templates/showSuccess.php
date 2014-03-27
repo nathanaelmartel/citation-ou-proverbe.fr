@@ -1,6 +1,6 @@
 
 <div class="grid-100">
-	<h1><?php echo $author->name ?></h1>
+<h1><?php echo $author->name ?></h1>
 </div>
 
 <div class="grid-60 author-citations">
