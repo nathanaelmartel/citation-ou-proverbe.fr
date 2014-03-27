@@ -85,12 +85,12 @@ EOF;
       $message->setContentType("text/html");
       if ($this->getMailer()->send($message)) {
     		sfTask::log('  -> ok');
+	    	$newsletter->last_send_at = new Doctrine_Expression('NOW()');
+	    	$newsletter->save();
       } else {
     		sfTask::log('  -> #failed');
       }
   		
-    	$newsletter->last_send_at = new Doctrine_Expression('NOW()');
-    	$newsletter->save();
     }
     sfTask::log('send '.$citation->id.' at '.date('r').' to '.count($newsletters).' mails');
   }
