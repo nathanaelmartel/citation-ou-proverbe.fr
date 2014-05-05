@@ -31,7 +31,7 @@ all:
   Contact:
     email_subject: '[citation-ou-proverbe] Formulaire de contact'
     email_from: contact@citation-ou-proverbe.fr
-    email_to: contact@citation-ou-proverbe.fr
+    email_to: formulaire@simplement-web.com
     email_bcc: []
 
   Send:
@@ -47,7 +47,7 @@ all:
   proposition:
     email_subject: "proposition de nouvelle citation"
     email_from: contact@citation-ou-proverbe.fr
-    email_to: nathanael@fam-martel.eu
+    email_to: formulaire@simplement-web.com
     
     
     
