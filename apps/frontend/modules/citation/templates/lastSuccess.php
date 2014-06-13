@@ -15,7 +15,7 @@
 	</div>
 	
 	<?php if ($i++%5 == 0): ?>
-		<?php include_partial('ads/rdb') ?>
+		<?php include_partial('ads/clickintext') ?>
 	<?php endif ?>
 	
 <?php endforeach ?>
