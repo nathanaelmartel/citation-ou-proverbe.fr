@@ -66,10 +66,10 @@
 	<?php endif ?>
 	
 	<?php if (count($citations)>2): ?>
-			<?php include_partial('ads/rdb') ?>
+		<?php include_partial('ads/clickintext') ?>
 	<?php endif; ?>
 	
 </div>
 
-<?php include_partial('ads/rdb') ?>
+		<?php include_partial('ads/clickintext') ?>
 
