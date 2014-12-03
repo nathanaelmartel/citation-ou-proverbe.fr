@@ -1,0 +1,38 @@
+
+@import url(http://fonts.googleapis.com/css?family=Lato);
+
+.ads-wallshop {
+  color: #1D2021;
+  border-color: 1px solid #1D2021;
+	background: #D2D2D3;
+	font-family: 'Lato', sans-serif;
+	
+	p { 
+	 margin: 0;
+	}
+
+	.buttons {
+		text-align: right;
+		margin-top: 1em;
+	}
+	
+	.button {
+		text-decoration: none;
+		text-transform: uppercase;
+	  padding: .5em;
+	  background: #1D2021;
+	  color: #fff;
+	  margin-right: .3em;
+	  display: inline-block;
+	  
+	  -moz-transition: all .2s ease-in;
+	  -o-transition: all .2s ease-in;
+	  -webkit-transition: all .2s ease-in;
+	  transition: all .2s ease-in;
+	  
+	  &:hover, &:focus, &:active {
+	    box-shadow: 0 0 0 5px #fff, 0 0 0 6px #1D2021;
+      outline: none;
+	  }
+	}
+}
