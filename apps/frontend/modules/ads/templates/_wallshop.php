@@ -2,7 +2,7 @@
 
 	$baseline = array( 
 		'Affichez vos citations préférées !',
-		'Une belle phrase dans sur un beau tableau…',	
+		'Une belle phrase sur un beau tableau…',	
 		'Des mots pour décorer vos murs',	
 		'Tout part des mots',	
 		'Citations illustrées pour un intérieur bien décoré !',	
@@ -18,7 +18,7 @@
 	<h2><?php echo $baseline[rand(0, count($baseline)-1)]?></h2>
 	<p></p>
 	<p class="buttons">
-		<a href="http://Wallshop.fr/?utm_source=citation-ou-proverbe.fr&utm_medium=website&utm_campaign=citation-ou-proverbe.fr" class="button" target="_blank">Wallshop.fr</a> 
+		<a href="http://Wallshop.fr/?utm_source=citation-ou-proverbe.fr&utm_medium=website&utm_campaign=citation-ou-proverbe.fr" class="button" target="_blank">Wallshop<span>.fr</span></a> 
 	</p>
 </div>
 
