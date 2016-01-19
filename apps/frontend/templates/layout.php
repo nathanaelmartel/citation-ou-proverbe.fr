@@ -3,16 +3,16 @@
 
   <head>
     <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width" />
-    
+
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
-    
+
     <?php include_stylesheets() ?>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -25,22 +25,22 @@
     <?php if (has_slot('header')): ?>
       <?php include_slot('header') ?>
     <?php endif; ?>
-    
+
 
   </head>
   <body>
-  	<!--[if lte IE 7]>
+  	<!--[if lte IE 10]>
       <link rel="stylesheet" href="/css/styles-ie.css" />
       <div class="alert-ie">
       	<p><strong>Attention ! </strong> Votre navigateur présente de sérieuses lacunes en terme de sécurité et de performances, dues à son obsolescence.<br>En conséquence, ce site sera consultable mais de manière moins optimale qu'avec un navigateur récent (<a href="http://www.browserforthebetter.com/download.html" >Internet Explorer</a>, <a href="http://www.mozilla-europe.org/fr/firefox/" >Firefox</a>, <a href="http://www.google.com/chrome?hl=fr" >Chrome</a>, <a href="http://www.apple.com/fr/safari/download/" >Safari</a>,...)</p>
       </div>
   	<![endif]-->
-  
+
 	  <?php include_partial('global/header')?>
-	   	
+
   	<div class="page grid-container">
-  	
-	   	
+
+
 			<?php if ($sf_user->hasFlash('confirmation')): ?>
 				<div class="grid-80 prefix-10">
 			    <div id="confirmation">
@@ -49,15 +49,15 @@
 			  </div>
 			  <div class="clear"></div>
 			<?php endif ?>
-			
+
 	    <?php echo $sf_content ?>
-	    
+
     </div>
-    
+
 	  <?php include_partial('global/footer')?>
-	  
+
     <?php include_partial('global/piwik')?>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <?php include_javascripts() ?>
   </body>
 </html>

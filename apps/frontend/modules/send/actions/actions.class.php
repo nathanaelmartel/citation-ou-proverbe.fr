@@ -19,7 +19,7 @@ class sendActions extends sfActions
         $this->form = new SendForm();
     		$this->form->setDefault('citation_id', $id);
     		$this->form->setDefault('image_url', $this->getController()->genUrl('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$citation->Author->slug.'&authorb='.$citation->Author->slug, array('absolute' => true)));
-    		
+
     		$response = $this->getResponse();
     		$response->setTitle('Envoyer la citation par mail');
     }
@@ -59,20 +59,20 @@ class sendActions extends sfActions
             $this->getMailer()->send($message);
 
             $this->getUser()->setFlash('confirmation', 'Votre message a bien été envoyé !');
-      			$this->getUser()->setAttribute('mail', $contact->email_from);	
-            
+      			$this->getUser()->setAttribute('mail', $contact->email_from);
+
             if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
             {
             	require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
-            	PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
-            
+            	PiwikTracker::$URL = 'https://piwik.simplement-web.com/';
+
             	$piwikTracker = new PiwikTracker( $idSite = 17 );
             	$piwikTracker->setCustomVariable( 1, 'email', $send->email_from, 'visit');
             	$piwikTracker->setCustomVariable( 4, 'dernière citation envoyée', $send->citation_id, 'visit');
             	$piwikTracker->doTrackPageView('Envoyer la citation par mail');
             	$piwikTracker->doTrackGoal($idGoal = 2, $revenue = 100);
             }
-            
+
             $this->redirect('@citation_short?id='.$send->citation_id);
         }
     }
