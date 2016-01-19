@@ -67,7 +67,7 @@ EOF;
     ->limit(35)
     ->orderBy('last_send_at ASC');
     
-    //die($q->getSqlQuery());
+//    die($q->getSqlQuery());
     
     $newsletters = $q->execute();
  
