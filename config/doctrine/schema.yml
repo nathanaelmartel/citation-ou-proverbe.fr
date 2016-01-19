@@ -19,11 +19,13 @@ Page:
     Timestampable:
 
   columns:
-    url: 
+    url:
       type: varchar(255)
       unique: true
     website: varchar(255)
     title: varchar(255)
+    content: {type: string()}
+    date: varchar(255)
     nb_citations: int
     http_code: varchar(4)
     loading_time: varchar(10)
@@ -33,7 +35,7 @@ Page:
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
+
 
 Author:
   connection: doctrine
@@ -44,7 +46,7 @@ Author:
       fields: [name]
       canUpdate: true
     Timestampable:
-    
+
   columns:
     name: {type: string(255), unique: true}
     dbpedia_at: {type: datetime, default: null}
@@ -53,7 +55,7 @@ Author:
     view: {type: int, default: 0}
     has_thumbnail: {type: boolean, default: null}
     is_active: {type: boolean}
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
@@ -64,7 +66,7 @@ AuthorDBPedia:
   tableName: author_dbpedia
   actAs:
     Timestampable:
-    
+
   columns:
     author_id: {type: integer, notnull: true}
     name: {type: string(255)}
@@ -79,7 +81,7 @@ AuthorDBPedia:
     dbpedia_url: {type: string(255), default: null}
 #    occupation: {type: string(255), default: null}
 #    notableworks: {type: string(255), default: null}
-    
+
   relations:
     Author:
       class: Author
@@ -87,7 +89,7 @@ AuthorDBPedia:
       local: author_id
       foreign: id
       onDelete: cascade
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
@@ -98,14 +100,14 @@ AuthorWikipedia:
   tableName: author_wikipedia
   actAs:
     Timestampable:
-    
+
   columns:
     author_id: {type: integer, notnull: true}
     name: {type: string(255)}
     abstract: {type: string(), default: null}
     thumbnail: {type: string(255), default: null}
     wikipedia_url: {type: string(255), default: null}
-    
+
   relations:
     Author:
       class: Author
@@ -113,11 +115,11 @@ AuthorWikipedia:
       local: author_id
       foreign: id
       onDelete: cascade
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
+
 Citation:
   connection: doctrine
   tableName: citation
@@ -136,7 +138,7 @@ Citation:
     slug: {type: string(255), unique: true}
     color: {type: string(255)}
     text_color: {type: string(255)}
-    
+
   relations:
     Author:
       class: Author
@@ -151,11 +153,11 @@ Citation:
       local: source_id
       foreign: id
       onDelete: cascade
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
+
 Source:
   connection: doctrine
   tableName: sources
@@ -178,8 +180,8 @@ Source:
     isbn: {type: string(255)}
     cover: {type: string(255)}
     wikipedia: {type: string(255)}
-    
-    
+
+
   relations:
     Author:
       class: Author
@@ -187,12 +189,12 @@ Source:
       local: author_id
       foreign: id
       onDelete: cascade
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
-Tag:    
+
+Tag:
   tableName: tag
   actAs:
     Sluggable:
@@ -203,18 +205,18 @@ Tag:
   columns:
     name: { type: string(255), notnull: true, unique: true }
     is_active: {type: boolean}
-    
+
   relations:
     Citations:
       class: Citation
       refClass: TagCitation
       foreignAlias: Tags
-      
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
-TagCitation:    
+
+TagCitation:
   tableName: tag_citation
 
   columns:
@@ -224,10 +226,10 @@ TagCitation:
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
-    
-    
-    
+
+
+
+
 Contact:
   tableName: contact
   actAs:
@@ -241,10 +243,10 @@ Contact:
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
-    
-    
-    
+
+
+
+
 Send:
   tableName: send
   actAs:
@@ -261,21 +263,17 @@ Send:
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
+
 
 Newsletter:
   columns:
     email: varchar(255)
-    is_confirmed: {type: boolean, default: false} 
+    is_confirmed: {type: boolean, default: false}
     last_send_at: datetime
-    
+
   actAs:
     Timestampable:
-  
+
   options:
     collate: utf8_unicode_ci
     charset: utf8
-    
-    
-    
-    

@@ -13,11 +13,11 @@ class newsletterActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new NewsletterForm();
-    
+
     $response = $this->getResponse();
     $response->setTitle('Abonnement');
   }
-  
+
 	public function executeCreate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST));
@@ -50,7 +50,7 @@ class newsletterActions extends sfActions
 		if ($form->isValid())
 		{
       $newsletter = $form->save();
-      
+
 			$message = Swift_Message::newInstance()
 			->setFrom(sfConfig::get('app_newsletter_mail_from'))
 			->setReplyTo(sfConfig::get('app_newsletter_mail_from'))
@@ -69,25 +69,25 @@ class newsletterActions extends sfActions
 		$email = base64_decode($request->getParameter('code'));
 
 		$this->forward404Unless($newsletter = Doctrine_Core::getTable('Newsletter')->findOneByEmail(array($email)), sprintf('Object newsletter does not exist (%s).', $request->getParameter('code')));
-		
+
 		if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1')))
 		{
 			require_once sfConfig::get('sf_lib_dir').'/vendor/piwik/PiwikTracker.php';
-			PiwikTracker::$URL = 'http://piwik.fam-martel.eu/';
-            
+			PiwikTracker::$URL = 'https://piwik.simplement-web.com/';
+
       $this->getUser()->setAttribute('mail', $contact->email);
-		
+
 			$piwikTracker = new PiwikTracker( $idSite = 17 );
 			$piwikTracker->setCustomVariable( 1, 'email', $email, 'visit');
 			$piwikTracker->setCustomVariable( 3, 'newsletter', 'inscrit', 'visit');
 			$piwikTracker->doTrackPageView('Abonnement');
 			$piwikTracker->doTrackGoal($idGoal = 4, $revenue = 100);
 		}
-		
+
 		$newsletter->is_confirmed = true;
 		$newsletter->save();
 	}
-  
+
   public function executeDel(sfWebRequest $request)
   {
     $email = base64_decode($request->getParameter('code'));
@@ -98,8 +98,5 @@ class newsletterActions extends sfActions
     $newsletter->save();
     $newsletter->delete();
   }
-  
+
 }
-
-
-
