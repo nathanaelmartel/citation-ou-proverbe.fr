@@ -1,16 +1,16 @@
 
-@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
 .ads-wallshop {
   color: #fff;
 	background: url(http://www.wallshop.fr/themes/wallshop/img/wallshop.png) no-repeat 80% 20px #1D2021;
 	font-family: 'Lato', sans-serif;
-	
+
 	h2 {
     font-family: 'Lato', sans-serif;
 	}
-	
-	p { 
+
+	p {
 	 margin: 0;
 	}
 
@@ -18,7 +18,7 @@
 		text-align: right;
 		margin-top: 1em;
 	}
-	
+
 	.button {
 		text-decoration: none;
 		text-transform: uppercase;
@@ -28,16 +28,16 @@
 	  margin-right: .3em;
 	  display: inline-block;
     box-shadow: 0 0 0 1px #fff, 0 0 0 2px #1D2021;
-	  
+
 	  -moz-transition: all .2s ease-in;
 	  -o-transition: all .2s ease-in;
 	  -webkit-transition: all .2s ease-in;
 	  transition: all .2s ease-in;
-	  
+
 	  span {
 	    color: #FF8B84;
 	  }
-	  
+
 	  &:hover, &:focus, &:active {
 	    box-shadow: 0 0 0 5px #fff, 0 0 0 6px #1D2021;
       outline: none;
