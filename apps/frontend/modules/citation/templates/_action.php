@@ -1,5 +1,5 @@
 
-  <a href="<?php echo url_for('@citation_wallpaper?author='.$citation->Author->slug.'&slug='.$citation->slug)?>" title="Citation en fond d'écran" >fond d'écran</a>
+
 	<a class="mail-share icon" href="<?php echo url_for('@send_mail?id='.$citation->id)?>" title="Envoyer la citation par mail">&nbsp;</a>
   <a class="facebook-share icon" title="partager sur facebook" target="_blank" href="https://www.facebook.com/sharer.php?u=<?php echo $url.'?pk_campaign=share&pk_kwd=share-facebook' ?>&amp;t=<?php echo $citation->quote ?>">&nbsp;</a>
   <a class="twitter-share icon" title="partager sur twitter" target="_blank" href="https://twitter.com/share?text=<?php echo $citation->quote ?>&amp;url=<?php echo $url.'?pk_campaign=share&pk_kwd=share-twitter' ?>">&nbsp;</a>

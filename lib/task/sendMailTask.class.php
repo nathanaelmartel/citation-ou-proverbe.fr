@@ -44,9 +44,19 @@ EOF;
     $citation = $q->fetchOne();
     //sfTask::log($citation->quote);die();
 
+
+  	$baseline = array(
+  		'«&nbsp;L’education est l’arme la plus puissante pour changer le monde&nbsp;» — Nelson Mandela',
+  		'L’éducation de nos enfants est notre priorité : nous nous sommes donnés comme objectif de construire une école',
+  		'«&nbsp;Si tu veux aller vite, marche seul ; mais si tu veux aller loin, marchons ensemble&nbsp;» — proverbe africain',
+  		'«&nbsp;Un Enfant sans éducation est comme un oiseau sans ailes&nbsp;» — proverbe Tibétain',
+  		'Vous pouvez lire et écrire ceci… Pas les enfants de Niellé.',
+  	);
+
     $annonce = '<p>Découvrez <a href="http://revenudebase.info/?utm_source=citation-ou-proverbe.fr&utm_medium=email&utm_campaign=citation-ou-proverbe.fr" style="color:#000;">Le Revenu de base</a>, et vous, que feriez-vous si votre revenu était garanti ?</p>';
     $annonce = '<p>Accrochez des citations à vos murs avec <a href="http://www.wallshop.fr/fr/?pk_campaign=email-citation-ou-proverbe&pk_kwd=email-footer-citation-ou-proverbe" style="color:#000;">WallShop.fr</a></p>';
-    $annonce = '';
+
+    $annonce = '<p>'.$baseline[rand(0, count($baseline)-1)].' <a href="http://www.badessatellites.com/?utm_medium=email&utm_campaign=citation-ou-proverbe.fr">Une École à Niellé</a></p>';
 
     $message_text = '<a href="https://www.citation-ou-proverbe.fr/'.$citation->Author->slug.'/'.$citation->slug.'?pk_campaign=abonnement&pk_kwd=abonnement-citation" class="card-container" style="width: 460px;display: block;text-decoration: none;">
     <blockquote style="color: '.$citation->getTextRGBColorHex().';background-color: '.$citation->getRGBColorHex() .';width: 460px;display: table-cell;font-size: 1.8em;height: 8em;line-height: 1.2em;padding: 1em;vertical-align: middle;">

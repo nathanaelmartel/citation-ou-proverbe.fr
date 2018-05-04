@@ -12,13 +12,13 @@
 			<?php include_partial('citation/card', array('citation' => $citation))?>
 		<div class="action">
 		  <?php include_partial('citation/action', array(
-  				'citation' => $citation, 
-		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$author->slug, array('absolute' => true)), 
+  				'citation' => $citation,
+		  		'url' => url_for('@citation?slug='.$citation->slug.'&author='.$author->slug, array('absolute' => true)),
 		  		'image' => url_for('@citation_image?sf_format=png&slug='.$citation->slug.'&author='.$author->slug.'&authorb='.$author->slug, array('absolute' => true))
 		  )) ?>
 		</div>
 	</div>
-	
+
 <?php endforeach ?>
 </div>
 
@@ -42,7 +42,7 @@
 		<?php endif; ?>
     </p>
 	</div>
-	
+
 	<?php if ($citations->haveToPaginate()): ?>
 		<div class="action">
 			<?php $links = $citations->getLinks(); ?>
@@ -53,7 +53,9 @@
 					<a href="<?php echo url_for( '@author_page?slug='.$author->slug.'&page='.$page) ?>" title="Citations ou Proverbes de : <?php echo $author->name?>" itemtype="url"><?php echo $page?></a>
 				<?php endif; ?>
 			<?php endforeach ?>
-		</div>    
+		</div>
 	<?php endif ?>
-	
+
 </div>
+
+		<?php include_partial('ads/clickintext') ?>

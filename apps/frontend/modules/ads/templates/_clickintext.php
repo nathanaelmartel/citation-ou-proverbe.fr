@@ -9,4 +9,4 @@
 </div>
 <?php*/ ?>
 
-<?php //include_partial('ads/wallshop') ?>
+<?php //include_partial('ads/nielle') ?>
